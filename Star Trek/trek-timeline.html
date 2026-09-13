@@ -1971,6 +1971,13 @@ document.addEventListener('DOMContentLoaded', () => {
     pip(TNG_X,  mainY, 8, AMBER); txt('TNG',       TNG_X,  mainY-H*.038, ps, AMBER); txt('2364–70',   TNG_X,  mainY+H*.038, pd, CHALK);
     pip(DS9_X,  mainY, 7, AMBER); txt('DS9',       DS9_X,  mainY-H*.038, ps, AMBER); txt('2369–75',   DS9_X,  mainY+H*.038, pd, CHALK);
     pip(VOY_X,  mainY, 7, AMBER); txt('VOY',       VOY_X,  mainY-H*.038, ps, AMBER); txt('2371–78',   VOY_X,  mainY+H*.038, pd, CHALK);
+
+    // Films VII–X bracket above TNG→VOY span
+    const bktY = mainY - H*0.085;
+    chalkLine(TNG_X, bktY, VOY_X, bktY, DIM, 1.2);
+    chalkLine(TNG_X, bktY, TNG_X, bktY + H*0.026, DIM, 1.2);
+    chalkLine(VOY_X, bktY, VOY_X, bktY + H*0.026, DIM, 1.2);
+    txt('Films VII–X', (TNG_X + VOY_X) / 2, bktY - H*0.024, W*0.011, DIM, 'center', 600);
     pip(LD_X,   mainY, 6, AMBER); txt('LD / PRO',  LD_X,   mainY-H*.038, ps*.9, AMBER); txt('2380–84',LD_X,   mainY+H*.038, pd, CHALK);
     pip(PIC_X,  mainY, 8, AMBER); txt('PIC',       PIC_X,  mainY-H*.038, ps, AMBER); txt('2399–2401', PIC_X,  mainY+H*.038, pd, CHALK);
 
@@ -1997,8 +2004,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Footnote
     chalkLine(PAD_L, H-H*.065, PAD_R, H-H*.065, 'rgba(238,242,225,0.16)', 0.8);
-    txt('* TAS omitted · Mirror Universe not shown (parallel thread) · Films VII–X overlap TNG era on prime line',
-      W/2, H-H*.04, W*0.009, DIM, 'center', 400);
+    txt('* TAS (2269–70) omitted for clarity  ·  Mirror Universe not shown — parallel thread, not a fork',
+      W/2, H-H*.04, W*0.012, CHALK, 'center', 400);
   }
 
   Promise.all([
