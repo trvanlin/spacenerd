@@ -3,7 +3,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600;700&display=swap">
 
 <style>
 :root {
@@ -248,6 +248,14 @@ body {
   letter-spacing: .06em;
 }
 .hero-meta span { margin-right: 20px; }
+
+/* ── TIMELINE MAP ── */
+.map-section {
+  background: #1a2318;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.map-section canvas { display: block; width: 100%; }
 
 /* ── LEGEND ── */
 .legend-bar {
@@ -728,6 +736,7 @@ tr.hidden-row { display: none; }
   </div>
   <nav class="sidebar-nav" id="toc">
     <div class="sidebar-section-label">Navigation</div>
+    <a class="sidebar-link" href="#s0"><span class="snum">—</span> Timeline Map</a>
     <a class="sidebar-link" href="#legend"><span class="snum">—</span> Legend</a>
     <a class="sidebar-link" href="#s1"><span class="snum">01</span> Executive Guide</a>
     <a class="sidebar-link" href="#s2"><span class="snum">02</span> Release Order</a>
@@ -785,6 +794,11 @@ tr.hidden-row { display: none; }
       <span class="badge" style="background:rgba(112,192,160,.1);color:#00806a;border:1px solid rgba(112,192,160,.25)"><span class="dot dot-short"></span>Short</span>
       <span class="badge" style="background:rgba(192,112,208,.1);color:#8030a0;border:1px solid rgba(192,112,208,.25)"><span class="dot dot-anim"></span>Animated</span>
     </div>
+  </div>
+
+  <!-- TIMELINE MAP -->
+  <div class="map-section" id="s0">
+    <canvas id="trek-map"></canvas>
   </div>
 
   <!-- SECTION 1: EXECUTIVE GUIDE -->
@@ -1820,4 +1834,174 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('trek-updated').textContent =
     d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 });
+</script>
+
+<script>
+(function() {
+  const canvas = document.getElementById('trek-map');
+  const ctx    = canvas.getContext('2d');
+
+  const CHALK = 'rgba(238,242,225,0.92)';
+  const DIM   = 'rgba(238,242,225,0.62)';
+  const AMBER = 'rgba(240,168,0,0.95)';
+  const RED   = 'rgba(218,72,58,0.95)';
+  const RED_D = 'rgba(218,72,58,0.60)';
+
+  let _s = 1337;
+  function sr() { _s = (_s * 1664525 + 1013904223) & 0xffffffff; return (_s >>> 0) / 0xffffffff; }
+  function w(n) { return (sr() - 0.5) * n; }
+
+  function chalkLine(x1, y1, x2, y2, col, lw, segs) {
+    const n = segs || Math.max(5, Math.floor(Math.hypot(x2-x1, y2-y1) / 14));
+    ctx.beginPath();
+    ctx.moveTo(x1 + w(2), y1 + w(1.5));
+    for (let i = 1; i <= n; i++) {
+      const t = i / n;
+      ctx.lineTo(x1+(x2-x1)*t + w(1.8), y1+(y2-y1)*t + w(1.8));
+    }
+    ctx.strokeStyle = col; ctx.lineWidth = lw || 2;
+    ctx.lineCap = ctx.lineJoin = 'round'; ctx.stroke();
+  }
+
+  function dashedLine(x1, y1, x2, y2, col, lw) {
+    ctx.save(); ctx.setLineDash([7, 9]);
+    chalkLine(x1, y1, x2, y2, col, lw || 2); ctx.restore();
+  }
+
+  function pip(x, y, r, col) {
+    ctx.beginPath(); ctx.arc(x + w(1), y + w(1), r, 0, Math.PI*2);
+    ctx.fillStyle = col; ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.fill(); ctx.stroke();
+  }
+
+  function wobblyCircle(x, y, r, col, lw) {
+    const n = 28; ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const a = (i / n) * Math.PI * 2, rr = r + w(2.5);
+      const px = x + rr*Math.cos(a) + w(1), py = y + rr*Math.sin(a) + w(1);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = col; ctx.lineWidth = lw || 2; ctx.stroke();
+  }
+
+  function arrowHead(x, y, angle, col, size) {
+    const s = size || 11;
+    ctx.beginPath();
+    ctx.moveTo(x, y); ctx.lineTo(x - s*Math.cos(angle-0.38), y - s*Math.sin(angle-0.38));
+    ctx.moveTo(x, y); ctx.lineTo(x - s*Math.cos(angle+0.38), y - s*Math.sin(angle+0.38));
+    ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.stroke();
+  }
+
+  function arrow(x1, y1, x2, y2, col, lw) {
+    chalkLine(x1, y1, x2, y2, col, lw || 2);
+    arrowHead(x2, y2, Math.atan2(y2-y1, x2-x1), col);
+  }
+
+  function txt(str, x, y, sz, col, align, weight) {
+    ctx.save();
+    ctx.font = `${weight||600} ${sz}px 'Caveat', cursive`;
+    ctx.fillStyle = col || CHALK; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle';
+    ctx.translate(x, y); ctx.rotate(w(0.018));
+    str.split('\n').forEach((line, i, arr) => {
+      ctx.fillText(line, 0, (i - (arr.length-1)/2) * sz * 1.15);
+    });
+    ctx.restore();
+  }
+
+  function draw() {
+    _s = 1337;
+    const DPR = window.devicePixelRatio || 1;
+    const W   = canvas.parentElement.clientWidth;
+    const H   = Math.round(W * 0.453);
+    canvas.width  = W * DPR; canvas.height = H * DPR;
+    canvas.style.width  = W + 'px'; canvas.style.height = H + 'px';
+    ctx.scale(DPR, DPR);
+
+    const PAD_L = W * 0.04, PAD_R = W * 0.97;
+    const PX = f => PAD_L + (PAD_R - PAD_L) * f;
+    const mainY = H * 0.38, kelvY = H * 0.68;
+
+    const ENT_X  = PX(0.05),  FORK_X = PX(0.18), DSC_X  = PX(0.26);
+    const SNW_X  = PX(0.30),  TOS_X  = PX(0.36), FILM_X = PX(0.44);
+    const BRKA_X = PX(0.50),  BRKB_X = PX(0.56), TNG_X  = PX(0.62);
+    const DS9_X  = PX(0.67),  VOY_X  = PX(0.71), LD_X   = PX(0.76);
+    const PIC_X  = PX(0.82),  FAR_X  = PX(0.87), SFA_X  = PX(0.94);
+    const K09_X  = PX(0.26),  KID_X  = PX(0.33), KBY_X  = PX(0.41);
+
+    // Background
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#1f2d1c'); bg.addColorStop(1, '#172015');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+    // Chalk-dust texture
+    for (let i = 0; i < 4000; i++) {
+      ctx.beginPath(); ctx.arc(sr()*W, sr()*H, sr()*1.6, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${sr()*0.014})`; ctx.fill();
+    }
+
+    // Title
+    txt('STAR TREK — UNIFIED TIMELINE', W/2, H * 0.09, W * 0.024, CHALK, 'center', 700);
+    txt('(Doc Brown edition)', W/2, H * 0.16, W * 0.013, DIM, 'center', 400);
+
+    // Prime line
+    chalkLine(PAD_L - 10, mainY, BRKA_X, mainY, CHALK, 3.5);
+    ctx.beginPath(); ctx.moveTo(BRKA_X, mainY);
+    const sqW = (BRKB_X - BRKA_X) / 7;
+    for (let i = 0; i < 7; i++) ctx.lineTo(BRKA_X + (i+1)*sqW + w(2), mainY + (i%2===0 ? -H*0.024 : H*0.024) + w(2));
+    ctx.strokeStyle = DIM; ctx.lineWidth = 2.5; ctx.lineCap = ctx.lineJoin = 'round'; ctx.stroke();
+    chalkLine(BRKB_X, mainY, SFA_X + 20, mainY, CHALK, 3.5);
+    arrowHead(SFA_X + 40, mainY, 0, CHALK, 13);
+
+    // Labels
+    txt('PRIME TIMELINE  ▶', (PAD_L + SFA_X + 40) / 2, mainY - H*0.133, W*0.013, AMBER, 'center', 700);
+    txt('~ 70 YEARS\npass (off-screen)', (BRKA_X+BRKB_X)/2, mainY - H*0.056, W*0.012, CHALK, 'center', 700);
+
+    // Fork
+    dashedLine(FORK_X, mainY + 14, FORK_X, kelvY - 14, RED_D, 1.5);
+    wobblyCircle(FORK_X, mainY, H*0.022, RED, 2.2);
+    txt("NERO'S INCURSION", FORK_X, mainY - H*0.079, W*0.011, RED, 'center', 600);
+    txt('2233', FORK_X, mainY - H*0.053, W*0.014, RED, 'center', 700);
+
+    // Prime pips
+    const ps = W*0.012, pd = W*0.011;
+    pip(ENT_X,  mainY, 8, AMBER); txt('ENT',       ENT_X,  mainY-H*.038, ps, AMBER); txt('2151–55',   ENT_X,  mainY+H*.038, pd, CHALK);
+    pip(DSC_X,  mainY, 7, AMBER); txt('DSC\nS1–2', DSC_X,  mainY-H*.044, ps*.9, AMBER); txt('2256–58',DSC_X,  mainY+H*.038, pd, CHALK);
+    pip(SNW_X,  mainY, 7, AMBER); txt('SNW',       SNW_X,  mainY-H*.038, ps, AMBER); txt('2259+',     SNW_X,  mainY+H*.038, pd, CHALK);
+    pip(TOS_X,  mainY, 8, AMBER); txt('TOS',       TOS_X,  mainY-H*.038, ps, AMBER); txt('2266–69',   TOS_X,  mainY+H*.038, pd, CHALK);
+    pip(FILM_X, mainY, 7, AMBER); txt('FILMS\nI–VI',FILM_X,mainY-H*.044, ps*.9, AMBER); txt('2273–93',FILM_X, mainY+H*.038, pd, CHALK);
+    pip(TNG_X,  mainY, 8, AMBER); txt('TNG',       TNG_X,  mainY-H*.038, ps, AMBER); txt('2364–70',   TNG_X,  mainY+H*.038, pd, CHALK);
+    pip(DS9_X,  mainY, 7, AMBER); txt('DS9',       DS9_X,  mainY-H*.038, ps, AMBER); txt('2369–75',   DS9_X,  mainY+H*.038, pd, CHALK);
+    pip(VOY_X,  mainY, 7, AMBER); txt('VOY',       VOY_X,  mainY-H*.038, ps, AMBER); txt('2371–78',   VOY_X,  mainY+H*.038, pd, CHALK);
+    pip(LD_X,   mainY, 6, AMBER); txt('LD / PRO',  LD_X,   mainY-H*.038, ps*.9, AMBER); txt('2380–84',LD_X,   mainY+H*.038, pd, CHALK);
+    pip(PIC_X,  mainY, 8, AMBER); txt('PIC',       PIC_X,  mainY-H*.038, ps, AMBER); txt('2399–2401', PIC_X,  mainY+H*.038, pd, CHALK);
+
+    // Spore-drive gap
+    dashedLine(PIC_X + 22, mainY, FAR_X - 4, mainY, DIM, 2);
+    const sporeX = (PIC_X + FAR_X) / 2;
+    txt('spore-drive jump', sporeX, mainY - H*0.118, W*0.012, CHALK, 'center', 700);
+    arrow(sporeX, mainY - H*0.097, sporeX + w(4), mainY - H*0.035, DIM, 1.5);
+
+    pip(FAR_X, mainY, 7, AMBER); txt('DSC\nS3–5', FAR_X, mainY-H*.044, ps*.9, AMBER); txt('3188+',  FAR_X, mainY+H*.038, pd, CHALK);
+    pip(SFA_X, mainY, 6, AMBER); txt('SFA',       SFA_X, mainY-H*.038, ps, AMBER);   txt('~3190+', SFA_X, mainY+H*.038, pd, CHALK);
+
+    // Kelvin branch
+    chalkLine(FORK_X + 12, mainY + 12, K09_X - 14, kelvY - 8, RED, 2.5);
+    chalkLine(K09_X - 20, kelvY, KBY_X + 50, kelvY, RED, 3);
+    ctx.beginPath(); ctx.moveTo(KBY_X+50, kelvY-10); ctx.lineTo(KBY_X+50, kelvY+10);
+    ctx.strokeStyle = RED; ctx.lineWidth = 3; ctx.stroke();
+
+    txt('KELVIN TIMELINE', FORK_X - 14, kelvY - H*0.076, W*0.013, RED, 'right', 700);
+
+    pip(K09_X, kelvY, 8, RED); txt("STAR TREK '09", K09_X, kelvY+H*.038, ps*.9, RED); txt('2258', K09_X, kelvY+H*.068, pd, CHALK);
+    pip(KID_X, kelvY, 7, RED); txt('INTO DARKNESS', KID_X, kelvY+H*.038, ps*.9, RED); txt('2259', KID_X, kelvY+H*.068, pd, CHALK);
+    pip(KBY_X, kelvY, 7, RED); txt('BEYOND',        KBY_X, kelvY+H*.038, ps,    RED); txt('2263', KBY_X, kelvY+H*.068, pd, CHALK);
+
+    // Footnote
+    chalkLine(PAD_L, H-H*.065, PAD_R, H-H*.065, 'rgba(238,242,225,0.16)', 0.8);
+    txt('* TAS omitted · Mirror Universe not shown (parallel thread) · Films VII–X overlap TNG era on prime line',
+      W/2, H-H*.04, W*0.009, DIM, 'center', 400);
+  }
+
+  document.fonts.ready.then(draw);
+  let _rt; window.addEventListener('resize', () => { clearTimeout(_rt); _rt = setTimeout(draw, 120); });
+})();
 </script>
