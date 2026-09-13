@@ -1991,9 +1991,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     txt('KELVIN TIMELINE', FORK_X - 14, kelvY - H*0.076, W*0.013, RED, 'right', 700);
 
-    pip(K09_X, kelvY, 8, RED); txt("STAR TREK '09", K09_X, kelvY+H*.038, ps*.9, RED); txt('2258', K09_X, kelvY+H*.068, pd, CHALK);
-    pip(KID_X, kelvY, 7, RED); txt('INTO DARKNESS', KID_X, kelvY+H*.038, ps*.9, RED); txt('2259', KID_X, kelvY+H*.068, pd, CHALK);
-    pip(KBY_X, kelvY, 7, RED); txt('BEYOND',        KBY_X, kelvY+H*.038, ps,    RED); txt('2263', KBY_X, kelvY+H*.068, pd, CHALK);
+    pip(K09_X, kelvY, 8, RED); txt("ST '09",        K09_X, kelvY+H*.038, ps, RED); txt('2258', K09_X, kelvY+H*.068, pd, CHALK);
+    pip(KID_X, kelvY, 7, RED); txt('INTO\nDARKNESS',KID_X, kelvY+H*.044, ps, RED); txt('2259', KID_X, kelvY+H*.082, pd, CHALK);
+    pip(KBY_X, kelvY, 7, RED); txt('BEYOND',        KBY_X, kelvY+H*.038, ps, RED); txt('2263', KBY_X, kelvY+H*.068, pd, CHALK);
 
     // Footnote
     chalkLine(PAD_L, H-H*.065, PAD_R, H-H*.065, 'rgba(238,242,225,0.16)', 0.8);
@@ -2001,7 +2001,13 @@ document.addEventListener('DOMContentLoaded', () => {
       W/2, H-H*.04, W*0.009, DIM, 'center', 400);
   }
 
-  document.fonts.ready.then(draw);
-  let _rt; window.addEventListener('resize', () => { clearTimeout(_rt); _rt = setTimeout(draw, 120); });
+  Promise.all([
+    document.fonts.load('400 20px Caveat'),
+    document.fonts.load('600 20px Caveat'),
+    document.fonts.load('700 20px Caveat')
+  ]).then(draw);
+  let _rt; window.addEventListener('resize', () => { clearTimeout(_rt); _rt = setTimeout(() => {
+    Promise.all([document.fonts.load('700 20px Caveat')]).then(draw);
+  }, 120); });
 })();
 </script>
