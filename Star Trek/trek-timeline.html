@@ -169,6 +169,19 @@ body {
   flex-shrink: 0;
 }
 .sidebar-link.active .snum { color: var(--sidebar-active); opacity: .8; }
+.sidebar-home {
+  display: block;
+  padding: 8px 16px;
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--sidebar-border);
+  opacity: 0.55;
+  transition: opacity 0.15s, color 0.15s;
+}
+.sidebar-home:hover { opacity: 1; color: var(--prime); }
 .sidebar-footer {
   padding: 12px 16px;
   border-top: 1px solid var(--sidebar-border);
@@ -702,6 +715,7 @@ tr.hidden-row { display: none; }
 
 <!-- SIDEBAR -->
 <div id="sidebar">
+  <a class="sidebar-home" href="../index.html">← SPACENERD</a>
   <div class="sidebar-header">
     <div class="sidebar-brand">
       <div class="sidebar-pip"><span></span><span></span><span></span><span></span></div>
@@ -725,8 +739,8 @@ tr.hidden-row { display: none; }
     <a class="sidebar-link" href="#updates"><span class="snum">—</span> Future Updates</a>
   </nav>
   <div class="sidebar-footer">
-    <div>Research date: Sep 2026</div>
     <div>Covers all screen canon</div>
+    <div>Updated: <span id="trek-updated"></span></div>
     <button class="theme-toggle" onclick="toggleTheme()">Toggle theme</button>
   </div>
 </div>
@@ -1801,5 +1815,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTOC();
   updateCount('release');
   updateCount('chrono');
+  const d = new Date(document.lastModified);
+  document.getElementById('trek-updated').textContent =
+    d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 });
 </script>

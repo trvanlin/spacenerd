@@ -255,6 +255,7 @@
 <footer>
   <a href="https://github.com/trvanlin/spacenerd">trvanlin.github.io/spacenerd</a>
   &nbsp;·&nbsp; fan reference &nbsp;·&nbsp; not affiliated with any studio
+  &nbsp;·&nbsp; updated <span id="index-updated"></span>
 </footer>
 
 <script>
@@ -460,6 +461,10 @@ function frame(ts) {
 }
 
 requestAnimationFrame(frame);
+
+const _upd = new Date(document.lastModified);
+document.getElementById('index-updated').textContent =
+  _upd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 </script>
 </body>
 </html>

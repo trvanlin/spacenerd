@@ -336,6 +336,28 @@ td.title-cell .title-sub { font-weight: 400; color: var(--text2); font-size: 0.7
 }
 .hero-meta span { margin-right: 1.5rem; }
 
+/* ── Home link ───────────────────────────────── */
+.sidebar-home {
+  display: block;
+  padding: 0.45rem 1rem;
+  font-family: var(--fm);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  opacity: 0.6;
+  transition: opacity 0.15s, color 0.15s;
+}
+.sidebar-home:hover { opacity: 1; color: var(--accent); }
+.sidebar-stamp {
+  padding: 0.5rem 1rem 0;
+  font-family: var(--fm);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  opacity: 0.5;
+}
 /* ── Theme Toggle ────────────────────────────── */
 .theme-toggle {
   display: block;
@@ -374,6 +396,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 
 <!-- ══ SIDEBAR ══════════════════════════════════════════ -->
 <nav>
+  <a class="sidebar-home" href="../index.html">← SPACENERD</a>
   <div class="sidebar-header">
     <div class="sidebar-brand">
       <div class="sw-pips">
@@ -412,6 +435,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
     <li><a href="#future">Future Updates</a></li>
   </ul>
   <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">◐ TOGGLE THEME</button>
+  <div class="sidebar-stamp">Updated: <span id="sw-updated"></span></div>
 </nav>
 
 <!-- ══ MAIN ═════════════════════════════════════════════ -->
@@ -2299,6 +2323,10 @@ const observer = new IntersectionObserver(entries => {
   });
 }, {rootMargin: '-20% 0px -70% 0px'});
 sections.forEach(s => observer.observe(s));
+
+const _d = new Date(document.lastModified);
+document.getElementById('sw-updated').textContent =
+  _d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 </script>
 </body>
 </html>
