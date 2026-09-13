@@ -1,0 +1,1805 @@
+<title>Star Trek Unified Timeline</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+:root {
+  --bg: #f2f5fc;
+  --surface: #ffffff;
+  --surface-2: #eaf0fa;
+  --surface-3: #dde7f5;
+  --border: #c5d5ed;
+  --border-subtle: #dce8f7;
+  --text: #16233a;
+  --text-2: #3d5880;
+  --text-3: #7a9ac0;
+  --sidebar-bg: #080e1c;
+  --sidebar-text: #8aaccc;
+  --sidebar-active: #f0a500;
+  --sidebar-border: #18305a;
+  --prime: #c47d00;
+  --prime-bg: #fff8e6;
+  --prime-border: #f0c060;
+  --kelvin: #bf3a2b;
+  --kelvin-bg: #fdecea;
+  --kelvin-border: #e8a09a;
+  --mirror: #7a2d9e;
+  --mirror-bg: #f6eafd;
+  --mirror-border: #c8a0e0;
+  --alt: #00807a;
+  --alt-bg: #e6f7f6;
+  --alt-border: #80ccc8;
+  --noncanon: #546e7a;
+  --noncanon-bg: #ecf0f1;
+  --noncanon-border: #b0bec5;
+  --canon-dot: #1a9e50;
+  --disputed-dot: #d4820a;
+  --noncanon-dot: #90a4ae;
+  --sw: 240px;
+  --fd: 'Antonio', sans-serif;
+  --fb: 'Source Sans 3', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #060c1a; --surface: #0b1626; --surface-2: #101e38;
+    --surface-3: #152444; --border: #1d3257; --border-subtle: #122040;
+    --text: #ccdaf0; --text-2: #6888b8; --text-3: #3c5880;
+    --prime: #f0a500; --prime-bg: rgba(240,165,0,.1); --prime-border: rgba(240,165,0,.28);
+    --kelvin: #e05848; --kelvin-bg: rgba(224,88,72,.1); --kelvin-border: rgba(224,88,72,.28);
+    --mirror: #b070d0; --mirror-bg: rgba(176,112,208,.1); --mirror-border: rgba(176,112,208,.28);
+    --alt: #00c8b8; --alt-bg: rgba(0,200,184,.1); --alt-border: rgba(0,200,184,.28);
+    --noncanon: #586e7a; --noncanon-bg: rgba(88,110,122,.1); --noncanon-border: rgba(88,110,122,.28);
+    --canon-dot: #2ecc71; --disputed-dot: #f0a020; --noncanon-dot: #7f8c8d;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #060c1a; --surface: #0b1626; --surface-2: #101e38;
+  --surface-3: #152444; --border: #1d3257; --border-subtle: #122040;
+  --text: #ccdaf0; --text-2: #6888b8; --text-3: #3c5880;
+  --prime: #f0a500; --prime-bg: rgba(240,165,0,.1); --prime-border: rgba(240,165,0,.28);
+  --kelvin: #e05848; --kelvin-bg: rgba(224,88,72,.1); --kelvin-border: rgba(224,88,72,.28);
+  --mirror: #b070d0; --mirror-bg: rgba(176,112,208,.1); --mirror-border: rgba(176,112,208,.28);
+  --alt: #00c8b8; --alt-bg: rgba(0,200,184,.1); --alt-border: rgba(0,200,184,.28);
+  --noncanon: #586e7a; --noncanon-bg: rgba(88,110,122,.1); --noncanon-border: rgba(88,110,122,.28);
+  --canon-dot: #2ecc71; --disputed-dot: #f0a020; --noncanon-dot: #7f8c8d;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  display: flex;
+  min-height: 100vh;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: var(--sw);
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-header {
+  padding: 20px 16px 0;
+  border-bottom: 1px solid var(--sidebar-border);
+  padding-bottom: 16px;
+}
+.sidebar-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.sidebar-pip {
+  width: 6px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sidebar-pip span {
+  display: block;
+  height: 18px;
+  border-radius: 2px;
+}
+.sidebar-pip span:nth-child(1) { background: var(--prime); }
+.sidebar-pip span:nth-child(2) { background: var(--kelvin); }
+.sidebar-pip span:nth-child(3) { background: var(--mirror); }
+.sidebar-pip span:nth-child(4) { background: var(--alt); }
+.sidebar-title {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: .01em;
+  line-height: 1.2;
+}
+.sidebar-sub {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--sidebar-text);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.sidebar-nav { padding: 10px 0; flex: 1; }
+.sidebar-section-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sidebar-text);
+  padding: 8px 16px 4px;
+  opacity: .6;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: var(--fb);
+  font-weight: 400;
+  transition: color .15s, background .15s;
+  border-left: 3px solid transparent;
+}
+.sidebar-link:hover { color: #fff; background: rgba(255,255,255,.04); }
+.sidebar-link.active { color: var(--sidebar-active); border-left-color: var(--sidebar-active); background: rgba(240,165,0,.07); }
+.sidebar-link .snum {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--sidebar-text);
+  opacity: .6;
+  width: 18px;
+  flex-shrink: 0;
+}
+.sidebar-link.active .snum { color: var(--sidebar-active); opacity: .8; }
+.sidebar-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--sidebar-border);
+  font-size: 11px;
+  color: var(--sidebar-text);
+  opacity: .5;
+}
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  font-size: 11px;
+  font-family: var(--fm);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+  text-align: left;
+  letter-spacing: .06em;
+}
+.theme-toggle:hover { color: #fff; }
+
+/* ── MAIN ── */
+#main {
+  margin-left: var(--sw);
+  flex: 1;
+  min-width: 0;
+}
+.page-hero {
+  background: var(--sidebar-bg);
+  border-bottom: 3px solid var(--prime);
+  padding: 28px 40px 24px;
+}
+.hero-eyebrow {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--prime);
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--fd);
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.hero-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,.5);
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+.hero-meta {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: rgba(255,255,255,.35);
+  margin-top: 8px;
+  letter-spacing: .06em;
+}
+.hero-meta span { margin-right: 20px; }
+
+/* ── LEGEND ── */
+.legend-bar {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+.legend-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.legend-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-right: 4px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--fm);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.badge-prime { background: var(--prime-bg); color: var(--prime); border: 1px solid var(--prime-border); }
+.badge-kelvin { background: var(--kelvin-bg); color: var(--kelvin); border: 1px solid var(--kelvin-border); }
+.badge-mirror { background: var(--mirror-bg); color: var(--mirror); border: 1px solid var(--mirror-border); }
+.badge-alt { background: var(--alt-bg); color: var(--alt); border: 1px solid var(--alt-border); }
+.badge-noncanon { background: var(--noncanon-bg); color: var(--noncanon); border: 1px solid var(--noncanon-border); }
+.badge-canon { background: rgba(46,204,113,.12); color: var(--canon-dot); border: 1px solid rgba(46,204,113,.25); }
+.badge-disputed { background: rgba(240,160,32,.12); color: var(--disputed-dot); border: 1px solid rgba(240,160,32,.25); }
+.badge-nc { background: var(--noncanon-bg); color: var(--noncanon); border: 1px solid var(--noncanon-border); }
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.dot-tv { background: #5b8de0; }
+.dot-film { background: #e09a30; }
+.dot-short { background: #70c0a0; }
+.dot-anim { background: #c070d0; }
+
+/* ── SECTIONS ── */
+.section {
+  padding: 40px 40px 50px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.section:last-of-type { border-bottom: none; }
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: var(--prime);
+  letter-spacing: .1em;
+  opacity: .8;
+}
+.section-title {
+  font-family: var(--fd);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  text-wrap: balance;
+}
+.section-subtitle {
+  font-size: 14px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+/* ── PROSE ── */
+.prose { max-width: 100%; }
+.prose h3 {
+  font-family: var(--fd);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 22px 0 6px;
+  letter-spacing: .01em;
+}
+.prose h4 {
+  font-family: var(--fd);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin: 16px 0 4px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: 12px;
+}
+.prose p { margin-bottom: 12px; color: var(--text); }
+.prose ul { padding-left: 18px; margin-bottom: 12px; }
+.prose li { margin-bottom: 4px; }
+.prose strong { color: var(--text); }
+.prose em { color: var(--text-2); font-style: italic; }
+.prose .aside {
+  background: var(--surface-2);
+  border-left: 3px solid var(--prime);
+  padding: 10px 14px;
+  margin: 14px 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  color: var(--text-2);
+}
+.prose .uncertain { color: var(--disputed-dot); font-style: italic; }
+cite {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: .04em;
+}
+
+/* ── FILTERS ── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  align-items: center;
+}
+.filter-label {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-right: 2px;
+}
+.filter-select {
+  font-family: var(--fm);
+  font-size: 11px;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: .04em;
+}
+.filter-select:focus { outline: 2px solid var(--prime); outline-offset: 1px; }
+.filter-clear {
+  font-family: var(--fm);
+  font-size: 11px;
+  background: none;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.filter-clear:hover { color: var(--text); }
+.search-input {
+  font-family: var(--fm);
+  font-size: 11px;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 4px;
+  width: 200px;
+}
+.search-input::placeholder { color: var(--text-3); }
+.search-input:focus { outline: 2px solid var(--prime); outline-offset: 1px; }
+.filter-count {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  margin-left: auto;
+  letter-spacing: .04em;
+}
+
+/* ── TABLES ── */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+th {
+  background: var(--surface-2);
+  font-family: var(--fd);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  padding: 9px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+th:hover { color: var(--prime); }
+th[data-col]::after { content: ' ⬍'; opacity: .3; font-size: 9px; }
+th[data-col].sort-asc::after { content: ' ↑'; color: var(--prime); opacity: 1; }
+th[data-col].sort-desc::after { content: ' ↓'; color: var(--prime); opacity: 1; }
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--surface-2); }
+tr.hidden-row { display: none; }
+.td-title { font-weight: 600; white-space: nowrap; }
+.td-abbr { font-family: var(--fm); font-size: 11px; color: var(--text-3); }
+.td-date { font-family: var(--fm); font-size: 12px; white-space: nowrap; }
+.td-setting { font-family: var(--fm); font-size: 12px; color: var(--text-2); white-space: nowrap; }
+.td-desc { min-width: 180px; max-width: 280px; font-size: 13px; color: var(--text-2); }
+.td-seasons { white-space: nowrap; }
+.status-chip {
+  font-family: var(--fm);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.status-complete { background: rgba(46,204,113,.1); color: var(--canon-dot); }
+.status-ongoing { background: rgba(91,141,224,.1); color: #5b8de0; }
+.status-released { background: var(--surface-3); color: var(--text-2); }
+.status-uncertain { background: rgba(240,160,32,.1); color: var(--disputed-dot); }
+
+/* ── ERA HEADERS IN CHRONO TABLE ── */
+.era-row td {
+  background: var(--surface-3);
+  font-family: var(--fd);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--prime);
+  padding: 7px 12px;
+  border-top: 2px solid var(--border);
+}
+
+/* ── CARDS ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 6px;
+}
+.ref-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ref-card-accent { height: 4px; }
+.ref-card-accent.prime { background: var(--prime); }
+.ref-card-accent.kelvin { background: var(--kelvin); }
+.ref-card-accent.mirror { background: var(--mirror); }
+.ref-card-accent.alt { background: var(--alt); }
+.ref-card-accent.noncanon { background: var(--noncanon); }
+.ref-card-body { padding: 14px 16px 16px; }
+.ref-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+.ref-card-abbr {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: .1em;
+}
+.ref-card-title {
+  font-family: var(--fd);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.ref-card-meta {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ref-card-desc { font-size: 13px; color: var(--text-2); margin-bottom: 8px; }
+.ref-card-kv { font-size: 12px; color: var(--text-2); }
+.ref-card-kv strong {
+  font-family: var(--fm);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-3);
+  display: block;
+  margin-top: 6px;
+}
+.ref-card-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+
+/* ── ALT TIMELINE BRANCHES ── */
+.branch {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.branch-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: background .15s;
+}
+.branch-header:hover { background: var(--surface-2); }
+.branch[open] > .branch-header { border-bottom-color: var(--border); }
+.branch-icon {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.branch-name {
+  font-family: var(--fd);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+.branch-tag {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: .08em;
+}
+.branch-chevron { font-size: 12px; color: var(--text-3); transition: transform .2s; }
+.branch[open] .branch-chevron { transform: rotate(90deg); }
+.branch-body { padding: 16px; }
+.branch-body .kv { display: grid; grid-template-columns: 130px 1fr; gap: 6px 12px; margin-bottom: 12px; font-size: 13px; }
+.branch-body .kv dt { font-family: var(--fm); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); padding-top: 2px; }
+.branch-body .kv dd { color: var(--text-2); }
+.branch-body p { font-size: 13.5px; color: var(--text-2); margin-bottom: 8px; }
+.branch-body .uncertain-tag {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--disputed-dot);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* ── VIEWING PATHS ── */
+.path-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.path-tab {
+  font-family: var(--fm);
+  font-size: 11px;
+  letter-spacing: .06em;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all .15s;
+}
+.path-tab:hover { border-color: var(--prime); color: var(--prime); }
+.path-tab.active { background: var(--prime-bg); border-color: var(--prime); color: var(--prime); font-weight: 600; }
+.path-content { display: none; }
+.path-content.visible { display: block; }
+.path-list {
+  list-style: none;
+  counter-reset: path-counter;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.path-list li {
+  counter-increment: path-counter;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+.path-list li::before {
+  content: counter(path-counter, decimal-leading-zero);
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  width: 22px;
+}
+.path-list li strong { color: var(--text); }
+.path-note {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-top: 4px;
+  margin-left: 34px;
+}
+.path-warning {
+  background: rgba(240,160,32,.1);
+  border: 1px solid rgba(240,160,32,.25);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--disputed-dot);
+  margin-bottom: 12px;
+}
+
+/* ── SOURCES ── */
+.sources-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.sources-list li { font-size: 13px; color: var(--text-2); }
+.sources-list a { color: var(--prime); text-decoration: none; }
+.sources-list a:hover { text-decoration: underline; }
+.sources-list .src-label {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-right: 6px;
+}
+
+/* ── UPDATES ── */
+.updates-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.updates-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+.updates-list .upd-dot { color: var(--prime); font-size: 16px; flex-shrink: 0; line-height: 1.4; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  :root { --sw: 0px; }
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  .section { padding: 28px 20px 36px; }
+  .page-hero { padding: 20px; }
+  .legend-bar { padding: 10px 20px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .branch-body .kv { grid-template-columns: 1fr; }
+}
+@media print {
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  .filters { display: none; }
+  .path-content { display: block !important; }
+  .branch { page-break-inside: avoid; }
+}
+</style>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">
+      <div class="sidebar-pip"><span></span><span></span><span></span><span></span></div>
+      <div>
+        <div class="sidebar-title">STAR TREK<br>UNIFIED TIMELINE</div>
+        <div class="sidebar-sub">Reference Document</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav" id="toc">
+    <div class="sidebar-section-label">Navigation</div>
+    <a class="sidebar-link" href="#legend"><span class="snum">—</span> Legend</a>
+    <a class="sidebar-link" href="#s1"><span class="snum">01</span> Executive Guide</a>
+    <a class="sidebar-link" href="#s2"><span class="snum">02</span> Release Order</a>
+    <a class="sidebar-link" href="#s3"><span class="snum">03</span> Chronological Order</a>
+    <a class="sidebar-link" href="#s4"><span class="snum">04</span> Alternate Timelines</a>
+    <a class="sidebar-link" href="#s5"><span class="snum">05</span> Reference Cards</a>
+    <a class="sidebar-link" href="#s6"><span class="snum">06</span> Viewing Paths</a>
+    <a class="sidebar-link" href="#s7"><span class="snum">07</span> Continuity Notes</a>
+    <a class="sidebar-link" href="#sources"><span class="snum">—</span> Sources</a>
+    <a class="sidebar-link" href="#updates"><span class="snum">—</span> Future Updates</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div>Research date: Sep 2026</div>
+    <div>Covers all screen canon</div>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle theme</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="hero-eyebrow">60th Anniversary · Fan Reference Document</div>
+    <div class="hero-title">Star Trek Unified Timeline</div>
+    <div class="hero-desc">Canon guide — Prime, Kelvin, Mirror &amp; Alternate timelines</div>
+    <div class="hero-meta">
+      <span>28 screen productions</span>
+      <span>Prime · Kelvin · Mirror · Alternate</span>
+      <span>2151 – ~4200 CE in-universe</span>
+      <span>Research date: September 2026</span>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend-bar" id="legend">
+    <div class="legend-group">
+      <span class="legend-label">Universe</span>
+      <span class="badge badge-prime">Prime</span>
+      <span class="badge badge-kelvin">Kelvin</span>
+      <span class="badge badge-mirror">Mirror</span>
+      <span class="badge badge-alt">Alternate</span>
+      <span class="badge badge-noncanon">Non-canon</span>
+    </div>
+    <div class="legend-group">
+      <span class="legend-label">Canon</span>
+      <span class="badge badge-canon">● Canon</span>
+      <span class="badge badge-disputed">● Disputed</span>
+      <span class="badge badge-nc">● Non-canon</span>
+    </div>
+    <div class="legend-group">
+      <span class="legend-label">Media</span>
+      <span class="badge" style="background:rgba(91,141,224,.1);color:#5b8de0;border:1px solid rgba(91,141,224,.25)"><span class="dot dot-tv"></span>Live TV</span>
+      <span class="badge" style="background:rgba(224,154,48,.1);color:#c07820;border:1px solid rgba(224,154,48,.25)"><span class="dot dot-film"></span>Film</span>
+      <span class="badge" style="background:rgba(112,192,160,.1);color:#00806a;border:1px solid rgba(112,192,160,.25)"><span class="dot dot-short"></span>Short</span>
+      <span class="badge" style="background:rgba(192,112,208,.1);color:#8030a0;border:1px solid rgba(192,112,208,.25)"><span class="dot dot-anim"></span>Animated</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: EXECUTIVE GUIDE -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div>
+        <div class="section-title">Executive Guide</div>
+        <div class="section-subtitle">How to use this document; why multiple timelines exist; canon rules</div>
+      </div>
+    </div>
+    <div class="prose">
+      <h3>Release Order vs. Chronological Order</h3>
+      <p><strong>Release order</strong> is the sequence in which audiences first encountered each production — TOS in 1966, TAS in 1973, TNG in 1987, and so on through Starfleet Academy in 2025. Watching in release order follows the creative evolution of the franchise and preserves dramatic reveals: episodes and films were written assuming audiences had seen every prior entry. Many narrative developments — including the significance of the Borg, the weight of Spock's death and resurrection, and the slow buildup of Section 31 — land with full force only when the audience shares the show's original context.</p>
+      <p><strong>In-universe chronological order</strong> reorganizes all material by when events are set within the story. Enterprise (2151 CE) comes first; Starfleet Academy (~3190 CE) comes last. This order makes thematic sense for viewers who want to watch civilizational rise from warp-five starships to the Federation's recovery after The Burn, but it requires watching shows that were produced decades apart in rapid succession, sometimes causing tonal whiplash.</p>
+      <div class="aside">Recommendation: first-time viewers should use <strong>release order</strong> for the classic era (TOS through Nemesis), then shift to near-chronological for the Paramount+ era (2017–present), where productions are more tightly interconnected.</div>
+
+      <h3>Why Multiple Timelines?</h3>
+      <p>Star Trek's stories frequently involve time travel, parallel universes, and divergent histories — not as a retcon mechanism, but as central plot devices. The result is several distinct categories of alternate chronology:</p>
+      <ul>
+        <li><strong>Parallel universes</strong> (the Mirror Universe) co-exist with the Prime Timeline and have always existed alongside it, reachable only by accident or technology.</li>
+        <li><strong>Temporal divergences</strong> (the Kelvin Timeline, Yesterday's Enterprise) are branches created when time-travel events alter a historical decision point, splitting the timeline into two incompatible histories.</li>
+        <li><strong>Averted futures</strong> (All Good Things…, Year of Hell, Endgame) are possible futures that characters experience and then prevent. These do not become permanent history; they collapse when the characters act to avoid them.</li>
+        <li><strong>Far-future successors</strong> (Discovery S3–5, Starfleet Academy) are not alternate timelines — they are the natural continuation of the Prime Timeline roughly 900 years into its future.</li>
+      </ul>
+
+      <h3>Canon Rules Used in This Document</h3>
+      <p>This document uses the following canon framework, which reflects current official production practice:</p>
+      <ul>
+        <li><strong>Prime Timeline canon</strong>: All live-action and animated productions officially set in the Prime Timeline, including those produced under CBS/Paramount's ongoing franchise. This is the document's primary frame of reference.</li>
+        <li><strong>Kelvin Timeline canon</strong>: The three Bad Robot films (2009–2016), which take place in a separate timeline created by Nero's incursion. Events here do not affect Prime continuity.</li>
+        <li><strong>Canon (accepted, historically disputed) — TAS</strong>: <em>Star Trek: The Animated Series</em> (1973–74) occupies a contested position. Gene Roddenberry informally excluded it from canon in the 1980s; modern showrunners (Alex Kurtzman et al.) and the official Paramount+ viewing guide treat it as canonical. Memory Alpha lists it as canon. This document follows current production practice and accepts TAS as canon while noting the historical dispute.</li>
+        <li><strong>Non-canon</strong>: <em>Very Short Treks</em> (2023) are officially produced but explicitly presented as comedic parodies without in-universe standing.</li>
+        <li><strong>Out of scope</strong>: Novels, comics, video games, and fan productions are not covered. The Pocket Books novelverse and IDW comics contain rich material but have no official canonical standing relative to screen productions.</li>
+      </ul>
+      <div class="aside"><strong>Note on "fan consensus":</strong> This document never presents fan interpretation or wiki consensus as an official ruling. Where sources conflict, both positions are described and the best-supported interpretation is labeled accordingly.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: RELEASE ORDER -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <div class="section-title">Complete Release-Order Timeline</div>
+        <div class="section-subtitle">All 28 screen productions in first-release order — click headers to sort, use filters to narrow</div>
+      </div>
+    </div>
+    <div class="filters">
+      <span class="filter-label">Filter:</span>
+      <select class="filter-select" id="f-universe" onchange="applyFilters('release')">
+        <option value="">All universes</option>
+        <option value="prime">Prime</option>
+        <option value="kelvin">Kelvin</option>
+        <option value="mirror">Mirror</option>
+        <option value="noncanon">Non-canon</option>
+      </select>
+      <select class="filter-select" id="f-type" onchange="applyFilters('release')">
+        <option value="">All media</option>
+        <option value="live-tv">Live-action TV</option>
+        <option value="film">Film</option>
+        <option value="animated-tv">Animated TV</option>
+        <option value="shorts">Short-form</option>
+      </select>
+      <select class="filter-select" id="f-canon" onchange="applyFilters('release')">
+        <option value="">Any canon status</option>
+        <option value="canon">Canon</option>
+        <option value="disputed">Disputed</option>
+        <option value="non-canon">Non-canon</option>
+      </select>
+      <button class="filter-clear" onclick="clearFilters('release')">Clear</button>
+      <input class="search-input" id="search-release" type="search" placeholder="Search titles, descriptions…" oninput="searchTable('release', this.value)">
+      <span class="filter-count" id="release-count"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="release-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable('release',0)" data-col="0">#</th>
+            <th onclick="sortTable('release',1)" data-col="1">Title</th>
+            <th onclick="sortTable('release',2)" data-col="2">Media</th>
+            <th onclick="sortTable('release',3)" data-col="3">Premiere</th>
+            <th onclick="sortTable('release',4)" data-col="4">End</th>
+            <th onclick="sortTable('release',5)" data-col="5">Seasons</th>
+            <th onclick="sortTable('release',6)" data-col="6">Status</th>
+            <th onclick="sortTable('release',7)" data-col="7">Universe</th>
+            <th onclick="sortTable('release',8)" data-col="8">Canon</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody id="release-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 3: CHRONOLOGICAL -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div>
+        <div class="section-title">In-Universe Chronological Timeline</div>
+        <div class="section-subtitle">Sorted by primary story setting, grouped by era — click headers to sort, use filters to narrow</div>
+      </div>
+    </div>
+    <div class="filters">
+      <span class="filter-label">Filter:</span>
+      <select class="filter-select" id="cf-universe" onchange="applyFilters('chrono')">
+        <option value="">All universes</option>
+        <option value="prime">Prime</option>
+        <option value="kelvin">Kelvin</option>
+      </select>
+      <select class="filter-select" id="cf-type" onchange="applyFilters('chrono')">
+        <option value="">All media</option>
+        <option value="live-tv">Live-action TV</option>
+        <option value="film">Film</option>
+        <option value="animated-tv">Animated TV</option>
+        <option value="shorts">Short-form</option>
+      </select>
+      <button class="filter-clear" onclick="clearFilters('chrono')">Clear</button>
+      <input class="search-input" id="search-chrono" type="search" placeholder="Search titles, eras…" oninput="searchTable('chrono', this.value)">
+      <span class="filter-count" id="chrono-count"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="chrono-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable('chrono',0)" data-col="0">Setting</th>
+            <th onclick="sortTable('chrono',1)" data-col="1">Title</th>
+            <th onclick="sortTable('chrono',2)" data-col="2">Era</th>
+            <th onclick="sortTable('chrono',3)" data-col="3">Media</th>
+            <th onclick="sortTable('chrono',4)" data-col="4">Universe</th>
+            <th onclick="sortTable('chrono',5)" data-col="5">Canon</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="chrono-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 4: ALTERNATE TIMELINES -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div>
+        <div class="section-title">Alternate Timelines &amp; Universes</div>
+        <div class="section-subtitle">Major branches — click any entry to expand</div>
+      </div>
+    </div>
+    <div id="branches-container"></div>
+  </section>
+
+  <!-- SECTION 5: REFERENCE CARDS -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div>
+        <div class="section-title">Series &amp; Film Reference Cards</div>
+        <div class="section-subtitle">Per-title quick reference with premise, leads, connections, and prerequisites</div>
+      </div>
+    </div>
+    <div class="cards-grid" id="cards-container"></div>
+  </section>
+
+  <!-- SECTION 6: VIEWING PATHS -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div>
+        <div class="section-title">Recommended Viewing Paths</div>
+        <div class="section-subtitle">Seven curated routes through the franchise</div>
+      </div>
+    </div>
+    <div class="path-tabs" id="path-tabs"></div>
+    <div id="path-contents"></div>
+  </section>
+
+  <!-- SECTION 7: CONTINUITY NOTES -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <div>
+        <div class="section-title">Continuity Notes &amp; Caveats</div>
+        <div class="section-subtitle">Visual redesigns, retcons, and apparent contradictions — documented without judgment</div>
+      </div>
+    </div>
+    <div class="prose">
+      <h3>The Three Kinds of Continuity</h3>
+      <p><strong>Production continuity</strong> is the real-world chain of creative decisions: who was showrunner, what the budget allowed, which actors were available, and what decade's aesthetics shaped the show's look. A 1960s starship necessarily looks different from a 2017 version of the same ship, because different production teams with different technology made different choices.</p>
+      <p><strong>In-universe continuity</strong> is the internal logic of the story world: what characters know, what events have happened, what technology exists. A story is in-universe inconsistent if it contradicts established facts without an in-story explanation.</p>
+      <p><strong>Canon</strong> is the set of productions officially recognized as establishing in-universe facts. Productions can be in-universe inconsistent while both being canon (requiring fans or later writers to reconcile them), or a production can be non-canon entirely (meaning its events simply don't apply to the shared story).</p>
+
+      <h3>The Eugenics Wars and 1990s Chronology</h3>
+      <p>TOS established that a catastrophic series of genetic wars — the Eugenics Wars — took place on Earth in the 1990s, producing Khan Noonien Singh and other genetically engineered "supermen." <em>The Wrath of Khan</em> (1982) reinforced this, setting Khan's Botany Bay exile at a point compatible with a 1990s origin. When the 1990s passed without incident, this became a known anachronism.</p>
+      <p><em>Strange New Worlds</em> Season 2 (2023) addressed this directly: the episode "Tomorrow and Tomorrow and Tomorrow" (S2E3) involves time travel to 2024 and implies the Eugenics Wars occurred differently and/or later than TOS suggested, effectively presenting a soft retcon. No official statement has fully resolved the canonical date of the Eugenics Wars. This document treats the historical placement as <span class="uncertain">Disputed</span>.</p>
+
+      <h3>Klingon Appearance Changes</h3>
+      <p>Klingons appear in three visually distinct forms across the franchise: the humanoid, smooth-browed Klingons of TOS (1966–1969); the ridged, darker-skinned Klingons introduced in <em>The Motion Picture</em> (1979) and maintained through all subsequent productions — except for Discovery Seasons 1–2 (2017–2019), which redesigned Klingons dramatically with elongated skulls and no hair.</p>
+      <p>The TOS-to-TMP change was addressed in-universe in the ENT episode "Divergence" / "Affliction" (S4), which attributed smooth-browed Klingons to a eugenics augment plague in the 22nd century. Discovery's visual redesign has not received an equivalent in-universe explanation as of this document's research date. Strange New Worlds Klingons (from 2022) revert to the more familiar post-TMP ridged appearance.</p>
+
+      <h3>Spock's Sister and Family</h3>
+      <p>Discovery's introduction of Michael Burnham as Spock's adoptive human sister (revealed in Season 1) was never mentioned in any prior production. This is an in-universe continuity question that the show addresses obliquely: Spock does not speak of her because of a deep personal estrangement (established in DIS Season 2). Whether this explanation fully satisfies prior canon is a matter of viewer interpretation; it is not presented here as an error.</p>
+
+      <h3>The Temporal Prime Directive</h3>
+      <p>The franchise's in-universe law governing time travel — the Temporal Prime Directive — appears inconsistently. Voyager invokes it frequently; earlier series rarely acknowledge it. Discovery Season 3 references the "Temporal Wars" as a past event that decimated time-travel capability. This document treats time-travel events in each production as canon within their own context without attempting to reconcile every apparent contradiction in temporal mechanics.</p>
+
+      <h3>Short Treks: "Calypso" Placement</h3>
+      <p>The Short Trek "Calypso" (2018) shows the AI Zora aboard a stationary Discovery, alone for "almost a thousand years." Produced before Discovery's jump to the 32nd century was conceived, the short's in-universe placement is <span class="uncertain">Uncertain</span>. If Discovery was abandoned after the events of Series 5 (~3191 CE), "Calypso" would be set around the 42nd century — making it the furthest-future canonical Star Trek story on screen. This interpretation is widely held but has not been officially confirmed.</p>
+
+      <h3>Star Trek: Prodigy and Streaming Migration</h3>
+      <p>Prodigy premiered on Paramount+ in 2021, was cancelled by Paramount and removed from the platform in 2023, then acquired by Netflix, which released Season 2 in 2024. The show is Prime Timeline canon and is omitted from the Paramount+ official viewing guide only because it is no longer on that platform. It is included in this document.</p>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="section" id="sources">
+    <div class="section-header">
+      <span class="section-num">—</span>
+      <div><div class="section-title">Sources</div></div>
+    </div>
+    <ul class="sources-list">
+      <li><span class="src-label">Official</span><a href="https://www.paramountplus.com/sneak-peak/star-trek-viewing-order-guide/" target="_blank">Paramount+ Star Trek Viewing Order Guide</a> — Official chronological and release ordering, streaming series descriptions and status (April 2026)</li>
+      <li><span class="src-label">Official</span><a href="https://www.startrek.com" target="_blank">startrek.com</a> — Official Star Trek website, episode guides, cast and crew information</li>
+      <li><span class="src-label">Reference</span><a href="https://memory-alpha.fandom.com" target="_blank">Memory Alpha</a> — Comprehensive Trek wiki; authoritative on production facts, stardate conversions, in-universe dating, and canon status discussions. Fan-maintained but editorially rigorous.</li>
+      <li><span class="src-label">Reference</span><a href="https://memory-alpha.fandom.com/wiki/Canon" target="_blank">Memory Alpha: Canon policy</a> — Used for TAS canon-status discussion and production-era policy sourcing</li>
+      <li><span class="src-label">Database</span>IMDb — Release dates for all films and series premieres</li>
+      <li><span class="src-label">Press</span>Paramount+ press releases — Production status for Starfleet Academy (Seasons 1–2) and Strange New Worlds (Seasons 4–5 greenlight)</li>
+    </ul>
+  </section>
+
+  <!-- FUTURE UPDATES -->
+  <section class="section" id="updates">
+    <div class="section-header">
+      <span class="section-num">—</span>
+      <div><div class="section-title">Recommended Future Updates</div></div>
+    </div>
+    <ul class="updates-list">
+      <li><span class="upd-dot">◆</span><div><strong>Star Trek: Section 31</strong> — Exact release date, confirmed in-universe setting date, and full synopsis needed once available. Currently marked Uncertain throughout.</div></li>
+      <li><span class="upd-dot">◆</span><div><strong>Star Trek: Strange New Worlds Seasons 4–5</strong> — Greenlit as of April 2026; no production or air-date information available. Update when announced.</div></li>
+      <li><span class="upd-dot">◆</span><div><strong>Star Trek: Starfleet Academy Season 2</strong> — Announced as of April 2026; no episode count, air date, or setting details confirmed. Update when available.</div></li>
+      <li><span class="upd-dot">◆</span><div><strong>New film production</strong> — Multiple Star Trek features have been in various stages of development. Update when any enters active production or receives a release date.</div></li>
+      <li><span class="upd-dot">◆</span><div><strong>TAS canonical status</strong> — Worth revisiting if Paramount or current showrunners issue a formal statement. Currently accepted as canon per production-era practice.</div></li>
+      <li><span class="upd-dot">◆</span><div><strong>"Calypso" placement</strong> — If any future production explicitly references Discovery's far-future abandonment, the ~42nd century placement can be confirmed or revised.</div></li>
+      <li><span class="upd-dot">◆</span><div><strong>Eugenics Wars date</strong> — <em>Strange New Worlds</em> has opened the question; if a future episode or official statement resolves the canonical date, update the Continuity Notes section.</div></li>
+    </ul>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const TITLES = [
+  { id:'tos', abbr:'TOS', title:'Star Trek', sub:'The Original Series',
+    type:'live-tv', premiere:'1966-09-08', end:'1969-06-03', releaseYear:1966,
+    seasons:'3 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2266–2269', settingSort:2266, era:'23rd Century',
+    desc:'Capt. Kirk, Spock, and Dr. McCoy aboard the U.S.S. Enterprise NCC-1701 explore strange new worlds on a five-year mission — the show that created the franchise.',
+    leads:'Kirk, Spock, McCoy, Uhura, Scotty, Sulu, Chekov',
+    connections:'Prequel: ENT, SNW. Same era: TAS. Films: TMP–TUC.',
+    prereqs:'None — the origin.',
+    paths:['release','prime-chrono','essential','kelvin-compare'] },
+
+  { id:'tas', abbr:'TAS', title:'Star Trek: The Animated Series', sub:null,
+    type:'animated-tv', premiere:'1973-09-08', end:'1974-10-12', releaseYear:1973,
+    seasons:'2 seasons', status:'complete', universe:'prime', canon:'disputed',
+    setting:'2269–2270', settingSort:2269, era:'23rd Century',
+    desc:'Animated continuation of TOS with most original voice cast; introduces Arex, M\'Ress, and early lore later absorbed into canon.',
+    leads:'Kirk, Spock, McCoy (voice cast reprising roles)',
+    connections:'Direct continuation of TOS. "Yesteryear" (S1E2) establishes Spock\'s Vulcan childhood, referenced in later canon.',
+    prereqs:'TOS.',
+    paths:['release','prime-chrono'] },
+
+  { id:'tmp', abbr:'TMP', title:'Star Trek: The Motion Picture', sub:null,
+    type:'film', premiere:'1979-12-07', end:null, releaseYear:1979,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2273', settingSort:2273, era:'23rd Century',
+    desc:'A massive energy cloud approaches Earth; Admiral Kirk retakes command of a refitted Enterprise to intercept it. Meditative, effects-driven, and deliberately slow.',
+    leads:'Kirk, Spock, McCoy, Decker, Ilia',
+    connections:'Follows TOS and TAS. Establishes V\'Ger mystery; Spock achieves Kolinahr (fails); introduces refitted Enterprise.',
+    prereqs:'TOS (especially to understand character relationships).',
+    paths:['release','prime-chrono','essential'] },
+
+  { id:'twok', abbr:'TWOK', title:'Star Trek II: The Wrath of Khan', sub:null,
+    type:'film', premiere:'1982-06-04', end:null, releaseYear:1982,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2285', settingSort:2285, era:'23rd Century',
+    desc:'Khan Noonien Singh escapes exile to pursue revenge on Kirk. The franchise\'s emotional and dramatic high-water mark — Spock\'s death changed Star Trek forever.',
+    leads:'Kirk, Spock, McCoy, Khan, Saavik',
+    connections:'Sequel to TOS "Space Seed" (S1E22). Must watch before TSFS.',
+    prereqs:'TOS "Space Seed" is useful; TMP optional.',
+    paths:['release','prime-chrono','essential'] },
+
+  { id:'tsfs', abbr:'TSFS', title:'Star Trek III: The Search for Spock', sub:null,
+    type:'film', premiere:'1984-06-01', end:null, releaseYear:1984,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2285', settingSort:2285.5, era:'23rd Century',
+    desc:'Kirk steals the Enterprise to retrieve Spock\'s body from the Genesis Planet. The Enterprise is destroyed; the Klingon Bird-of-Prey is captured.',
+    leads:'Kirk, McCoy, Spock (revived), Saavik, Kruge',
+    connections:'Direct sequel to TWOK. Required before TVH.',
+    prereqs:'TWOK.',
+    paths:['release','prime-chrono'] },
+
+  { id:'tvh', abbr:'TVH', title:'Star Trek IV: The Voyage Home', sub:null,
+    type:'film', premiere:'1986-11-26', end:null, releaseYear:1986,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2286 (+ 1986 Earth)', settingSort:2286, era:'23rd Century',
+    desc:'The crew travels back to 1986 San Francisco to retrieve humpback whales and save Earth from an alien probe. The franchise\'s most accessible, lightest film.',
+    leads:'Kirk, Spock, McCoy, Scotty, Uhura, Sulu, Chekov, Gillian',
+    connections:'Completes the "Genesis trilogy" (TWOK/TSFS/TVH). Kirk restored to captain.',
+    prereqs:'TWOK and TSFS for full context; can stand somewhat alone.',
+    paths:['release','prime-chrono','essential'] },
+
+  { id:'tng', abbr:'TNG', title:'Star Trek: The Next Generation', sub:null,
+    type:'live-tv', premiere:'1987-09-28', end:'1994-05-23', releaseYear:1987,
+    seasons:'7 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2364–2370', settingSort:2364, era:'24th Century',
+    desc:'Capt. Jean-Luc Picard commands the U.S.S. Enterprise NCC-1701-D nearly a century after Kirk\'s era. Introduced the Borg, Q, the Cardassians, and reshaped the franchise.',
+    leads:'Picard, Riker, Data, Troi, Worf, Crusher, La Forge, Yar',
+    connections:'Runs concurrently with early DS9 (S6–7). Leads into TNG films. Characters continue in PIC.',
+    prereqs:'None required, though TOS helps with lore.',
+    paths:['release','prime-chrono','essential'] },
+
+  { id:'tff', abbr:'TFF', title:'Star Trek V: The Final Frontier', sub:null,
+    type:'film', premiere:'1989-06-09', end:null, releaseYear:1989,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2287', settingSort:2287, era:'23rd Century',
+    desc:'Spock\'s half-brother Sybok hijacks the Enterprise to find "God" at the center of the galaxy. Widely regarded as the weakest entry in the TOS film series.',
+    leads:'Kirk, Spock, McCoy, Sybok',
+    connections:'Follows TVH. Introduces Sybok as Spock\'s previously unmentioned half-brother.',
+    prereqs:'TVH.',
+    paths:['release','prime-chrono'] },
+
+  { id:'tuc', abbr:'TUC', title:'Star Trek VI: The Undiscovered Country', sub:null,
+    type:'film', premiere:'1991-12-06', end:null, releaseYear:1991,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2293', settingSort:2293, era:'23rd Century',
+    desc:'The fall of the Klingon Empire leads to peace negotiations — and a conspiracy to stop them. The TOS crew\'s farewell. Worf\'s grandfather, Sulu commands the Excelsior.',
+    leads:'Kirk, Spock, McCoy, Valeris, Chang, Azetbur, Sulu',
+    connections:'Leads directly to GEN\'s 2293 prologue. Khitomer Accords founded here.',
+    prereqs:'TOS or earlier films for emotional weight.',
+    paths:['release','prime-chrono','essential'] },
+
+  { id:'ds9', abbr:'DS9', title:'Star Trek: Deep Space Nine', sub:null,
+    type:'live-tv', premiere:'1993-01-03', end:'1999-06-02', releaseYear:1993,
+    seasons:'7 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2369–2375', settingSort:2369, era:'24th Century',
+    desc:'Commander (later Captain) Benjamin Sisko oversees space station Deep Space Nine near a strategic wormhole, navigating Bajoran politics, the Dominion War, and the Prophets.',
+    leads:'Sisko, Kira, Odo, Dax, O\'Brien, Bashir, Quark, Worf (S4+)',
+    connections:'Overlaps TNG S6–7 and all of VOY. Worf joins S4. Mirror Universe eps. Temporal: "The Visitor," "Children of Time," "Trials and Tribble-ations."',
+    prereqs:'TNG S1–7 helpful for Cardassian/Bajoran context and Worf.',
+    paths:['release','prime-chrono','essential','mirror'] },
+
+  { id:'gen', abbr:'GEN', title:'Star Trek: Generations', sub:null,
+    type:'film', premiere:'1994-11-18', end:null, releaseYear:1994,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2293 / 2371', settingSort:2371, era:'24th Century',
+    desc:'Kirk and Picard meet across time via the Nexus to stop Dr. Soran from destroying a star. Kirk dies. Enterprise-D is destroyed.',
+    leads:'Picard, Kirk, Data, Soran, Guinan, Lursa & B\'Etor',
+    connections:'Bridge TOS and TNG eras. Requires TUC (2293 prologue) and TNG familiarity.',
+    prereqs:'TUC for the prologue; TNG S1–7 for the main story.',
+    paths:['release','prime-chrono'] },
+
+  { id:'voy', abbr:'VOY', title:'Star Trek: Voyager', sub:null,
+    type:'live-tv', premiere:'1995-01-16', end:'2001-05-23', releaseYear:1995,
+    seasons:'7 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2371–2378', settingSort:2371.5, era:'24th Century',
+    desc:'Capt. Kathryn Janeway\'s U.S.S. Voyager is stranded 75,000 light-years from Earth and must make its way home through the Delta Quadrant over seven years.',
+    leads:'Janeway, Chakotay, Tuvok, Torres, Paris, Kim, Doctor, Seven of Nine',
+    connections:'Overlaps DS9. Seven of Nine appears in PIC. Janeway appears in PRO. "Endgame" creates major temporal branch.',
+    prereqs:'TNG for Borg context (especially "The Best of Both Worlds").',
+    paths:['release','prime-chrono','essential','time-travel'] },
+
+  { id:'fc', abbr:'FC', title:'Star Trek: First Contact', sub:null,
+    type:'film', premiere:'1996-11-22', end:null, releaseYear:1996,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2373 (+ 2063)', settingSort:2373, era:'24th Century',
+    desc:'The Borg travel back to 2063 to prevent humanity\'s first contact with Vulcans; Picard and crew follow. Zefram Cochrane\'s warp flight is witnessed and protected.',
+    leads:'Picard, Data, Riker, Troi, Worf, Cochrane, Lily',
+    connections:'Major Borg story (requires "The Best of Both Worlds" TNG). Establishes First Contact Day (April 5, 2063).',
+    prereqs:'TNG especially "The Best of Both Worlds" (S3E26/S4E1).',
+    paths:['release','prime-chrono','essential','time-travel'] },
+
+  { id:'ins', abbr:'INS', title:'Star Trek: Insurrection', sub:null,
+    type:'film', premiere:'1998-12-11', end:null, releaseYear:1998,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2375', settingSort:2375, era:'24th Century',
+    desc:'Picard defies Starfleet orders to protect the peaceful Ba\'ku people from forced relocation by the Son\'a in partnership with rogue Federation officials.',
+    leads:'Picard, Data, Riker, Troi, Worf, Anij',
+    connections:'Set during the Dominion War period (DS9 S7). Relatively self-contained.',
+    prereqs:'TNG familiarity.',
+    paths:['release','prime-chrono'] },
+
+  { id:'ent', abbr:'ENT', title:'Star Trek: Enterprise', sub:null,
+    type:'live-tv', premiere:'2001-09-26', end:'2005-05-13', releaseYear:2001,
+    seasons:'4 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2151–2155', settingSort:2151, era:'22nd Century',
+    desc:'Capt. Jonathan Archer commands the NX-01 Enterprise — humanity\'s first warp-five vessel — navigating first contacts and building the alliances that become the Federation.',
+    leads:'Archer, T\'Pol, Trip Tucker, Reed, Hoshi, Travis, Phlox',
+    connections:'Prequel to all Prime Timeline series. S4 "In a Mirror, Darkly" is the Mirror Universe\'s origin story.',
+    prereqs:'None — stands alone as a prequel.',
+    paths:['release','prime-chrono','mirror'] },
+
+  { id:'nem', abbr:'NEM', title:'Star Trek: Nemesis', sub:null,
+    type:'film', premiere:'2002-12-13', end:null, releaseYear:2002,
+    seasons:'Film', status:'released', universe:'prime', canon:'canon',
+    setting:'2379', settingSort:2379, era:'24th Century',
+    desc:'Picard faces Shinzon, a Reman clone of himself who plans to destroy Earth. Data sacrifices himself. The TNG crew\'s final film appearance until Picard (2020).',
+    leads:'Picard, Data, Riker, Troi, Shinzon, Worf',
+    connections:'Riker and Troi marry here. Leads directly into PIC S1 backstory (Romulus destruction aftermath). Data\'s sacrifice echoed throughout PIC.',
+    prereqs:'TNG S1–7.',
+    paths:['release','prime-chrono'] },
+
+  { id:'st09', abbr:'ST09', title:'Star Trek', sub:'(Kelvin Timeline)',
+    type:'film', premiere:'2009-05-08', end:null, releaseYear:2009,
+    seasons:'Film', status:'released', universe:'kelvin', canon:'canon',
+    setting:'2233 / 2258 (K)', settingSort:2258, era:'23rd Century (Kelvin)',
+    desc:'Romulan Nero travels back in time, destroying the USS Kelvin and creating an alternate timeline. Young Kirk and Spock meet and stop Nero from destroying Vulcan — and fail.',
+    leads:'Kirk, Spock, McCoy, Uhura, Scotty, Sulu, Chekov, Nero, Spock Prime',
+    connections:'Kelvin Timeline origin. Spock Prime (Leonard Nimoy) bridges both timelines. Leads to STID, STB.',
+    prereqs:'TOS familiarity enriches but is not required.',
+    paths:['release','kelvin','time-travel'] },
+
+  { id:'stid', abbr:'STID', title:'Star Trek Into Darkness', sub:'(Kelvin Timeline)',
+    type:'film', premiere:'2013-05-16', end:null, releaseYear:2013,
+    seasons:'Film', status:'released', universe:'kelvin', canon:'canon',
+    setting:'2259 (K)', settingSort:2259, era:'23rd Century (Kelvin)',
+    desc:'John Harrison — revealed as Khan Noonien Singh — manipulates Starfleet from within. A re-imagining of TWOK beats that inverts the original\'s emotional dynamic.',
+    leads:'Kirk, Spock, Khan, Marcus, Uhura',
+    connections:'Parallel to TWOK. Requires ST09.',
+    prereqs:'ST09; TWOK for parallels (optional).',
+    paths:['release','kelvin'] },
+
+  { id:'stb', abbr:'STB', title:'Star Trek Beyond', sub:'(Kelvin Timeline)',
+    type:'film', premiere:'2016-07-22', end:null, releaseYear:2016,
+    seasons:'Film', status:'released', universe:'kelvin', canon:'canon',
+    setting:'2263 (K)', settingSort:2263, era:'23rd Century (Kelvin)',
+    desc:'The Enterprise is destroyed by a swarm attack; the crew stranded on an alien planet face Krall, an ancient Federation enemy. A more action-oriented, ensemble entry.',
+    leads:'Kirk, Spock, McCoy, Scotty, Uhura, Sulu, Chekov, Krall, Jaylah',
+    connections:'Dedicated to Leonard Nimoy (Spock Prime). Final Kelvin film to date.',
+    prereqs:'ST09.',
+    paths:['release','kelvin'] },
+
+  { id:'dis', abbr:'DIS', title:'Star Trek: Discovery', sub:null,
+    type:'live-tv', premiere:'2017-09-24', end:'2024-05-30', releaseYear:2017,
+    seasons:'5 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2256–2258 (S1–2); 3188–3191 (S3–5)', settingSort:2256, era:'23rd / 32nd Century',
+    desc:'Michael Burnham navigates a prequel era and then a radical future — Discovery jumps 930 years forward to evade an AI threat, rebuilding a fractured Federation in the 32nd century.',
+    leads:'Burnham, Saru, Stamets, Tilly, Culber, Georgiou, Book',
+    connections:'Prequel to SNW and TOS (S1–2). 32nd century setting leads into SFA.',
+    prereqs:'None required; TOS familiarity adds depth to S1–2.',
+    paths:['release','prime-chrono','time-travel'] },
+
+  { id:'shorttreks', abbr:'ST-S', title:'Short Treks', sub:null,
+    type:'shorts', premiere:'2018-10-04', end:'2020-01-09', releaseYear:2018,
+    seasons:'10 shorts (2 seasons)', status:'complete', universe:'prime', canon:'canon',
+    setting:'Various (2230s–3200s+)', settingSort:2254, era:'Various',
+    desc:'Ten short-form episodes exploring characters and corners of the Trek universe: Saru\'s homeworld, Spock\'s first day on Enterprise, Harry Mudd, the far-future Zora, and more.',
+    leads:'Various (Saru, Spock, Po, Mudd, Burnham, Pike)',
+    connections:'Closely tied to DIS and SNW. "Children of Mars" directly precedes PIC. "Calypso" set in far future (~42nd century, Uncertain).',
+    prereqs:'DIS S1 for most; SNW S1 for "Q&A" context.',
+    paths:['release','prime-chrono'] },
+
+  { id:'pic', abbr:'PIC', title:'Star Trek: Picard', sub:null,
+    type:'live-tv', premiere:'2020-01-23', end:'2023-04-20', releaseYear:2020,
+    seasons:'3 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2399–2402', settingSort:2399, era:'25th Century',
+    desc:'Retired Admiral Picard returns to space to investigate a conspiracy involving synthetic life forms, the Borg, and the Romulan diaspora. Season 3 is a full TNG reunion.',
+    leads:'Picard, Seven of Nine, Elnor, Raffi, Rios, Soji, Data (android), Laris; S3: full TNG cast',
+    connections:'Requires TNG and NEM. Seven from VOY. S2 alternate-timeline branch (Confederation). S3 resolves Data\'s legacy.',
+    prereqs:'TNG S1–7, NEM; VOY for Seven of Nine.',
+    paths:['release','prime-chrono','essential','mirror','time-travel'] },
+
+  { id:'ld', abbr:'LD', title:'Star Trek: Lower Decks', sub:null,
+    type:'animated-tv', premiere:'2020-08-06', end:'2024-10-24', releaseYear:2020,
+    seasons:'5 seasons', status:'complete', universe:'prime', canon:'canon',
+    setting:'2380–2381', settingSort:2380, era:'25th Century',
+    desc:'Animated comedy following the lowest-ranked crew of the U.S.S. Cerritos: Ensigns Mariner, Boimler, Tendi, and Rutherford. Dense with franchise references, genuine heart.',
+    leads:'Mariner, Boimler, Tendi, Rutherford, Freeman, Ransom',
+    connections:'Set just after VOY\'s return. References TNG, DS9, VOY extensively. Crossover with SNW (S3). Series finale wraps the crew\'s arc.',
+    prereqs:'No strict prerequisites; franchise familiarity significantly enriches the comedy.',
+    paths:['release','prime-chrono'] },
+
+  { id:'pro', abbr:'PRO', title:'Star Trek: Prodigy', sub:null,
+    type:'animated-tv', premiere:'2021-10-28', end:'2024-07-01', releaseYear:2021,
+    seasons:'2 seasons', status:'complete (Netflix)', universe:'prime', canon:'canon',
+    setting:'2383–2386', settingSort:2383, era:'25th Century',
+    desc:'A group of young alien outcasts discover an abandoned Starfleet vessel (the U.S.S. Protostar) and learn to become a crew under holographic Janeway\'s guidance. Designed for new audiences.',
+    leads:'Dal R\'El, Gwyndala, Jankom Pog, Zero, Rok-Tahk, Murf; Holographic Janeway; Admiral Janeway',
+    connections:'Features Janeway (VOY). Guardian of Forever appears (S2). Links to VOY era. Moved from Paramount+ to Netflix between seasons.',
+    prereqs:'None — designed as an entry point. VOY adds context for Janeway.',
+    paths:['release','prime-chrono','time-travel'] },
+
+  { id:'snw', abbr:'SNW', title:'Star Trek: Strange New Worlds', sub:null,
+    type:'live-tv', premiere:'2022-05-05', end:'ongoing', releaseYear:2022,
+    seasons:'3 seasons (S4, S5 greenlit)', status:'ongoing', universe:'prime', canon:'canon',
+    setting:'2259–2261+', settingSort:2259, era:'23rd Century',
+    desc:'Capt. Christopher Pike commands the Enterprise on standalone-episode adventures, exploring new civilizations before Kirk\'s era. Acclaimed for its episodic structure and character depth.',
+    leads:'Pike, Spock, Number One (Una), La\'an, Uhura, Chapel, M\'Benga, Hemmer, Pelia',
+    connections:'Prequel to TOS. Spock\'s arc leads toward "The Cage" / TOS. Crossover with LD (S3). SNW "A Quality of Mercy" (S1E10) is an alternate-timeline episode.',
+    prereqs:'DIS S2 introduces Pike/Spock. Can stand alone.',
+    paths:['release','prime-chrono','essential','time-travel'] },
+
+  { id:'vst', abbr:'VST', title:'Very Short Treks', sub:null,
+    type:'shorts', premiere:'2023-09-07', end:'2023-10-05', releaseYear:2023,
+    seasons:'5 shorts', status:'complete', universe:null, canon:'non-canon',
+    setting:'Parody / non-continuity', settingSort:9999, era:'Non-canon',
+    desc:'Five animated parody shorts produced by the Lower Decks team and released on YouTube and Paramount+. Comedic, deliberately absurdist, and officially non-canon.',
+    leads:'Animated versions of various Trek characters',
+    connections:'None — explicitly non-canonical.',
+    prereqs:'Broad franchise familiarity for jokes to land.',
+    paths:['release'] },
+
+  { id:'s31', abbr:'S31', title:'Star Trek: Section 31', sub:null,
+    type:'film', premiere:'2025 (Uncertain)', end:null, releaseYear:2025,
+    seasons:'TV film', status:'uncertain', universe:'prime', canon:'canon',
+    setting:'24th century (Uncertain)', settingSort:2390, era:'24th Century (Uncertain)',
+    desc:'Philippa Georgiou (Michelle Yeoh) anchors this standalone TV film exploring the Federation\'s clandestine intelligence organization after her temporal displacement in Discovery S3.',
+    leads:'Georgiou (Yeoh)',
+    connections:'Follows DIS S3 (Georgiou\'s exit). Section 31 organization seen in DIS, DS9.',
+    prereqs:'DIS S1–3 for Georgiou\'s full arc.',
+    paths:['release','prime-chrono'] },
+
+  { id:'sfa', abbr:'SFA', title:'Star Trek: Starfleet Academy', sub:null,
+    type:'live-tv', premiere:'2025 (Uncertain)', end:'ongoing', releaseYear:2025,
+    seasons:'1 season (S2 announced)', status:'ongoing', universe:'prime', canon:'canon',
+    setting:'~3190 CE', settingSort:3190, era:'32nd Century',
+    desc:'Set in the 32nd century — more than 120 years after The Burn devastated the Federation — a new generation of cadets train at a rebuilt Starfleet Academy. Features Jett Reno (DIS) and the Holographic Doctor (VOY).',
+    leads:'New ensemble cadets; Jett Reno (Tig Notaro), Holographic Doctor (Robert Picardo)',
+    connections:'Set in DIS\'s far-future era. Shares characters and setting with DIS S3–5.',
+    prereqs:'DIS S3–5 strongly recommended.',
+    paths:['release','prime-chrono'] }
+];
+
+const BRANCHES = [
+  { name:'Kelvin Timeline', color:'kelvin', type:'Temporal Divergence',
+    divergence:'2233 — Romulan mining ship Narada (Nero) emerges from a black hole, destroys the U.S.S. Kelvin, killing George Kirk.',
+    period:'2233–2263 (parallel 23rd century)',
+    titles:'Star Trek (2009), Star Trek Into Darkness (2013), Star Trek Beyond (2016)',
+    reconnects:'Spock Prime (from the Prime Timeline) crosses into this timeline and lives here until his death. The two timelines remain parallel; events in one do not alter the other.',
+    body:`<p>The Kelvin Timeline is the most substantial alternate continuity in the franchise, comprising three full theatrical films. Nero's accidental incursion from the Prime Timeline's 24th century creates a divergent 23rd century in which Vulcan is destroyed (ST09), Khan is weaponized by a corrupt Admiral (STID), and the five-year mission begins under different circumstances (STB).</p>
+    <p>The Kelvin films are fully canonical within their own continuity. They are not "reboots" of the Prime Timeline but a separate branch that runs parallel to it. Spock Prime's presence confirms this: he remembers Prime Timeline history, which continues unchanged in its own thread.</p>
+    <p>As of September 2026, no fourth Kelvin film is in active production.</p>` },
+
+  { name:'Mirror Universe', color:'mirror', type:'Parallel Universe (co-existent)',
+    divergence:'Exists independently — not created by time travel. Point of earliest divergence from Prime Timeline is unknown (at least as far back as the 22nd century in ENT).',
+    period:'22nd century onward (episodes span 2155–2257)',
+    titles:'TOS "Mirror, Mirror" (S2E4); DS9 mirror arc (6 episodes, S2–S7); ENT "In a Mirror, Darkly" (S4E18–19); DIS S1 mirror arc (S1E10–E15)',
+    reconnects:'The Mirror Universe does not merge with or erase the Prime Timeline. Characters may cross between them; the universes co-exist permanently.',
+    body:`<p>The Mirror Universe is a parallel reality where the benevolent United Federation of Planets has been replaced by the brutal Terran Empire (or, in the DIS era, the Klingon-Cardassian Alliance that overthrew it). It is characterized by authoritarian hierarchy, assassination as career advancement, and a predatory approach to alien species.</p>
+    <p>TOS establishes it in "Mirror, Mirror" (1967), where a transporter accident sends Kirk's landing party to the mirror version of the Enterprise. DS9 revisits it across six standalone episodes, building a recurring cast including "Intendant" Kira Nerys and "Smiley" O'Brien. Enterprise's "In a Mirror, Darkly" is set entirely in the Mirror Universe and functions as a prequel to TOS's version of it.</p>
+    <p>Discovery Season 1 features a prolonged mirror arc when the U.S.S. Discovery accidentally travels there; Philippa Georgiou is revealed to be the Mirror Universe's deposed Empress, and she crosses permanently into the Prime Timeline — a crossing that drives much of DIS S2–3 and the Section 31 film.</p>` },
+
+  { name:'"Yesterday\'s Enterprise" Timeline', color:'alt', type:'Temporal Divergence (restored)',
+    divergence:'2344 — The U.S.S. Enterprise-C, instead of being destroyed defending the Klingon outpost at Narendra III, travels through a temporal rift to 2366. Its absence means the Klingons never received the gesture of alliance, and the Federation is at war.',
+    period:'2344–2366 (war-timeline version of TNG era)',
+    titles:'TNG "Yesterday\'s Enterprise" (S3E15)',
+    reconnects:'Resolved: Picard sends the Enterprise-C back through the rift; the timeline is restored. Guinan retains a partial memory of the alternate timeline. Tasha Yar (who died in the Prime Timeline) survives into the Enterprise-C\'s past.',
+    body:`<p>One of Star Trek's finest time-travel episodes. The alternate 2366 is grimmer: the Federation-Klingon War has lasted 20 years, the Enterprise-D is a warship, and there is no Counselor Troi. Only Guinan's unique temporal sense detects that something is wrong.</p>
+    <p>The ripple effect of Tasha Yar surviving and accompanying the Enterprise-C back to 2344 produces a half-Romulan daughter, Sela, who appears as an antagonist in TNG Season 5 — meaning the restored timeline still carries the consequence of the altered one.</p>` },
+
+  { name:'"City on the Edge of Forever" Altered History', color:'alt', type:'Temporal Alteration (restored)',
+    divergence:'1930 — Dr. McCoy, accidentally injected with cordrazine, travels through the Guardian of Forever and saves Edith Keeler from a traffic accident. Keeler, now alive, leads a pacifist movement that delays U.S. entry into WWII; Nazi Germany wins; the Federation never forms.',
+    period:'1930 Earth (altered); ripples erase Starfleet by 2267',
+    titles:'TOS "The City on the Edge of Forever" (S1E28)',
+    reconnects:'Resolved: Kirk allows Edith Keeler to die; the timeline is restored. The Guardian of Forever reappears in DIS S2 and PRO S2.',
+    body:`<p>Considered by many the finest TOS episode, "City on the Edge of Forever" poses Star Trek's starkest moral dilemma: Kirk must watch a woman he loves die to preserve history. The altered timeline is never shown on screen — only its absence is demonstrated — which gives the threat a haunting, implied weight.</p>
+    <p>The Guardian of Forever is a sentient time portal on a ruined planet; it reappears in "Imzadi" (TAS S1E2), in DIS Season 2 (as "Carl"), and in PRO Season 2.</p>` },
+
+  { name:'"Year of Hell" Timeline', color:'alt', type:'Temporal Alteration (erased)',
+    divergence:'Approx. 2374 — Annorax\'s Krenim Imperium temporal weapon begins erasing species from history to restore the Krenim empire to its height. Voyager is caught in the altered timestream.',
+    period:'2374 (one year of ship-time)',
+    titles:'VOY "Year of Hell" (S4E8–9)',
+    reconnects:'Resolved: Chakotay and Paris destroy the weapon ship; Annorax\'s wife survives; all alterations are reversed. The Year of Hell timeline is completely erased.',
+    body:`<p>The "Year of Hell" is one of Voyager's most ambitious storytelling experiments: a two-part episode depicting a full year of degradation and loss for the crew, knowing it will almost certainly be reset. The twist — that Annorax is not a villain pursuing power but a man trying to resurrect his dead wife by restoring their civilization — gives the episode genuine pathos.</p>
+    <p>The erased-timeline structure means none of the damage (destroyed consoles, dead crew, Tuvok's blindness) persists into subsequent episodes. This was creatively controversial at the time.</p>` },
+
+  { name:'"All Good Things…" Future', color:'alt', type:'Possible Future (averted)',
+    divergence:'Q manipulates Picard across three time periods (2364, 2370, ~2395) to demonstrate a temporal anomaly in the Devron System that threatens to prevent life from evolving on Earth. The future shown is not fixed.',
+    period:'~2395 (possible TNG future)',
+    titles:'TNG "All Good Things…" (S7E25–26)',
+    reconnects:'Averted: Picard acts in all three time periods simultaneously; the anomaly collapses; Q closes humanity\'s trial. The future shown (~2395) is one possible version, not the established Prime Timeline future.',
+    body:`<p>The TNG series finale is structured as a mystery about causality: the anomaly grows backward in time, meaning Picard in 2370 must prevent something that doesn't exist yet. The glimpsed future shows a retired Picard with Irumodic Syndrome, a disbanded Enterprise crew, a Klingon conflict, and Data as a Cambridge professor.</p>
+    <p>Because this future is explicitly shown as averted (Q says "you've been given a gift"), it is not the canonical future of the TNG characters — that role falls to Picard (2020–2023), which contradicts this future in several ways.</p>` },
+
+  { name:'"Endgame" Future / Admiral Janeway\'s Timeline', color:'alt', type:'Temporal Alteration (integrated)',
+    divergence:'~2404 — Admiral Kathryn Janeway, having grown old watching the consequences of Voyager\'s long journey, travels back to 2378 to bring the ship home sooner and prevent the deaths and damage that accumulated.',
+    period:'~2404 (the unaltered future, never fully shown)',
+    titles:'VOY "Endgame" (S7E25–26)',
+    reconnects:'The alteration is the resolution: Voyager returns to Earth in 2378 via a Borg transwarp hub. The original ~2404 Admiral Janeway is erased. The post-2378 Prime Timeline reflects the altered outcome.',
+    body:`<p>Unlike most "averted future" episodes, "Endgame" integrates its alteration into the permanent timeline. The Prime Timeline's post-2378 history — including Voyager's return, Seven of Nine leaving the ship, and Janeway's subsequent career — is the <em>result</em> of the temporal intervention. The "original" 2404 timeline (with Kim as an older captain, Seven dead, Tuvok ill) was never going to persist.</p>
+    <p>This makes "Endgame" a rare case where time travel produces a stable, lasting change to the Prime Timeline — rather than being reversed or contained.</p>
+    <p>Lower Decks and Picard both show the post-Endgame Federation, confirming Voyager's return as established fact.</p>` },
+
+  { name:'Discovery: "Control" Averted Future', color:'alt', type:'Possible Future (averted)',
+    divergence:'DIS Season 2 — The Section 31 AI "Control" is evolving toward total consciousness and will destroy all sentient life in the galaxy. A signal trail leads Burnham to conclude that Discovery — with the complete Sphere data aboard — must travel to the far future to prevent Control from accessing it.',
+    period:'A hypothetical far future (never shown) in which Control succeeds',
+    titles:'DIS S2 (2019)',
+    reconnects:'Averted: Discovery jumps to the 32nd century (3188 CE). Control never gets the data; the galactic extinction never occurs. The crew\'s survival in the 32nd century becomes Seasons 3–5.',
+    body:`<p>The central crisis of Discovery Season 2 is both a plot engine and a structural justification for the show's radical jump forward in time. The "Control" threat is averted not by defeating the AI in the 23rd century but by removing the prize from the timeline entirely.</p>
+    <p>Critically, this also explains in-universe why Discovery and its crew are never mentioned in TOS or subsequent 23rd/24th century productions: Starfleet classified all information about the ship and its crew, imposing penalties for discussing them. This is an explicit narrative device to address a continuity concern.</p>` },
+
+  { name:'Picard Season 2: Confederation of Earth', color:'alt', type:'Temporal Alteration (restored)',
+    divergence:'~2401 — Q alters the timeline at a moment in 2024 Los Angeles, creating a version of 2401 in which a xenophobic "Confederation of Earth" has replaced the Federation, treating alien species as conquered subjects.',
+    period:'2024 / alternate 2401',
+    titles:'PIC S2 (2022)',
+    reconnects:'Restored: Picard and crew travel to 2024 and correct the divergence (involving Renée Picard and a Europa mission). The Confederation timeline is erased.',
+    body:`<p>Picard Season 2's alternate-present is darker and more overtly political than most Trek alternate timelines: the Confederation is explicitly a fascist human-supremacist state, with a trophy room of defeated alien skulls. Q's motivation for creating it is eventually revealed as an act of misguided compassion — he is dying and wanted to teach Picard a final lesson about accepting change.</p>
+    <p>The 2024 sections serve as both a timeline-correction plot and a commentary on contemporary Earth — a device Trek has used since TOS "The City on the Edge of Forever."</p>` },
+
+  { name:'SNW: "A Quality of Mercy" Alternate Future', color:'alt', type:'Possible Future (averted by choice)',
+    divergence:'SNW S1E10 — An older Pike (from 2266) contacts younger Pike (2259) to show him what happens if he avoids accepting the radiation accident that will disable him: he commands Enterprise during "Balance of Terror," makes different decisions, and the Federation enters a devastating war with the Romulans.',
+    period:'2259 / alternate 2266',
+    titles:'SNW "A Quality of Mercy" (S1E10)',
+    reconnects:'Resolved by choice: Pike accepts his future. The alternate 2266 is not created; the episode functions as a vision, not a true branch.',
+    body:`<p>The episode is structurally a loose adaptation of TOS "Balance of Terror" (S1E14) told from an alternate vantage point, allowing SNW to directly reference and reimagine TOS while keeping Pike's story coherent. The message is explicit: some fixed points must be accepted even at personal cost, or worse outcomes follow.</p>
+    <p>Because the alternate 2266 exists only as a vision shown to Pike, it is not a separate timeline that persists — it's a demonstration of consequence, similar to "All Good Things…" in structure.</p>` },
+];
+
+const PATHS = [
+  { id:'release', label:'Release Order (Full)', warning:null,
+    items:[
+      { title:'Star Trek (TOS)', note:'3 seasons, 1966–1969' },
+      { title:'Star Trek: The Animated Series (TAS)', note:'2 seasons, 1973–74 — disputed canon; safe to watch or skip' },
+      { title:'Star Trek: The Motion Picture', note:'1979 — slow-burn, but canonically significant' },
+      { title:'Star Trek II: The Wrath of Khan', note:'1982 — essential' },
+      { title:'Star Trek III: The Search for Spock', note:'1984' },
+      { title:'Star Trek IV: The Voyage Home', note:'1986' },
+      { title:'Star Trek: The Next Generation (TNG)', note:'7 seasons, 1987–1994 — watch at least through S3 before the TNG films' },
+      { title:'Star Trek V: The Final Frontier', note:'1989 — weakest entry; can be skipped without loss' },
+      { title:'Star Trek VI: The Undiscovered Country', note:'1991 — essential TOS closer' },
+      { title:'Star Trek: Deep Space Nine S1–2', note:'1993–1994 — begins during TNG S6–7' },
+      { title:'Star Trek: Generations', note:'1994 — TNG film #1' },
+      { title:'Star Trek: Voyager S1', note:'1995' },
+      { title:'Star Trek: First Contact', note:'1996 — TNG film #2; best TNG film' },
+      { title:'Star Trek: Deep Space Nine S3–7 / Voyager S2–7', note:'1995–2001 — these overlap; interleave if desired' },
+      { title:'Star Trek: Insurrection', note:'1998 — TNG film #3' },
+      { title:'Star Trek: Enterprise', note:'4 seasons, 2001–2005' },
+      { title:'Star Trek: Nemesis', note:'2002 — TNG film #4' },
+      { title:'Star Trek (2009)', note:'Kelvin Timeline begins' },
+      { title:'Star Trek Into Darkness', note:'2013 — Kelvin' },
+      { title:'Star Trek Beyond', note:'2016 — Kelvin' },
+      { title:'Star Trek: Discovery', note:'5 seasons, 2017–2024' },
+      { title:'Short Treks', note:'2018–2020 — watch alongside DIS/SNW' },
+      { title:'Star Trek: Picard', note:'3 seasons, 2020–2023' },
+      { title:'Star Trek: Lower Decks', note:'5 seasons, 2020–2024' },
+      { title:'Star Trek: Prodigy', note:'2 seasons, 2021–2024 (Netflix)' },
+      { title:'Star Trek: Strange New Worlds', note:'3+ seasons, 2022–ongoing' },
+      { title:'Very Short Treks', note:'2023 — non-canon parody; optional' },
+      { title:'Star Trek: Section 31', note:'2025 — TV film (date uncertain)' },
+      { title:'Star Trek: Starfleet Academy', note:'2025–ongoing' },
+    ]},
+  { id:'prime-chrono', label:'Prime Chronological',
+    warning:'Chronological order requires watching productions made decades apart in rapid succession, often causing tonal whiplash. Discovery S1–2 feels jarring before TOS; Enterprise feels isolated at the start. Release order is recommended for first-timers.',
+    items:[
+      { title:'Short Treks: "The Girl Who Made the Stars"', note:'Framing ~2230s — optional' },
+      { title:'Short Treks: "The Brightest Star"', note:'~2239 — Saru\'s backstory' },
+      { title:'Star Trek: Enterprise', note:'2151–2155 — Federation\'s founding era' },
+      { title:'Short Treks: "Q&A"', note:'2254 — Spock\'s first day on Enterprise' },
+      { title:'Short Treks: "The Trouble with Edward"', note:'~2250s' },
+      { title:'Star Trek: Discovery S1–2', note:'2256–2258 — before TOS' },
+      { title:'Short Treks: "Runaway," "The Escape Artist," "Ask Not"', note:'2257' },
+      { title:'Star Trek: Strange New Worlds', note:'2259–2261 — Pike\'s Enterprise' },
+      { title:'Star Trek (TOS)', note:'2266–2269 — the original five-year mission' },
+      { title:'Star Trek: The Animated Series', note:'2269–2270 — disputed; optional' },
+      { title:'Short Treks: "Ephraim and Dot"', note:'TOS film era' },
+      { title:'Star Trek: The Motion Picture', note:'2273' },
+      { title:'Star Trek II–VI', note:'2285–2293' },
+      { title:'Star Trek: Generations', note:'2293 prologue / 2371 main' },
+      { title:'Star Trek: The Next Generation', note:'2364–2370' },
+      { title:'Star Trek: Deep Space Nine', note:'2369–2375' },
+      { title:'Star Trek: Voyager', note:'2371–2378' },
+      { title:'Star Trek: First Contact', note:'2373 (+ 2063)' },
+      { title:'Star Trek: Insurrection', note:'2375' },
+      { title:'Star Trek: Nemesis', note:'2379' },
+      { title:'Star Trek: Lower Decks', note:'2380–2381' },
+      { title:'Star Trek: Prodigy', note:'2383–2386 (Netflix)' },
+      { title:'Short Treks: "Children of Mars"', note:'2385 — leads directly into Picard' },
+      { title:'Star Trek: Section 31', note:'~24th century (uncertain)' },
+      { title:'Star Trek: Picard', note:'2399–2402' },
+      { title:'Star Trek: Discovery S3–5', note:'3188–3191' },
+      { title:'Star Trek: Starfleet Academy', note:'~3190' },
+      { title:'Short Treks: "Calypso"', note:'~42nd century (uncertain)' },
+    ]},
+  { id:'essential', label:'Essential Trek (~20 entries)',
+    warning:null,
+    items:[
+      { title:'Star Trek (TOS)', note:'Start here — 3 seasons or key episodes: "The City on the Edge of Forever," "Balance of Terror," "Space Seed," "Mirror, Mirror," "The Trouble with Tribbles"' },
+      { title:'Star Trek II: The Wrath of Khan', note:'The emotional anchor of the franchise' },
+      { title:'Star Trek IV: The Voyage Home', note:'The most accessible TOS film' },
+      { title:'Star Trek VI: The Undiscovered Country', note:'Best closer to the TOS era' },
+      { title:'Star Trek: The Next Generation', note:'7 seasons — at minimum: S3–4 for Borg ("Best of Both Worlds"), S3E15 "Yesterday\'s Enterprise," S7 finale "All Good Things…"' },
+      { title:'Star Trek: Deep Space Nine', note:'At minimum: S1E1 "Emissary," S3–4 Dominion War setup, S5–7 for the war arc' },
+      { title:'Star Trek: First Contact', note:'The franchise\'s best action film; essential Borg story' },
+      { title:'Star Trek: Voyager', note:'At minimum: S1E1 "Caretaker," S3–4 for Seven\'s introduction, "Endgame"' },
+      { title:'Star Trek: Enterprise', note:'At minimum: S4 for the pre-Federation arc' },
+      { title:'Star Trek: Discovery', note:'All 5 seasons — sets up the 32nd century era' },
+      { title:'Star Trek: Strange New Worlds', note:'All 3+ seasons — best recent Trek' },
+      { title:'Star Trek: Picard S3', note:'Full TNG reunion; deeply satisfying closer' },
+    ]},
+  { id:'kelvin', label:'Kelvin Timeline Only',
+    warning:null,
+    items:[
+      { title:'Star Trek (2009)', note:'Start here — watch TOS\'s "Space Seed" and TWOK first for Khan context useful in STID' },
+      { title:'Star Trek Into Darkness', note:'2013' },
+      { title:'Star Trek Beyond', note:'2016 — best of the three for character ensemble' },
+    ]},
+  { id:'mirror', label:'Mirror Universe Path',
+    warning:'The Mirror Universe appears across multiple eras and series. Watch in this order for thematic coherence.',
+    items:[
+      { title:'ENT "In a Mirror, Darkly" (S4E18–19)', note:'2155 — the Mirror Universe\'s own story; set entirely in the MU. Best starting point.' },
+      { title:'TOS "Mirror, Mirror" (S2E4)', note:'2267 — Kirk\'s famous landing-party swap; the franchise\'s first Mirror episode' },
+      { title:'DS9 "Crossover" (S2E23)', note:'2370 — Kira and Bashir cross over; sequel to "Mirror, Mirror"' },
+      { title:'DS9 "Through the Looking Glass" (S3E19)', note:'2371' },
+      { title:'DS9 "Shattered Mirror" (S4E20)', note:'2372' },
+      { title:'DS9 "Resurrection" (S6E8)', note:'2373' },
+      { title:'DS9 "The Emperor\'s New Cloak" (S7E12)', note:'2375' },
+      { title:'DIS S1 mirror arc (S1E10–E15)', note:'2257 — Georgiou as Mirror Empress; significant DIS plot' },
+    ]},
+  { id:'time-travel', label:'Time Travel & Alternate Timeline Path',
+    warning:'This path foregrounds Trek\'s most complex temporal storytelling. Best enjoyed with at least one prior full watch of the franchise.',
+    items:[
+      { title:'TOS "The City on the Edge of Forever" (S1E28)', note:'The Guardian of Forever; the franchise\'s most famous temporal paradox' },
+      { title:'TNG "Yesterday\'s Enterprise" (S3E15)', note:'The Enterprise-C timeline' },
+      { title:'TNG "All Good Things…" (S7E25–26)', note:'Three time periods; Q\'s final trial' },
+      { title:'DS9 "Trials and Tribble-ations" (S5E6)', note:'The crew travels to TOS era — comedy and reverence combined' },
+      { title:'VOY "Year of Hell" (S4E8–9)', note:'Krenim temporal weapon; erased timeline' },
+      { title:'VOY "Timeless" (S5E6)', note:'Alternate future; Harry Kim sends back a message' },
+      { title:'Star Trek: First Contact', note:'Borg time travel to 2063; Zefram Cochrane' },
+      { title:'VOY "Endgame"', note:'Admiral Janeway alters the timeline' },
+      { title:'ENT "Temporal Cold War" arc (S1–4)', note:'Scattered through Enterprise — the Temporal Cold War background' },
+      { title:'Star Trek (2009)', note:'Kelvin Timeline origin; Spock Prime crossing timelines' },
+      { title:'DIS S2', note:'"Control" future averted; Discovery\'s jump to 3188' },
+      { title:'SNW "A Quality of Mercy" (S1E10)', note:'Pike\'s alternate future vision' },
+      { title:'PIC S2', note:'2024 Los Angeles; Q\'s Confederation alteration' },
+    ]},
+];
+
+// ─── RENDER FUNCTIONS ──────────────────────────────────────────────────────
+
+function universeBadge(u) {
+  if (!u) return '<span class="badge badge-noncanon">—</span>';
+  const map = { prime:'badge-prime Prime', kelvin:'badge-kelvin Kelvin',
+    mirror:'badge-mirror Mirror', alt:'badge-alt Alternate', noncanon:'badge-noncanon Non-canon' };
+  const cls = map[u] || 'badge-noncanon —';
+  const [c, l] = cls.split(' ');
+  return `<span class="badge ${c}">${l}</span>`;
+}
+
+function canonBadge(c) {
+  const map = { canon:'badge-canon ● Canon', disputed:'badge-disputed ● Disputed', 'non-canon':'badge-nc ● Non-canon' };
+  const cls = map[c] || 'badge-nc ● Non-canon';
+  const [cl, ...rest] = cls.split(' ');
+  return `<span class="badge ${cl}">${rest.join(' ')}</span>`;
+}
+
+function mediaLabel(t) {
+  const map = { 'live-tv':'Live-action TV','film':'Film','animated-tv':'Animated TV','shorts':'Short-form' };
+  return map[t] || t;
+}
+
+function statusChip(s) {
+  const map = { complete:['status-complete','Complete'], ongoing:['status-ongoing','Ongoing'],
+    released:['status-released','Released'], uncertain:['status-uncertain','Uncertain'] };
+  const [cls, label] = map[s] || ['status-released', s];
+  return `<span class="status-chip ${cls}">${label}</span>`;
+}
+
+function mediaDot(t) {
+  const map = { 'live-tv':'dot-tv','film':'dot-film','animated-tv':'dot-anim','shorts':'dot-short' };
+  return `<span class="dot ${map[t]||'dot-tv'}"></span>`;
+}
+
+// Release table
+function buildReleaseTable() {
+  const tbody = document.getElementById('release-tbody');
+  tbody.innerHTML = TITLES.map((t, i) => `
+    <tr data-universe="${t.universe||''}" data-type="${t.type}" data-canon="${t.canon}" data-id="${t.id}">
+      <td class="td-date">${i+1}</td>
+      <td>
+        <div class="td-title">${t.title}</div>
+        ${t.sub ? `<div class="td-abbr">${t.sub}</div>` : ''}
+        <div class="td-abbr">${t.abbr}</div>
+      </td>
+      <td>${mediaDot(t.type)} ${mediaLabel(t.type)}</td>
+      <td class="td-date">${t.premiere}</td>
+      <td class="td-date">${t.end || '—'}</td>
+      <td class="td-seasons">${t.seasons}</td>
+      <td>${statusChip(t.status)}</td>
+      <td>${universeBadge(t.universe)}</td>
+      <td>${canonBadge(t.canon)}</td>
+      <td class="td-desc">${t.desc}</td>
+    </tr>`).join('');
+}
+
+// Chronological table
+function buildChronoTable() {
+  const sorted = [...TITLES].sort((a, b) => a.settingSort - b.settingSort);
+  const eras = {};
+  sorted.forEach(t => { if (!eras[t.era]) eras[t.era] = []; eras[t.era].push(t); });
+  const eraOrder = [...new Set(sorted.map(t => t.era))];
+
+  const tbody = document.getElementById('chrono-tbody');
+  tbody.innerHTML = eraOrder.map(era => {
+    const eraRow = `<tr class="era-row"><td colspan="7">${era}</td></tr>`;
+    const rows = eras[era].map(t => `
+      <tr data-universe="${t.universe||''}" data-type="${t.type}" data-id="${t.id}">
+        <td class="td-setting">${t.setting}${t.settingSort>=9000?' <span class="uncertain-tag">Parody</span>':''}</td>
+        <td>
+          <div class="td-title">${t.title}</div>
+          <div class="td-abbr">${t.abbr}</div>
+        </td>
+        <td class="td-abbr">${t.era}</td>
+        <td>${mediaDot(t.type)} ${mediaLabel(t.type)}</td>
+        <td>${universeBadge(t.universe)}</td>
+        <td>${canonBadge(t.canon)}</td>
+        <td class="td-desc">${t.connections}</td>
+      </tr>`).join('');
+    return eraRow + rows;
+  }).join('');
+}
+
+// Branches
+function buildBranches() {
+  const colorMap = { kelvin:'var(--kelvin)', mirror:'var(--mirror)',
+    alt:'var(--alt)', prime:'var(--prime)', noncanon:'var(--noncanon)' };
+
+  document.getElementById('branches-container').innerHTML = BRANCHES.map(b => `
+    <details class="branch">
+      <summary class="branch-header">
+        <span class="branch-icon" style="background:${colorMap[b.color]||'var(--alt)'}"></span>
+        <span class="branch-name">${b.name}</span>
+        <span class="branch-tag">${b.type}</span>
+        <span class="branch-chevron">▶</span>
+      </summary>
+      <div class="branch-body">
+        <dl class="kv">
+          <dt>Divergence</dt><dd>${b.divergence}</dd>
+          <dt>Period</dt><dd>${b.period}</dd>
+          <dt>Affected titles</dt><dd>${b.titles}</dd>
+          <dt>Reconnects?</dt><dd>${b.reconnects}</dd>
+        </dl>
+        ${b.body}
+      </div>
+    </details>`).join('');
+}
+
+// Reference cards
+function buildCards() {
+  const colorMap = { prime:'prime', kelvin:'kelvin', mirror:'mirror', alt:'alt', noncanon:'noncanon' };
+
+  document.getElementById('cards-container').innerHTML = TITLES.map(t => `
+    <div class="ref-card">
+      <div class="ref-card-accent ${colorMap[t.universe]||'noncanon'}"></div>
+      <div class="ref-card-body">
+        <div class="ref-card-top">
+          <div class="ref-card-abbr">${t.abbr}</div>
+          <div>${canonBadge(t.canon)}</div>
+        </div>
+        <div class="ref-card-title">${t.title}</div>
+        ${t.sub ? `<div class="ref-card-abbr" style="margin-bottom:4px">${t.sub}</div>` : ''}
+        <div class="ref-card-meta">
+          <span>${mediaLabel(t.type)}</span>
+          <span>${t.premiere.slice(0,4)}${t.end?' – '+t.end.slice(0,4):''}</span>
+          <span>${t.seasons}</span>
+        </div>
+        <div class="ref-card-desc">${t.desc}</div>
+        <div class="ref-card-kv">
+          <strong>Setting</strong>${t.setting}
+          <strong>Leads</strong>${t.leads}
+          <strong>Prerequisites</strong>${t.prereqs}
+          <strong>Connections</strong>${t.connections}
+        </div>
+        <div class="ref-card-badges">${universeBadge(t.universe)} ${statusChip(t.status)}</div>
+      </div>
+    </div>`).join('');
+}
+
+// Viewing paths
+function buildPaths() {
+  const tabs = document.getElementById('path-tabs');
+  const contents = document.getElementById('path-contents');
+
+  tabs.innerHTML = PATHS.map((p, i) =>
+    `<button class="path-tab${i===0?' active':''}" onclick="selectPath('${p.id}')">${p.label}</button>`
+  ).join('');
+
+  contents.innerHTML = PATHS.map((p, i) => `
+    <div class="path-content${i===0?' visible':''}" id="path-${p.id}">
+      ${p.warning ? `<div class="path-warning">⚠ ${p.warning}</div>` : ''}
+      <ol class="path-list">
+        ${p.items.map(item => `
+          <li>
+            <div>
+              <strong>${item.title}</strong>
+              ${item.note ? `<div class="path-note">${item.note}</div>` : ''}
+            </div>
+          </li>`).join('')}
+      </ol>
+    </div>`).join('');
+}
+
+// ─── INTERACTIVITY ─────────────────────────────────────────────────────────
+
+function selectPath(id) {
+  document.querySelectorAll('.path-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.path-content').forEach(c => c.classList.remove('visible'));
+  document.querySelector(`[onclick="selectPath('${id}')"]`).classList.add('active');
+  document.getElementById('path-'+id).classList.add('visible');
+}
+
+let sortState = { release: { col:-1, dir:1 }, chrono: { col:-1, dir:1 } };
+
+function sortTable(tableId, col) {
+  const state = sortState[tableId];
+  if (state.col === col) state.dir *= -1;
+  else { state.col = col; state.dir = 1; }
+
+  const tbody = document.getElementById(tableId === 'release' ? 'release-tbody' : 'chrono-tbody');
+  const table = tbody.closest('table');
+
+  // Update header classes
+  table.querySelectorAll('th').forEach((th, i) => {
+    th.classList.remove('sort-asc','sort-desc');
+    if (i === col) th.classList.add(state.dir === 1 ? 'sort-asc' : 'sort-desc');
+  });
+
+  // Remove era rows for chrono sort
+  const eraRows = [...tbody.querySelectorAll('.era-row')];
+  eraRows.forEach(r => r.remove());
+
+  const rows = [...tbody.querySelectorAll('tr:not(.era-row)')];
+  rows.sort((a, b) => {
+    const aVal = a.cells[col]?.textContent.trim() || '';
+    const bVal = b.cells[col]?.textContent.trim() || '';
+    const aNum = parseFloat(aVal); const bNum = parseFloat(bVal);
+    if (!isNaN(aNum) && !isNaN(bNum)) return (aNum - bNum) * state.dir;
+    return aVal.localeCompare(bVal) * state.dir;
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+function searchTable(tableId, query) {
+  const q = query.toLowerCase().trim();
+  const tbody = document.getElementById(tableId === 'release' ? 'release-tbody' : 'chrono-tbody');
+  tbody.querySelectorAll('tr:not(.era-row)').forEach(row => {
+    row.dataset.searchHide = (q && !row.textContent.toLowerCase().includes(q)) ? 'true' : '';
+  });
+  applyFilters(tableId);
+}
+
+function updateCount(tableId) {
+  const tbody = document.getElementById(tableId === 'release' ? 'release-tbody' : 'chrono-tbody');
+  const all = tbody.querySelectorAll('tr:not(.era-row)').length;
+  const visible = tbody.querySelectorAll('tr:not(.era-row):not(.hidden-row)').length;
+  const el = document.getElementById(tableId + '-count');
+  if (el) el.textContent = visible === all ? `${all} entries` : `${visible} of ${all}`;
+}
+
+function applyFilters(tableId) {
+  const uSel = document.getElementById(tableId === 'release' ? 'f-universe' : 'cf-universe');
+  const tSel = document.getElementById(tableId === 'release' ? 'f-type' : 'cf-type');
+  const cSel = document.getElementById('f-canon');
+  const uVal = uSel?.value || ''; const tVal = tSel?.value || '';
+  const cVal = cSel?.value || '';
+
+  const tbody = document.getElementById(tableId === 'release' ? 'release-tbody' : 'chrono-tbody');
+  tbody.querySelectorAll('tr:not(.era-row)').forEach(row => {
+    const u = row.dataset.universe || ''; const t = row.dataset.type || '';
+    const c = row.dataset.canon || '';
+    const hide = row.dataset.searchHide === 'true'
+      || (uVal && u !== uVal) || (tVal && t !== tVal) || (cVal && c !== cVal);
+    row.classList.toggle('hidden-row', hide);
+  });
+
+  tbody.querySelectorAll('.era-row').forEach(er => {
+    let next = er.nextElementSibling;
+    let hasVisible = false;
+    while (next && !next.classList.contains('era-row')) {
+      if (!next.classList.contains('hidden-row')) { hasVisible = true; break; }
+      next = next.nextElementSibling;
+    }
+    er.classList.toggle('hidden-row', !hasVisible);
+  });
+  updateCount(tableId);
+}
+
+function clearFilters(tableId) {
+  const ids = tableId === 'release'
+    ? ['f-universe','f-type','f-canon']
+    : ['cf-universe','cf-type'];
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const searchEl = document.getElementById('search-' + tableId);
+  if (searchEl) searchEl.value = '';
+  const tbody = document.getElementById(tableId === 'release' ? 'release-tbody' : 'chrono-tbody');
+  tbody.querySelectorAll('tr').forEach(r => { r.classList.remove('hidden-row'); r.dataset.searchHide = ''; });
+  updateCount(tableId);
+}
+
+// TOC active link on scroll
+function initTOC() {
+  const sections = document.querySelectorAll('section[id], div[id="legend"]');
+  const links = document.querySelectorAll('.sidebar-link');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+      }
+    });
+  }, { rootMargin:'-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+}
+
+// Theme toggle
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  buildReleaseTable();
+  buildChronoTable();
+  buildBranches();
+  buildCards();
+  buildPaths();
+  initTOC();
+  updateCount('release');
+  updateCount('chrono');
+});
+</script>

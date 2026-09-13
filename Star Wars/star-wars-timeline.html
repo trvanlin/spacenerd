@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Wars Canon Timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg:      #08080e;
+  --bg2:     #0e0e1a;
+  --bg3:     #14142080;
+  --bg4:     #1a1a28;
+  --text:    #dde0f0;
+  --text2:   #8890aa;
+  --text3:   #555e78;
+  --border:  #23233a;
+  --accent:  #c9a84c;
+  --sidebar: 240px;
+
+  --era-high:       #c9a84c;
+  --era-fall:       #a67fd4;
+  --era-empire:     #d45f5f;
+  --era-rebellion:  #e08c44;
+  --era-republic:   #4d9ed4;
+  --era-firstorder: #8899aa;
+  --era-visions:    #4dbf8a;
+  --era-legends:    #6677aa;
+
+  --fd: 'Antonio', sans-serif;
+  --fb: 'Source Sans 3', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+}
+:root[data-theme="light"] {
+  --bg:     #f0f0f8;
+  --bg2:    #e4e4f0;
+  --bg3:    rgba(0,0,0,0.05);
+  --bg4:    #d8d8e8;
+  --text:   #14141e;
+  --text2:  #44445a;
+  --text3:  #888898;
+  --border: #c8c8da;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* ── Sidebar ─────────────────────────────────── */
+nav {
+  width: var(--sidebar);
+  min-width: var(--sidebar);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1.25rem 0 2rem;
+  flex-shrink: 0;
+}
+.sidebar-header {
+  padding: 1.1rem 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+.sidebar-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.sw-pips {
+  flex-shrink: 0;
+  margin-top: 3px;
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+}
+.pip-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sw-pips span {
+  display: block;
+  width: 6px;
+  height: 16px;
+  border-radius: 2px;
+}
+.sidebar-title {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+}
+.sidebar-sub {
+  font-family: var(--fm);
+  font-size: 0.6rem;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+nav ul { list-style: none; margin: 0; padding: 0; }
+nav li a {
+  display: block;
+  padding: 0.4rem 1rem;
+  font-size: 0.78rem;
+  color: var(--text2);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+nav li a:hover { color: var(--text); border-left-color: var(--accent); }
+nav li.section-head a { font-weight: 600; font-size: 0.72rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.5rem; cursor: default; }
+nav li.section-head a:hover { color: var(--text3); border-left-color: transparent; }
+nav .nav-group { margin-bottom: 0.25rem; }
+
+/* ── Main ─────────────────────────────────────── */
+main {
+  flex: 1;
+  padding: 2.5rem 2rem 4rem;
+  max-width: 1400px;
+  min-width: 0;
+}
+h1 { font-family: var(--fd); font-size: 2.2rem; font-weight: 700; margin: 0 0 0.25rem; color: var(--text); letter-spacing: 0.02em; }
+h2 { font-family: var(--fd); font-size: 1.45rem; font-weight: 700; margin: 2.5rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); color: var(--text); letter-spacing: 0.02em; }
+h3 { font-family: var(--fd); font-size: 1.1rem; font-weight: 500; margin: 1.5rem 0 0.5rem; color: var(--accent); letter-spacing: 0.03em; }
+h4 { font-family: var(--fb); font-size: 0.9rem; font-weight: 600; margin: 1rem 0 0.3rem; color: var(--text); }
+p { margin: 0 0 0.8rem; font-size: 0.88rem; color: var(--text2); }
+section { margin-bottom: 3.5rem; }
+.section-number { font-family: var(--fm); color: var(--text3); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.25rem; }
+
+/* ── Tables ───────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--border); border-radius: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+thead th {
+  background: var(--bg4);
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  font-family: var(--fm);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text2);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+thead th:hover { color: var(--text); }
+thead th.sorted-asc::after  { content: " ↑"; color: var(--accent); }
+thead th.sorted-desc::after { content: " ↓"; color: var(--accent); }
+tbody td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: var(--bg3); }
+.col-num  { width: 36px; color: var(--text3); font-family: var(--fm); font-variant-numeric: tabular-nums; }
+.col-year { white-space: nowrap; }
+.col-date { white-space: nowrap; font-family: var(--fm); font-size: 0.77rem; }
+.col-summary { min-width: 200px; }
+td.title-cell { font-weight: 600; }
+td.title-cell .title-sub { font-weight: 400; color: var(--text2); font-size: 0.75rem; display: block; }
+
+/* Search / filter */
+.table-controls { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; flex-wrap: wrap; align-items: center; }
+.table-controls input {
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+  width: 220px;
+}
+.table-controls input::placeholder { color: var(--text3); }
+.table-controls select {
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.82rem;
+}
+.filter-count { font-family: var(--fm); font-size: 0.72rem; color: var(--text3); }
+
+/* ── Era Badges ──────────────────────────────── */
+.era { display: inline-block; padding: 0.12rem 0.45rem; border-radius: 3px; font-family: var(--fm); font-size: 0.67rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+.era-high       { background: rgba(201,168,76,.18); color: var(--era-high); }
+.era-fall       { background: rgba(166,127,212,.18); color: var(--era-fall); }
+.era-empire     { background: rgba(212,95,95,.18);  color: var(--era-empire); }
+.era-rebellion  { background: rgba(224,140,68,.18); color: var(--era-rebellion); }
+.era-republic   { background: rgba(77,158,212,.18); color: var(--era-republic); }
+.era-firstorder { background: rgba(136,153,170,.18); color: var(--era-firstorder); }
+.era-multi      { background: rgba(100,100,140,.18); color: #9090c0; }
+.era-visions    { background: rgba(77,191,138,.18); color: var(--era-visions); }
+.era-legends    { background: rgba(102,119,170,.18); color: var(--era-legends); }
+
+/* ── Status Badges ───────────────────────────── */
+.status { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-family: var(--fm); font-size: 0.67rem; font-weight: 500; white-space: nowrap; }
+.st-complete   { background: rgba(77,191,138,.18); color: #4dbf8a; }
+.st-ongoing    { background: rgba(77,158,212,.18); color: #4d9ed4; }
+.st-upcoming   { background: rgba(241,196,15,.18); color: #f1c40f; }
+.st-cancelled  { background: rgba(212,95,95,.18);  color: #d45f5f; }
+.st-production { background: rgba(166,127,212,.18); color: #a67fd4; }
+.st-legends    { background: rgba(102,119,170,.18); color: var(--era-legends); }
+.st-noncanon   { background: rgba(77,191,138,.18); color: var(--era-visions); }
+
+/* ── Media Type Badges ───────────────────────── */
+.media { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-family: var(--fm); font-size: 0.67rem; font-weight: 500; background: var(--bg4); color: var(--text2); white-space: nowrap; }
+
+/* ── Legend / Key ────────────────────────────── */
+.legend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 1rem 0; }
+.legend-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 0.9rem 1rem; }
+.legend-box h4 { margin: 0 0 0.6rem; font-family: var(--fm); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); font-weight: 500; }
+.legend-box .badge-list { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.78rem; }
+.legend-box .badge-row { display: flex; align-items: center; gap: 0.5rem; color: var(--text2); }
+
+/* ── Callout / Note boxes ────────────────────── */
+.callout { background: var(--bg4); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; padding: 0.75rem 1rem; margin: 1rem 0; font-size: 0.84rem; color: var(--text2); }
+.callout.note { border-left-color: var(--era-republic); }
+.callout.warn { border-left-color: var(--era-empire); }
+.callout.legend-note { border-left-color: var(--era-legends); }
+.callout strong { color: var(--text); }
+
+/* ── Era Summary Cards ───────────────────────── */
+.era-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+.era-card-header { padding: 0.9rem 1.2rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+.era-card-header:hover { background: var(--bg3); }
+.era-card-body { padding: 1rem 1.2rem 1.2rem; border-top: 1px solid var(--border); }
+.era-card-body dl { display: grid; grid-template-columns: 130px 1fr; gap: 0.4rem 0.75rem; font-size: 0.83rem; margin: 0.5rem 0; }
+.era-card-body dt { color: var(--text3); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 0.1rem; }
+.era-card-body dd { color: var(--text2); margin: 0; }
+
+/* ── Reference Cards ─────────────────────────── */
+.ref-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+.ref-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.ref-card-head { padding: 0.75rem 1rem; background: var(--bg4); display: flex; flex-direction: column; gap: 0.3rem; }
+.ref-card-head .rc-title { font-weight: 700; font-size: 0.92rem; }
+.ref-card-head .rc-meta { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.ref-card-body { padding: 0.75rem 1rem; font-size: 0.8rem; }
+.ref-card-body dl { margin: 0; }
+.ref-card-body dt { color: var(--text3); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.5rem; }
+.ref-card-body dd { color: var(--text2); margin: 0.1rem 0 0; }
+.ref-card-body dd.spoiler { color: var(--era-empire); font-style: italic; }
+
+/* ── Viewing Paths ───────────────────────────── */
+.path-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 1rem; }
+.path-card summary { padding: 0.75rem 1rem; cursor: pointer; font-weight: 600; font-size: 0.88rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.path-card summary::-webkit-details-marker { display: none; }
+.path-card summary::after { content: "▾"; color: var(--text3); transition: transform .2s; }
+.path-card[open] summary::after { transform: rotate(-180deg); }
+.path-card summary:hover { background: var(--bg3); border-radius: 6px; }
+.path-card .path-body { padding: 0 1rem 1rem; border-top: 1px solid var(--border); }
+.path-body ol, .path-body ul { margin: 0.75rem 0; padding-left: 1.5rem; font-size: 0.82rem; color: var(--text2); }
+.path-body li { margin-bottom: 0.3rem; }
+.path-body p { margin: 0.5rem 0 0; }
+
+/* ── Footer / Sources ────────────────────────── */
+.sources-list { font-size: 0.8rem; color: var(--text2); padding-left: 1.2rem; }
+.sources-list li { margin-bottom: 0.3rem; }
+.sources-list a { color: var(--era-republic); text-decoration: none; }
+.sources-list a:hover { text-decoration: underline; }
+.uncertainty { font-style: italic; color: var(--era-empire); font-size: 0.78rem; }
+.uncertain-label { color: var(--era-empire); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
+.future-list { font-size: 0.83rem; color: var(--text2); padding-left: 1.2rem; }
+.future-list li { margin-bottom: 0.5rem; }
+
+/* ── Release-order table ─────────────────────────────────── */
+/* Compact cols stay on one line; title expands; summary merged into title via JS */
+#s2-table th:nth-child(1), #s2-table td:nth-child(1),
+#s2-table th:nth-child(3), #s2-table td:nth-child(3),
+#s2-table th:nth-child(4), #s2-table td:nth-child(4),
+#s2-table th:nth-child(6), #s2-table td:nth-child(6),
+#s2-table th:nth-child(7), #s2-table td:nth-child(7),
+#s2-table th:nth-child(8), #s2-table td:nth-child(8) { white-space: nowrap; }
+/* Seasons/Eps: wrap within a capped width */
+#s2-table th:nth-child(5), #s2-table td:nth-child(5) { width: 135px; white-space: normal; }
+/* Title: greedy */
+#s2-table th:nth-child(2), #s2-table td:nth-child(2) { width: 99%; }
+.td-summary-inline { font-size:0.75rem; color:var(--text3); margin-top:0.3rem; line-height:1.4; font-weight:400; }
+
+/* ── Chron table ─────────────────────────────────────────── */
+#s3-table th:nth-child(1), #s3-table td:nth-child(1),
+#s3-table th:nth-child(3), #s3-table td:nth-child(3),
+#s3-table th:nth-child(4), #s3-table td:nth-child(4) { white-space: nowrap; }
+#s3-table th:nth-child(2), #s3-table td:nth-child(2) { min-width: 180px; }
+#s3-table th:nth-child(5), #s3-table td:nth-child(5) { width: 99%; }
+
+/* ── Page Hero ───────────────────────────────── */
+.page-hero {
+  margin: -2.5rem -2rem 2.5rem;
+  padding: 2rem 2.5rem 1.75rem;
+  background: #06060e;
+  border-bottom: 3px solid var(--accent);
+}
+.hero-eyebrow {
+  font-family: var(--fm);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.hero-title {
+  font-family: var(--fd);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+.hero-meta {
+  font-family: var(--fm);
+  font-size: 0.68rem;
+  color: rgba(255,255,255,.3);
+  margin-top: 0.6rem;
+  letter-spacing: 0.07em;
+}
+.hero-meta span { margin-right: 1.5rem; }
+
+/* ── Theme Toggle ────────────────────────────── */
+.theme-toggle {
+  display: block;
+  width: calc(100% - 2rem);
+  margin: 0.75rem 1rem 0;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-family: var(--fm);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: color .15s, border-color .15s;
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--accent); }
+
+/* ── Misc ─────────────────────────────────────── */
+abbr { border-bottom: 1px dotted var(--text3); cursor: help; text-decoration: none; }
+.text-muted { color: var(--text3); }
+.text-accent { color: var(--accent); }
+.inline-note { font-size: 0.75rem; color: var(--text3); font-style: italic; }
+hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+@media (max-width: 760px) {
+  nav { display: none; }
+  main { padding: 1.25rem 1rem; }
+  .ref-cards-grid { grid-template-columns: 1fr; }
+  .legend-grid { grid-template-columns: 1fr 1fr; }
+  .era-card-body dl { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════ -->
+<nav>
+  <div class="sidebar-header">
+    <div class="sidebar-brand">
+      <div class="sw-pips">
+        <div class="pip-col">
+          <span style="background:var(--era-high)"></span>
+          <span style="background:var(--era-fall)"></span>
+          <span style="background:var(--era-empire)"></span>
+          <span style="background:var(--era-rebellion)"></span>
+        </div>
+        <div class="pip-col">
+          <span style="background:var(--era-republic)"></span>
+          <span style="background:var(--era-firstorder)"></span>
+          <span style="background:var(--era-visions)"></span>
+        </div>
+      </div>
+      <div>
+        <div class="sidebar-title">STAR WARS<br>CANON TIMELINE</div>
+        <div class="sidebar-sub">Reference Document</div>
+      </div>
+    </div>
+  </div>
+  <ul>
+    <li><a href="#legend">Key &amp; Legend</a></li>
+    <li class="section-head"><a href="#">—</a></li>
+    <li><a href="#s1">1 · Executive Guide</a></li>
+    <li><a href="#s2">2 · Release Order</a></li>
+    <li><a href="#s3">3 · Chronological Order</a></li>
+    <li><a href="#s4">4 · Era Summaries</a></li>
+    <li><a href="#s5">5 · Reference Cards</a></li>
+    <li><a href="#s6">6 · Force Anomalies</a></li>
+    <li><a href="#s7">7 · Legends Companion</a></li>
+    <li><a href="#s8">8 · Viewing Paths</a></li>
+    <li><a href="#s9">9 · Continuity Notes</a></li>
+    <li class="section-head"><a href="#">—</a></li>
+    <li><a href="#sources">Sources</a></li>
+    <li><a href="#future">Future Updates</a></li>
+  </ul>
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">◐ TOGGLE THEME</button>
+</nav>
+
+<!-- ══ MAIN ═════════════════════════════════════════════ -->
+<main>
+
+<div class="page-hero">
+  <div class="hero-eyebrow">Official Canon · Fan Reference Document</div>
+  <div class="hero-title">Star Wars Canon Timeline</div>
+  <div class="hero-meta">
+    <span>Research date: September 2026</span>
+    <span>Based on Lucasfilm canon</span>
+    <span>Films · Live-action · Animation</span>
+  </div>
+</div>
+
+<!-- ══ LEGEND ══════════════════════════════════════════ -->
+<section id="legend">
+<div class="section-number">Key &amp; Legend</div>
+<h2>Legend</h2>
+<div class="legend-grid">
+
+  <div class="legend-box">
+    <h4>Eras</h4>
+    <div class="badge-list">
+      <div class="badge-row"><span class="era era-high">High Republic</span> ~400–100 BBY</div>
+      <div class="badge-row"><span class="era era-fall">Fall of the Jedi</span> ~32–19 BBY</div>
+      <div class="badge-row"><span class="era era-empire">Reign of the Empire</span> ~19–0 BBY</div>
+      <div class="badge-row"><span class="era era-rebellion">Age of Rebellion</span> ~0 BBY–5 ABY</div>
+      <div class="badge-row"><span class="era era-republic">New Republic</span> ~5–34 ABY</div>
+      <div class="badge-row"><span class="era era-firstorder">Rise of the First Order</span> ~34–35 ABY</div>
+      <div class="badge-row"><span class="era era-multi">Multi-Era</span> anthology / spans eras</div>
+      <div class="badge-row"><span class="era era-visions">Visions</span> officially non-canon anthology</div>
+      <div class="badge-row"><span class="era era-legends">Legends</span> pre-2014 continuity</div>
+    </div>
+  </div>
+
+  <div class="legend-box">
+    <h4>Media Types</h4>
+    <div class="badge-list">
+      <div class="badge-row"><span class="media">Film</span> Theatrical release</div>
+      <div class="badge-row"><span class="media">LA Series</span> Live-action series</div>
+      <div class="badge-row"><span class="media">Anim Series</span> Animated series</div>
+      <div class="badge-row"><span class="media">Anim Anthology</span> Animated anthology shorts</div>
+      <div class="badge-row"><span class="media">Ltd Series</span> Limited / miniseries</div>
+      <div class="badge-row"><span class="media">Special</span> TV special</div>
+    </div>
+  </div>
+
+  <div class="legend-box">
+    <h4>Canon Status</h4>
+    <div class="badge-list">
+      <div class="badge-row"><span class="status st-complete">Canon</span> Current Lucasfilm canon</div>
+      <div class="badge-row"><span class="status st-noncanon">Non-Canon</span> Officially licensed, not in continuity</div>
+      <div class="badge-row"><span class="status st-legends">Legends</span> Pre-2014 Expanded Universe</div>
+    </div>
+  </div>
+
+  <div class="legend-box">
+    <h4>Series Status</h4>
+    <div class="badge-list">
+      <div class="badge-row"><span class="status st-complete">Complete</span> All seasons finished</div>
+      <div class="badge-row"><span class="status st-ongoing">Ongoing</span> Currently airing / more seasons</div>
+      <div class="badge-row"><span class="status st-production">In Production</span> Confirmed, not yet aired</div>
+      <div class="badge-row"><span class="status st-upcoming">Upcoming</span> Date announced</div>
+      <div class="badge-row"><span class="status st-cancelled">Cancelled</span> No further seasons</div>
+    </div>
+  </div>
+
+  <div class="legend-box">
+    <h4>Dating</h4>
+    <div class="badge-list">
+      <div class="badge-row"><strong>BBY</strong> = Before Battle of Yavin (A New Hope)</div>
+      <div class="badge-row"><strong>ABY</strong> = After Battle of Yavin</div>
+      <div class="badge-row"><strong>c.</strong> = circa (approximate)</div>
+      <div class="badge-row"><span class="uncertain-label">Uncertain</span> placement not officially confirmed</div>
+    </div>
+  </div>
+
+  <div class="legend-box">
+    <h4>Symbols</h4>
+    <div class="badge-list">
+      <div class="badge-row">★ = landmark / cornerstone title</div>
+      <div class="badge-row">† = title with significant Force anomaly content</div>
+      <div class="badge-row">⚠ = spoiler-sensitive placement or content</div>
+      <div class="badge-row">↔ = spans multiple eras</div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══ SECTION 1 ═══════════════════════════════════════ -->
+<section id="s1">
+<div class="section-number">Section 1</div>
+<h2>Executive Guide</h2>
+
+<h3>Release Order vs. Chronological Order</h3>
+<p>Star Wars was not made in story order. George Lucas released the saga beginning with what is now Episode IV, and the prequel and sequel trilogies were produced decades apart. <strong>Release order</strong> follows the films and series as they were first published — the order in which the creative team intended audiences to encounter the story, including intentional reveals and surprises. <strong>Chronological order</strong> arranges all titles by their in-universe story setting, from the earliest era to the most recent, regardless of when they were made.</p>
+<p>Neither order is definitively "correct." Release order preserves the original dramatic structure and the mystery around Darth Vader's identity and the Emperor's plans. Chronological order gives context to prequels and understands political history before it becomes relevant, but risks spoiling major reveals — particularly the Darth Vader revelation — for first-time viewers who watch Episode III before Episode IV.</p>
+
+<h3>The BBY/ABY Dating System</h3>
+<p>In-universe, Star Wars does not have a single, universal calendar consistent across all species and systems. The <strong>BBY/ABY convention</strong> (Before/After the Battle of Yavin) is a <em>fan-facing shorthand</em>, used in reference materials and Wookieepedia, not a formal in-universe calendar. The Battle of Yavin — the climax of <em>A New Hope</em> — serves as the zero point because it is the best-known fixed event in the saga. Official Lucasfilm materials sometimes use it implicitly; in-universe characters do not say "32 BBY."</p>
+<div class="callout note">All BBY/ABY dates in this document are based on published Lucasfilm reference materials and the fan-standard Wookieepedia dating convention. Dates marked <strong>c.</strong> are approximate. Dates marked <span class="uncertain-label">Uncertain</span> lack an official placement and are inferred from context.</div>
+
+<h3>Current Canon vs. Legends</h3>
+<p>Prior to April 2014, the Star Wars Expanded Universe (EU) — comprising novels, comics, games, and other materials — was organized into tiers of canonicity. In April 2014, Lucasfilm declared a clean continuity reset: everything except the six theatrical films, <em>The Clone Wars</em> animated series, and newly created material would be designated <strong>Legends</strong> — an officially acknowledged alternate continuity that remains in print but no longer informs new stories.</p>
+<p>The <strong>current canon</strong> consists of everything produced under the post-2014 continuity: the sequel trilogy, Disney+ live-action series, the post-2014 animated series, and all story-group-approved novels, comics, and games. <strong>This document covers only on-screen canon content.</strong> Legends material is addressed separately in Section 7.</p>
+
+<h3>Scope of This Document</h3>
+<p>This reference covers all officially canonical, on-screen Star Wars storytelling: theatrical films, live-action series, animated series, animated anthology shorts, and relevant specials. Star Wars: Visions is included with its non-canon status clearly marked. The 2003 Clone Wars micro-series is included as Legends. Novels, comics, games, audio dramas, and fan works are excluded from the main timeline and referenced only where a screen title directly depends on them. The research date is September 2026; announced projects with dates beyond that may be incomplete.</p>
+</section>
+
+<!-- ══ SECTION 2 ═══════════════════════════════════════ -->
+<section id="s2">
+<div class="section-number">Section 2</div>
+<h2>Release-Order Timeline</h2>
+<p>Sorted by original worldwide release date. For series, first and last release years are shown. Series status reflects the most current available information as of the research date.</p>
+
+<div class="table-controls">
+  <input type="text" id="s2-search" placeholder="Search title, era, medium…" oninput="filterTable('s2-table', this.value, 's2-count')">
+  <select id="s2-era" onchange="filterTableByEra('s2-table', this.value, 's2-count')">
+    <option value="">All eras</option>
+    <option value="High Republic">High Republic</option>
+    <option value="Fall of the Jedi">Fall of the Jedi</option>
+    <option value="Reign of the Empire">Reign of the Empire</option>
+    <option value="Age of Rebellion">Age of Rebellion</option>
+    <option value="New Republic">New Republic</option>
+    <option value="Rise of the First Order">Rise of the First Order</option>
+    <option value="Multi-Era">Multi-Era</option>
+    <option value="Non-Canon">Non-Canon</option>
+    <option value="Legends">Legends</option>
+  </select>
+  <span class="filter-count" id="s2-count"></span>
+</div>
+
+<div class="table-wrap">
+<table id="s2-table">
+<thead>
+<tr>
+  <th class="col-num" data-col="0">#</th>
+  <th data-col="1">Title</th>
+  <th data-col="2">Medium</th>
+  <th data-col="3" class="col-year">Released</th>
+  <th data-col="4">Seasons / Eps</th>
+  <th data-col="5">Status</th>
+  <th data-col="6">Era</th>
+  <th data-col="7" class="col-date">Setting</th>
+  <th data-col="8" class="col-summary">Brief Summary</th>
+</tr>
+</thead>
+<tbody>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-num">1</td>
+  <td class="title-cell">★ Star Wars: A New Hope <span class="title-sub">Episode IV</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">1977</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td class="col-date">0 BBY</td>
+  <td class="col-summary">Farm boy Luke Skywalker joins a rebellion against the tyrannical Galactic Empire, discovers his Force sensitivity, and destroys the Death Star. Introduced the galaxy and its core characters.</td>
+</tr>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-num">2</td>
+  <td class="title-cell">★ The Empire Strikes Back <span class="title-sub">Episode V</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">1980</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td class="col-date">3 ABY</td>
+  <td class="col-summary">The Empire strikes back against the Rebel Alliance; Luke trains with Yoda on Dagobah and confronts Darth Vader, who delivers the saga's defining revelation. ⚠</td>
+</tr>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-num">3</td>
+  <td class="title-cell">★ Return of the Jedi <span class="title-sub">Episode VI</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">1983</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td class="col-date">4 ABY</td>
+  <td class="col-summary">The Rebellion destroys the second Death Star; Luke redeems his father Anakin Skywalker and defeats the Emperor, ending the Galactic Civil War.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-num">4</td>
+  <td class="title-cell">★ The Phantom Menace <span class="title-sub">Episode I</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">1999</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td class="col-date">32 BBY</td>
+  <td class="col-summary">Jedi Qui-Gon Jinn and Obi-Wan Kenobi discover young Anakin Skywalker on Tatooine. The Sith reveal themselves after a millennium in hiding. Political intrigue in the Senate foreshadows the Republic's decay.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-num">5</td>
+  <td class="title-cell">★ Attack of the Clones <span class="title-sub">Episode II</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2002</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td class="col-date">22 BBY</td>
+  <td class="col-summary">A secret clone army is revealed; Anakin Skywalker and Padmé Amidala fall in love. The Clone Wars begin as the Separatist crisis erupts into open conflict.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-num">6</td>
+  <td class="title-cell">★ Revenge of the Sith <span class="title-sub">Episode III</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2005</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td class="col-date">19 BBY</td>
+  <td class="col-summary">Anakin Skywalker falls to the dark side and becomes Darth Vader; the Jedi are nearly exterminated in Order 66; the Republic is transformed into the Galactic Empire. ⚠</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-num">7</td>
+  <td class="title-cell">The Clone Wars <span class="title-sub">Theatrical Film (2008)</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2008</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td class="col-date">22 BBY</td>
+  <td class="col-summary">Pilot film for the animated series. Anakin and his new Padawan Ahsoka Tano rescue Jabba the Hutt's son. Introduces the Clone Wars' tone and Ahsoka Tano, now one of the saga's most important characters.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-num">8</td>
+  <td class="title-cell">★ The Clone Wars <span class="title-sub">Animated Series</span></td>
+  <td><span class="media">Anim Series</span></td>
+  <td class="col-year">2008–2020</td>
+  <td>7 seasons · 133 eps</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td class="col-date">22–19 BBY</td>
+  <td class="col-summary">The definitive account of the Clone Wars. Follows Anakin, Obi-Wan, Ahsoka, Rex, and many others through key campaigns and personal arcs. Season 7 runs concurrently with Revenge of the Sith. Essential canon.</td>
+</tr>
+
+<tr data-era="Legends">
+  <td class="col-num">—</td>
+  <td class="title-cell">Clone Wars Micro-Series <span class="title-sub">2003 · Legends only</span></td>
+  <td><span class="media">Anim Series</span></td>
+  <td class="col-year">2003–2005</td>
+  <td>2 volumes · 25 chapters</td>
+  <td><span class="status st-legends">Legends</span></td>
+  <td><span class="era era-legends">Legends</span></td>
+  <td class="col-date">22–19 BBY</td>
+  <td class="col-summary">Genndy Tartakovsky's stylized 2D micro-series covering the Clone Wars. Considered Legends since 2014; available on Disney+ in the Vintage Collection. See Section 9 for the relationship to the 2008 series.</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-num">9</td>
+  <td class="title-cell">★ Star Wars Rebels</td>
+  <td><span class="media">Anim Series</span></td>
+  <td class="col-year">2014–2018</td>
+  <td>4 seasons · 75 eps</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td class="col-date">5–0 BBY</td>
+  <td class="col-summary">A found-family crew of early rebels aboard the Ghost become the seeds of the Rebel Alliance. Expands on Ahsoka, Darth Maul, and Grand Admiral Thrawn. Leads directly into Rogue One. † ↔</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-num">10</td>
+  <td class="title-cell">★ The Force Awakens <span class="title-sub">Episode VII</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2015</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td class="col-date">34 ABY</td>
+  <td class="col-summary">Thirty years after the Empire's fall, scavenger Rey and ex-stormtrooper Finn encounter Han Solo and join the Resistance against the newly emerged First Order. Han Solo confronts his son Kylo Ren. ⚠</td>
+</tr>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-num">11</td>
+  <td class="title-cell">★ Rogue One: A Star Wars Story</td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2016</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td class="col-date">0 BBY</td>
+  <td class="col-summary">Jyn Erso leads a rebel team to steal the Death Star plans, connecting directly to the opening scene of A New Hope. The first standalone Star Wars film. Explores moral ambiguity and sacrifice in the Rebel Alliance.</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-num">12</td>
+  <td class="title-cell">The Last Jedi <span class="title-sub">Episode VIII</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2017</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td class="col-date">34 ABY</td>
+  <td class="col-summary">The Resistance is pursued by the First Order. Rey seeks to understand the Force and her past; Luke Skywalker grapples with the legacy of the Jedi. Directly follows The Force Awakens. †</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-num">13</td>
+  <td class="title-cell">Solo: A Star Wars Story</td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2018</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td class="col-date">c. 13–10 BBY</td>
+  <td class="col-summary">Young Han Solo's origin story: meeting Chewbacca, Lando Calrissian, and Qi'ra; making the Kessel Run; and his first encounter with the criminal underworld — and with Maul.</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-num">14</td>
+  <td class="title-cell">Star Wars Resistance</td>
+  <td><span class="media">Anim Series</span></td>
+  <td class="col-year">2018–2020</td>
+  <td>2 seasons · 40 eps</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td class="col-date">34–35 ABY</td>
+  <td class="col-summary">Spy Kazuda Xiono infiltrates a refueling station that becomes caught in the First Order's rise. Bridges the prequel era to the sequel trilogy; begins before The Force Awakens. ↔</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-num">15</td>
+  <td class="title-cell">★ The Mandalorian</td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">2019–2023</td>
+  <td>3 seasons · 24 eps</td>
+  <td><span class="status st-production">Continuing (Film)</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td class="col-date">c. 9 ABY</td>
+  <td class="col-summary">Lone Mandalorian bounty hunter Din Djarin becomes the reluctant guardian of Grogu (the Child). The flagship Disney+ Star Wars series; launched the New Republic era of storytelling and the "Mando-verse" of connected shows.</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-num">16</td>
+  <td class="title-cell">The Rise of Skywalker <span class="title-sub">Episode IX</span></td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2019</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td class="col-date">35 ABY</td>
+  <td class="col-summary">Emperor Palpatine returns from apparent death; Rey confronts her heritage and the Final Order. Concludes the Skywalker Saga and the sequel trilogy.</td>
+</tr>
+
+<tr data-era="Non-Canon">
+  <td class="col-num">—</td>
+  <td class="title-cell">Star Wars: Visions Vol. 1</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td class="col-year">2021</td>
+  <td>9 shorts</td>
+  <td><span class="status st-noncanon">Non-Canon</span></td>
+  <td><span class="era era-visions">Visions</span></td>
+  <td class="col-date">N/A</td>
+  <td class="col-summary">Seven Japanese anime studios create original, stylized short films set in the Star Wars universe. Officially licensed but not part of canon continuity. Visually inventive; celebrates diverse artistic interpretations.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-num">17</td>
+  <td class="title-cell">The Book of Boba Fett</td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">2021–2022</td>
+  <td>1 season · 7 eps</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td class="col-date">c. 9 ABY</td>
+  <td class="col-summary">Boba Fett and Fennec Shand establish themselves as crime lords of Tatooine after Jabba's death. Closely connected to The Mandalorian; two episodes function as Mandalorian Season 2.5.</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-num">18</td>
+  <td class="title-cell">★ The Bad Batch</td>
+  <td><span class="media">Anim Series</span></td>
+  <td class="col-year">2021–2024</td>
+  <td>3 seasons · 47 eps</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td class="col-date">19–17 BBY</td>
+  <td class="col-summary">Clone Force 99 — a squad of genetically mutated clones — navigates the galaxy after Order 66 as the Republic becomes the Empire. Explores the human cost of the Imperial transition. Direct sequel to The Clone Wars.</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-num">19</td>
+  <td class="title-cell">Obi-Wan Kenobi</td>
+  <td><span class="media">Ltd Series</span></td>
+  <td class="col-year">2022</td>
+  <td>1 season · 6 eps</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td class="col-date">9 BBY</td>
+  <td class="col-summary">Obi-Wan Kenobi comes out of hiding on Tatooine to rescue young Leia from Imperial Inquisitors and confronts Darth Vader for the first time since Mustafar. Set 10 years after Revenge of the Sith.</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-num">20</td>
+  <td class="title-cell">★ Andor</td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">2022–2025</td>
+  <td>2 seasons · 24 eps total</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td class="col-date">5–0 BBY</td>
+  <td class="col-summary">The origin and radicalization of Cassian Andor, hero of Rogue One. Season 1 (2022) covers ~5 BBY; Season 2 (April–May 2025) advances toward the founding of the Rebellion and ends just before Rogue One. Widely praised as the series' most mature, grounded work.</td>
+</tr>
+
+<tr data-era="Multi-Era">
+  <td class="col-num">21</td>
+  <td class="title-cell">Tales of the Jedi</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td class="col-year">2022</td>
+  <td>6 shorts</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-multi">Multi-Era</span></td>
+  <td class="col-date">c. 40–17 BBY</td>
+  <td class="col-summary">Six animated shorts in two arcs: three tracing Count Dooku's fall to the dark side, three following Ahsoka Tano from birth through life after the Clone Wars. Fills in major character backstory. ↔</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-num">22</td>
+  <td class="title-cell">★ Ahsoka</td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">2023–</td>
+  <td>Season 1 (8 eps) complete; Season 2 upcoming Jan 2027</td>
+  <td><span class="status st-upcoming">Upcoming S2 Jan 2027</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td class="col-date">c. 9 ABY</td>
+  <td class="col-summary">Ahsoka Tano investigates the return of Grand Admiral Thrawn and is pulled into another galaxy. Season 1 (2023) functions as a live-action sequel to Rebels. Season 2 confirmed for January 20, 2027; features Hayden Christensen as Force ghost Anakin. †</td>
+</tr>
+
+<tr data-era="Non-Canon">
+  <td class="col-num">—</td>
+  <td class="title-cell">Star Wars: Visions Vol. 2</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td class="col-year">2023</td>
+  <td>9 shorts</td>
+  <td><span class="status st-noncanon">Non-Canon</span></td>
+  <td><span class="era era-visions">Visions</span></td>
+  <td class="col-date">N/A</td>
+  <td class="col-summary">Second volume of the anthology, expanding to international animation studios from South Africa, India, the UK, France, Spain, Chile, Ireland, South Korea, and Japan. Broader stylistic range than Vol. 1.</td>
+</tr>
+
+<tr data-era="High Republic">
+  <td class="col-num">—</td>
+  <td class="title-cell">Young Jedi Adventures</td>
+  <td><span class="media">Anim Series</span></td>
+  <td class="col-year">2023–</td>
+  <td>Season 1 (25 eps); Season 2 complete; Season 3 announced</td>
+  <td><span class="status st-ongoing">Ongoing</span></td>
+  <td><span class="era era-high">High Republic</span></td>
+  <td class="col-date">c. 232 BBY</td>
+  <td class="col-summary">Children's animated series set in the High Republic era following young Jedi initiates at a Jedi temple. Produced for Disney Junior / Disney+. Not listed in StarWars.com's main chronological guide; included here as canonical screen content. Emmy Award winner.</td>
+</tr>
+
+<tr data-era="Multi-Era">
+  <td class="col-num">23</td>
+  <td class="title-cell">Tales of the Empire</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td class="col-year">2024</td>
+  <td>6 shorts</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-multi">Multi-Era</span></td>
+  <td class="col-date">c. 19 BBY–1 BBY</td>
+  <td class="col-summary">Six shorts in two arcs: Morgan Elsbeth's origin and rise (connecting to Ahsoka) and Barriss Offee's life under the Empire after her arrest in The Clone Wars. Spans the early-to-mid Imperial period. ↔</td>
+</tr>
+
+<tr data-era="High Republic">
+  <td class="col-num">24</td>
+  <td class="title-cell">The Acolyte</td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">2024</td>
+  <td>1 season · 8 eps</td>
+  <td><span class="status st-cancelled">Cancelled</span></td>
+  <td><span class="era era-high">High Republic</span></td>
+  <td class="col-date">c. 100 BBY</td>
+  <td class="col-summary">A former Jedi Padawan investigates a series of Jedi murders that reveal a hidden Sith presence at the end of the High Republic era. Cancelled by Disney/Lucasfilm in August 2024 after one season, despite strong viewership numbers.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-num">25</td>
+  <td class="title-cell">Skeleton Crew</td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">2024–</td>
+  <td>1 season · 8 eps; S2 in production</td>
+  <td><span class="status st-production">S2 In Production</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td class="col-date">c. 9 ABY</td>
+  <td class="col-summary">Four children from a sheltered planet are lost in a dangerous galaxy and must find their way home with the help of a former pirate. Tonally distinct coming-of-age adventure in the Mando-verse. Season 2 entered production c. early 2026.</td>
+</tr>
+
+<tr data-era="Multi-Era">
+  <td class="col-num">26</td>
+  <td class="title-cell">Tales of the Underworld</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td class="col-year">2025</td>
+  <td>6 shorts</td>
+  <td><span class="status st-complete">Complete</span></td>
+  <td><span class="era era-multi">Multi-Era</span></td>
+  <td class="col-date">varies</td>
+  <td class="col-summary">Third entry in the Tales anthology series. Three shorts follow Asajj Ventress on the run with a new ally after the Clone Wars; three explore Cad Bane confronting his past and a former friend turned lawman. Released May 4, 2025. ↔</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-num">27</td>
+  <td class="title-cell">Maul – Shadow Lord</td>
+  <td><span class="media">Anim Series</span></td>
+  <td class="col-year">2026–</td>
+  <td>Season 1 (10 eps) complete; Season 2 announced</td>
+  <td><span class="status st-ongoing">S2 Announced</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td class="col-date">c. 17–14 BBY</td>
+  <td class="col-summary">Maul rebuilds his criminal empire on the planet Janix in the early Imperial period, crossing paths with a disillusioned Jedi Padawan. Created by Dave Filoni; Sam Witwer voices Maul. Season 1 released April–May 2026.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-num">28</td>
+  <td class="title-cell">★ The Mandalorian and Grogu</td>
+  <td><span class="media">Film</span></td>
+  <td class="col-year">2026</td>
+  <td>—</td>
+  <td><span class="status st-complete">Canon</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td class="col-date">c. 9–10 ABY</td>
+  <td class="col-summary">Din Djarin and Grogu are enlisted by the New Republic to confront scattered Imperial warlords. The first Star Wars theatrical film since 2019. Directed by Jon Favreau; stars Pedro Pascal, Sigourney Weaver, and Jeremy Allen White. Released May 22, 2026.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-num">—</td>
+  <td class="title-cell">The Mandalorian Season 4 <span class="title-sub">Announced</span></td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">TBD</td>
+  <td>In production (c. early 2026)</td>
+  <td><span class="status st-production">In Production</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td class="col-date">c. 10 ABY</td>
+  <td class="col-summary">A fourth season of The Mandalorian is in production. No release date confirmed as of the research date. <span class="uncertain-label">Uncertain</span></td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-num">—</td>
+  <td class="title-cell">Ahsoka Season 2 <span class="title-sub">Announced</span></td>
+  <td><span class="media">LA Series</span></td>
+  <td class="col-year">2027</td>
+  <td>Season 2; date announced</td>
+  <td><span class="status st-upcoming">Premieres Jan 20, 2027</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td class="col-date">c. 9 ABY</td>
+  <td class="col-summary">Season 2 premieres January 20, 2027 on Disney+. Hayden Christensen returns as Force ghost Anakin; Baylan Skoll recast with Rory McCann. Grand Admiral Thrawn declares war. Teaser revealed August 15, 2026. †</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+<p class="inline-note">† = significant Force anomaly content · ⚠ = spoiler-sensitive placement · ↔ = spans multiple eras. Legends and Non-Canon rows are numbered "—" to distinguish from the canon count. Young Jedi Adventures release number omitted as it does not appear in the official StarWars.com chronological guide.</p>
+</section>
+
+<!-- ══ SECTION 3 ═══════════════════════════════════════ -->
+<section id="s3">
+<div class="section-number">Section 3</div>
+<h2>In-Universe Chronological Timeline</h2>
+<p>Sorted by primary story setting (BBY/ABY). Multi-era anthology series appear at their earliest story point with a note. The official ordering follows StarWars.com (May 2025 update). BBY/ABY dates are fan-convention approximations from Lucasfilm reference materials; approximate dates are marked <strong>c.</strong></p>
+<div class="callout note"><strong>Key notes from StarWars.com:</strong> Tales of the Jedi, Tales of the Empire, and Tales of the Underworld span wide time periods due to their anthology format. Andor and Rebels run concurrently (~5–0 BBY), both leading into Rogue One. Resistance begins before The Force Awakens and extends past it.</div>
+
+<div class="table-controls">
+  <input type="text" id="s3-search" placeholder="Search title, era…" oninput="filterTable('s3-table', this.value, 's3-count')">
+  <select onchange="filterTableByEra('s3-table', this.value, 's3-count')">
+    <option value="">All eras</option>
+    <option value="High Republic">High Republic</option>
+    <option value="Fall of the Jedi">Fall of the Jedi</option>
+    <option value="Reign of the Empire">Reign of the Empire</option>
+    <option value="Age of Rebellion">Age of Rebellion</option>
+    <option value="New Republic">New Republic</option>
+    <option value="Rise of the First Order">Rise of the First Order</option>
+  </select>
+  <span class="filter-count" id="s3-count"></span>
+</div>
+
+<div class="table-wrap">
+<table id="s3-table">
+<thead>
+<tr>
+  <th data-col="0" class="col-date">Setting (BBY/ABY)</th>
+  <th data-col="1">Title</th>
+  <th data-col="2">Medium</th>
+  <th data-col="3">Era</th>
+  <th data-col="4">Placement Notes</th>
+</tr>
+</thead>
+<tbody>
+
+<tr data-era="High Republic">
+  <td class="col-date">c. 232 BBY</td>
+  <td class="title-cell">Young Jedi Adventures</td>
+  <td><span class="media">Anim Series</span></td>
+  <td><span class="era era-high">High Republic</span></td>
+  <td>High Republic Phase 1. Set at a Jedi temple during the golden age of the Order. Not in StarWars.com main guide; placed by era. <span class="uncertain-label">Uncertain</span></td>
+</tr>
+
+<tr data-era="High Republic">
+  <td class="col-date">c. 100 BBY</td>
+  <td class="title-cell">The Acolyte</td>
+  <td><span class="media">LA Series</span></td>
+  <td><span class="era era-high">High Republic</span></td>
+  <td>End of the High Republic era. A secret Sith presence begins eroding the Republic's golden age. Cancelled after Season 1; story threads unresolved.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-date">32 BBY</td>
+  <td class="title-cell">★ The Phantom Menace</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td>The Sith reveal themselves publicly for the first time in ~1,000 years. Anakin Skywalker discovered. Trade Federation crisis on Naboo.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-date">22 BBY</td>
+  <td class="title-cell">★ Attack of the Clones</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td>Clone Wars begin. Anakin and Padmé secretly wed. Yoda fights Count Dooku. Geonosis is the opening battle.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-date">22 BBY</td>
+  <td class="title-cell">The Clone Wars (Film)</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td>Opening salvos of the Clone Wars. Watch before or after AOTC; officially placed just after. Introduces Ahsoka Tano.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-date">22–19 BBY</td>
+  <td class="title-cell">★ The Clone Wars (Series)</td>
+  <td><span class="media">Anim Series</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td>Non-linear anthology structure within the war. Season 7 runs directly into Revenge of the Sith. Official guide places it here in full.</td>
+</tr>
+
+<tr data-era="Multi-Era">
+  <td class="col-date">c. 40–17 BBY ↔</td>
+  <td class="title-cell">Tales of the Jedi</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td><span class="era era-multi">Multi-Era</span></td>
+  <td>Spans a wide period. Dooku arc: ~40–19 BBY (Fall of the Jedi). Ahsoka arc: ~22–17 BBY (spans Fall/Reign). Official guide places it between TCW and ROTS with an asterisked note.</td>
+</tr>
+
+<tr data-era="Fall of the Jedi">
+  <td class="col-date">19 BBY</td>
+  <td class="title-cell">★ Revenge of the Sith</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-fall">Fall of the Jedi</span></td>
+  <td>Order 66. Fall of the Jedi Order. Anakin becomes Darth Vader. The Republic becomes the Empire. Twins Luke and Leia born and hidden separately. ⚠</td>
+</tr>
+
+<tr data-era="Multi-Era">
+  <td class="col-date">c. 19–1 BBY ↔</td>
+  <td class="title-cell">Tales of the Empire</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td><span class="era era-multi">Multi-Era</span></td>
+  <td>Spans early-to-mid Imperial period. Morgan Elsbeth arc: post-Order 66 through her rise. Barriss Offee arc: her imprisonment and choices under the Empire. Official guide places it here with asterisked note.</td>
+</tr>
+
+<tr data-era="Multi-Era">
+  <td class="col-date">varies ↔</td>
+  <td class="title-cell">Tales of the Underworld</td>
+  <td><span class="media">Anim Anthology</span></td>
+  <td><span class="era era-multi">Multi-Era</span></td>
+  <td>Exact placements vary by short. Ventress arc: post-Clone Wars. Cad Bane arc: spans multiple periods. Official guide places it after Tales of the Empire with asterisked note. <span class="uncertain-label">Uncertain — individual short dates</span></td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-date">19–17 BBY</td>
+  <td class="title-cell">★ The Bad Batch</td>
+  <td><span class="media">Anim Series</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td>Begins on the day of Order 66 (Season 1 premiere). Follows the Empire's consolidation of power. Series finale ends the Bad Batch's story.</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-date">c. 17–14 BBY</td>
+  <td class="title-cell">Maul – Shadow Lord</td>
+  <td><span class="media">Anim Series</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td>Placed between The Bad Batch and Solo per official guide. "A few short years after Order 66." Exact date uncertain. <span class="uncertain-label">Uncertain — c. date</span></td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-date">c. 13–10 BBY</td>
+  <td class="title-cell">Solo: A Star Wars Story</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td>Han and Chewie meet; Kessel Run; Maul appears as a crime lord. Official date range approximate; internal story spans several years.</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-date">9 BBY</td>
+  <td class="title-cell">Obi-Wan Kenobi</td>
+  <td><span class="media">Ltd Series</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td>10 years after Revenge of the Sith. Obi-Wan and Darth Vader meet again for the first time since their duel on Mustafar. Young Leia central to the plot.</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-date">5–0 BBY</td>
+  <td class="title-cell">★ Andor</td>
+  <td><span class="media">LA Series</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td>Season 1 (2022): ~5 BBY. Season 2 (2025): advances toward Rogue One. Runs concurrently with Rebels in the latter stages. Ends immediately before Rogue One. ↔</td>
+</tr>
+
+<tr data-era="Reign of the Empire">
+  <td class="col-date">5–0 BBY</td>
+  <td class="title-cell">★ Star Wars Rebels</td>
+  <td><span class="media">Anim Series</span></td>
+  <td><span class="era era-empire">Reign of the Empire</span></td>
+  <td>Concurrent with Andor per official guide. Both lead into Rogue One. Rebels Season 4 finale epilogue jumps forward to post-Return of the Jedi. †↔</td>
+</tr>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-date">0 BBY</td>
+  <td class="title-cell">★ Rogue One: A Star Wars Story</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td>Immediately precedes A New Hope; its final scene connects directly to the opening of Episode IV. The Death Star plans are stolen at the cost of every team member's life.</td>
+</tr>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-date">0 BBY</td>
+  <td class="title-cell">★ A New Hope (Episode IV)</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td>Battle of Yavin. The zero point of the BBY/ABY dating system. The Death Star is destroyed; the Rebellion wins its first major victory.</td>
+</tr>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-date">3 ABY</td>
+  <td class="title-cell">★ The Empire Strikes Back (Episode V)</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td>Battle of Hoth; Luke's Dagobah training; the revelation of Vader's identity. ⚠</td>
+</tr>
+
+<tr data-era="Age of Rebellion">
+  <td class="col-date">4 ABY</td>
+  <td class="title-cell">★ Return of the Jedi (Episode VI)</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-rebellion">Age of Rebellion</span></td>
+  <td>Battle of Endor; Vader redeemed; Emperor killed; Empire falls. The Galactic Civil War effectively ends.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-date">c. 9 ABY</td>
+  <td class="title-cell">★ The Mandalorian</td>
+  <td><span class="media">LA Series</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td>Mando-verse anchor. All three seasons roughly concurrent. Season 3 introduces Bo-Katan and the Mandalorian homeworld arc.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-date">c. 9 ABY</td>
+  <td class="title-cell">The Book of Boba Fett</td>
+  <td><span class="media">LA Series</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td>Concurrent with or shortly after Mandalorian Season 2. Two episodes ("Chapter 5" and "Chapter 6") are effectively Mandalorian Season 2.5 and are required viewing before Mandalorian Season 3.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-date">c. 9 ABY</td>
+  <td class="title-cell">★ Ahsoka (Season 1)</td>
+  <td><span class="media">LA Series</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td>Concurrent with Mandalorian Season 3 / shortly after. Functions as a live-action Rebels sequel. Grand Admiral Thrawn's return initiated. † Recommended: watch Rebels before Ahsoka.</td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-date">c. 9 ABY</td>
+  <td class="title-cell">Skeleton Crew</td>
+  <td><span class="media">LA Series</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td>Concurrent with the broader Mando-verse. Relatively self-contained; exact Mando-verse placement uncertain but confirmed same era. <span class="uncertain-label">Uncertain — precise inter-series placement</span></td>
+</tr>
+
+<tr data-era="New Republic">
+  <td class="col-date">c. 9–10 ABY</td>
+  <td class="title-cell">★ The Mandalorian and Grogu</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-republic">New Republic</span></td>
+  <td>Theatrical continuation of The Mandalorian. Directly follows the series timeline. Zeb Orrelios appears in live action. Film released May 22, 2026.</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-date">34–35 ABY ↔</td>
+  <td class="title-cell">Star Wars Resistance</td>
+  <td><span class="media">Anim Series</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td>Begins before The Force Awakens (~34 ABY); extends past The Rise of Skywalker. Runs concurrent with the sequel trilogy. Official guide places it before Episode VII with a note it extends past it.</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-date">34 ABY</td>
+  <td class="title-cell">★ The Force Awakens (Episode VII)</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td>30 years after Return of the Jedi. Han Solo dies; Kylo Ren emerges; Rey's Force awakening. ⚠</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-date">34 ABY</td>
+  <td class="title-cell">The Last Jedi (Episode VIII)</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td>Directly follows The Force Awakens (within hours/days). Luke Skywalker sacrifices himself; the Resistance is nearly destroyed. †</td>
+</tr>
+
+<tr data-era="Rise of the First Order">
+  <td class="col-date">35 ABY</td>
+  <td class="title-cell">The Rise of Skywalker (Episode IX)</td>
+  <td><span class="media">Film</span></td>
+  <td><span class="era era-firstorder">Rise of the First Order</span></td>
+  <td>One year after The Last Jedi. Palpatine's return revealed; Exegol; Rey's identity revealed; the Final Order destroyed. Skywalker Saga ends. ⚠†</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+<p class="inline-note">Source for official order: StarWars.com "Star Wars Movies and Series Viewing Guide," updated May 2025. ↔ = spans multiple eras. † = significant Force content. ⚠ = major reveal.</p>
+</section>
+
+<!-- ══ SECTION 4 ═══════════════════════════════════════ -->
+<section id="s4">
+<div class="section-number">Section 4</div>
+<h2>Era Summaries</h2>
+<p>Each era is an official Lucasfilm storytelling designation used in reference materials and the StarWars.com Databank. BBY/ABY ranges are based on primary on-screen content and may not capture every edge.</p>
+
+<!-- HIGH REPUBLIC -->
+<div class="era-card">
+  <div class="era-card-header">
+    <span class="era era-high">High Republic</span>
+    <strong>c. 400–100 BBY (on screen: c. 232–100 BBY)</strong>
+  </div>
+  <div class="era-card-body">
+    <dl>
+      <dt>Approx. years</dt><dd>~400 to ~100 BBY (screen content: ~232 to ~100 BBY)</dd>
+      <dt>Political state</dt><dd>The Galactic Republic is at its zenith — prosperous, expansionist, and largely peaceful. The frontier of the Outer Rim is being colonised and protected by the Republic and Jedi.</dd>
+      <dt>Dominant factions</dt><dd>Galactic Republic; Jedi Order (at full strength, numbering in the thousands); Nihil (pirates/raiders); Hutt Clans</dd>
+      <dt>Force traditions</dt><dd>The Jedi Order at its most idealised; diverse Force-using cultures on the frontier; early hints of dark-side sects</dd>
+      <dt>Central conflicts</dt><dd>The Nihil threat in the Outer Rim (novels/comics); the secret emergence of a Sith tradition by ~100 BBY (The Acolyte)</dd>
+      <dt>Key screen titles</dt><dd>Young Jedi Adventures (c. 232 BBY); The Acolyte (c. 100 BBY)</dd>
+      <dt>Transition</dt><dd>The era ends as the Sith secretly establish themselves in the shadows. By 32 BBY (Episode I), their presence has grown to the point of open action. The Rule of Two, established by Darth Bane ~1,000 BBY (Legends; implied in canon), ensures the Sith operate in secret.</dd>
+    </dl>
+  </div>
+</div>
+
+<!-- FALL OF THE JEDI -->
+<div class="era-card">
+  <div class="era-card-header">
+    <span class="era era-fall">Fall of the Jedi</span>
+    <strong>32–19 BBY</strong>
+  </div>
+  <div class="era-card-body">
+    <dl>
+      <dt>Approx. years</dt><dd>32–19 BBY</dd>
+      <dt>Political state</dt><dd>The Galactic Republic is increasingly fractured by political corruption, Trade Federation disputes, and the growing Separatist movement. Chancellor Palpatine accumulates extraordinary emergency powers.</dd>
+      <dt>Dominant factions</dt><dd>Galactic Republic; Jedi Order; Confederacy of Independent Systems (Separatists); Grand Army of the Republic (clone army); Sith (in secret until Episode I)</dd>
+      <dt>Force traditions</dt><dd>The Jedi Order at its structural peak but philosophically rigid; the Sith operating in secret via the Rule of Two; the Nightsisters of Dathomir</dd>
+      <dt>Central conflicts</dt><dd>Clone Wars (22–19 BBY): the Republic and Jedi fight the Separatist military; simultaneously, Darth Sidious manipulates both sides to manufacture his own rise to absolute power</dd>
+      <dt>Key screen titles</dt><dd>The Phantom Menace (32 BBY); Attack of the Clones (22 BBY); The Clone Wars film and series (22–19 BBY); Tales of the Jedi (spans into this era); Revenge of the Sith (19 BBY)</dd>
+      <dt>Transition</dt><dd>Order 66 nearly destroys the Jedi in a single night. Palpatine declares himself Emperor; the Republic becomes the Galactic Empire. Anakin Skywalker becomes Darth Vader. The surviving Jedi go into hiding, and the age of Imperial rule begins.</dd>
+    </dl>
+  </div>
+</div>
+
+<!-- REIGN OF THE EMPIRE -->
+<div class="era-card">
+  <div class="era-card-header">
+    <span class="era era-empire">Reign of the Empire</span>
+    <strong>19–0 BBY</strong>
+  </div>
+  <div class="era-card-body">
+    <dl>
+      <dt>Approx. years</dt><dd>~19–0 BBY (~19 years)</dd>
+      <dt>Political state</dt><dd>The Galactic Empire rules the galaxy through military force, fear, and bureaucratic control. Regional governors (Moffs) administer sectors; the Senate is stripped of power and eventually disbanded. The Death Star is secretly under construction for most of the era.</dd>
+      <dt>Dominant factions</dt><dd>Galactic Empire (ISB, Imperial military, Inquisitorius); early Rebel cells (coalescing into the Rebel Alliance by ~1 BBY); crime syndicates (Crimson Dawn, Pyke Syndicate, Hutt Clans)</dd>
+      <dt>Force traditions</dt><dd>The Inquisitorius: former Jedi turned dark-side agents hunting Jedi survivors; Darth Vader and the Emperor; isolated Jedi survivors in hiding (Obi-Wan, Yoda, Kanan Jarrus); Maul operating independently</dd>
+      <dt>Central conflicts</dt><dd>Imperial consolidation; Jedi survival; the gradual formation of organised armed resistance; Imperial atrocities on occupied worlds; the arms race toward the Death Star</dd>
+      <dt>Key screen titles</dt><dd>The Bad Batch (19–17 BBY); Maul – Shadow Lord (c. 17–14 BBY); Solo (c. 13–10 BBY); Obi-Wan Kenobi (9 BBY); Andor (5–0 BBY); Rebels (5–0 BBY); Tales of the Empire (multi)</dd>
+      <dt>Transition</dt><dd>The Rebel Alliance formally coalesces in the year before A New Hope (~1 BBY). The Death Star's completion triggers the events of Rogue One and immediately thereafter Episode IV — the Battle of Yavin, which destroys the Death Star and marks the beginning of the Age of Rebellion.</dd>
+    </dl>
+  </div>
+</div>
+
+<!-- AGE OF REBELLION -->
+<div class="era-card">
+  <div class="era-card-header">
+    <span class="era era-rebellion">Age of Rebellion</span>
+    <strong>0 BBY – c. 5 ABY</strong>
+  </div>
+  <div class="era-card-body">
+    <dl>
+      <dt>Approx. years</dt><dd>~0 BBY to ~4–5 ABY (approximately 4–5 years)</dd>
+      <dt>Political state</dt><dd>Open galactic civil war between the Rebel Alliance and the Galactic Empire. The Rebellion operates from hidden bases and mobile fleets; the Empire fields its full military might including the Death Star and later the second Death Star.</dd>
+      <dt>Dominant factions</dt><dd>Rebel Alliance; Galactic Empire; Hutt Clans (largely neutral)</dd>
+      <dt>Force traditions</dt><dd>Luke Skywalker's self-taught and Yoda-guided emergence as a Jedi; Darth Vader active as the Emperor's enforcer; the Emperor himself wielding the dark side; Obi-Wan Kenobi as a Force ghost</dd>
+      <dt>Central conflicts</dt><dd>The Galactic Civil War; the Battle of Yavin (0 BBY); the Battle of Hoth (3 ABY); the Battle of Endor and the fall of the Emperor (4 ABY)</dd>
+      <dt>Key screen titles</dt><dd>Rogue One (0 BBY); A New Hope (0 BBY); The Empire Strikes Back (3 ABY); Return of the Jedi (4 ABY)</dd>
+      <dt>Transition</dt><dd>The Emperor is killed at Endor; Vader redeemed and dies. The Empire is shattered but not destroyed — Imperial remnants persist for years. The New Republic is established, and a new democratic government attempts to unite the galaxy. This fragile transition defines the New Republic era.</dd>
+    </dl>
+  </div>
+</div>
+
+<!-- NEW REPUBLIC -->
+<div class="era-card">
+  <div class="era-card-header">
+    <span class="era era-republic">New Republic</span>
+    <strong>c. 5–34 ABY</strong>
+  </div>
+  <div class="era-card-body">
+    <dl>
+      <dt>Approx. years</dt><dd>~5–34 ABY (~29 years; screen content concentrated c. 9 ABY)</dd>
+      <dt>Political state</dt><dd>The New Republic governs most of the galaxy but is ideologically divided — many senators resist maintaining a strong military, scarred by the memory of Imperial overreach. Imperial Warlords hold scattered territories. The New Republic struggles to project authority in the Outer Rim.</dd>
+      <dt>Dominant factions</dt><dd>New Republic; Imperial remnants (various warlords); resurgent Mandalorian clans; the Bounty Hunters' Guild; crime syndicates; the First Order (forming in secret in the Unknown Regions by ~20 ABY)</dd>
+      <dt>Force traditions</dt><dd>Luke Skywalker attempting to rebuild the Jedi Order (ultimately ending in disaster c. 28 ABY); Ahsoka Tano operating independently; dark-side practitioners in the Unknown Regions associated with the nascent First Order</dd>
+      <dt>Central conflicts</dt><dd>Imperial remnant suppression; Grogu's protection and training; the Mandalorian civil war and reclamation of Mandalore; Thrawn's return and planned conquest; the galaxy's political instability enabling the First Order's growth</dd>
+      <dt>Key screen titles</dt><dd>The Mandalorian (c. 9 ABY); The Book of Boba Fett (c. 9 ABY); Ahsoka Season 1 (c. 9 ABY); Skeleton Crew (c. 9 ABY); The Mandalorian and Grogu (c. 9–10 ABY)</dd>
+      <dt>Transition</dt><dd>The New Republic is complacent and unwilling to act against the First Order's growing power. The Hosnian Cataclysm (~34 ABY) — the destruction of the New Republic's capital and fleet by Starkiller Base — effectively ends the New Republic and plunges the galaxy back into open war.</dd>
+    </dl>
+  </div>
+</div>
+
+<!-- RISE OF THE FIRST ORDER -->
+<div class="era-card">
+  <div class="era-card-header">
+    <span class="era era-firstorder">Rise of the First Order</span>
+    <strong>c. 34–35 ABY</strong>
+  </div>
+  <div class="era-card-body">
+    <dl>
+      <dt>Approx. years</dt><dd>~34–35 ABY (the sequel trilogy spans roughly one year)</dd>
+      <dt>Political state</dt><dd>The New Republic is destroyed by the First Order's Starkiller Base weapon. The Resistance — a small private force funded by General Leia Organa — is the only organised opposition. The First Order, formed from Imperial remnants in the Unknown Regions, has emerged as a dominant military power.</dd>
+      <dt>Dominant factions</dt><dd>First Order (Supreme Leader Snoke, then Kylo Ren; the Final Order under Palpatine); the Resistance; scattered New Republic survivors</dd>
+      <dt>Force traditions</dt><dd>Rey's awakening and training (self-taught, tutored by Leia and Luke's writings/Force ghost); Kylo Ren as the Supreme Leader's enforcer; the Knights of Ren; Palpatine's return via Exegol and the Final Order Sith loyalists</dd>
+      <dt>Central conflicts</dt><dd>The destruction of the Hosnian system; the Battle of Crait; the Battle of Exegol; the fall of Palpatine and the Final Order; Kylo Ren's redemption as Ben Solo</dd>
+      <dt>Key screen titles</dt><dd>Star Wars Resistance (34–35 ABY); The Force Awakens (34 ABY); The Last Jedi (34 ABY); The Rise of Skywalker (35 ABY)</dd>
+      <dt>Transition</dt><dd>Palpatine is defeated at Exegol; Ben Solo dies saving Rey. The Final Order fleet is destroyed. The galaxy celebrates, but no clear successor government is established on screen. What comes next — a New Jedi Order, a rebuilt Republic — is an open question in current canon.</dd>
+    </dl>
+  </div>
+</div>
+
+</section>
+
+<!-- ══ SECTION 5 ═══════════════════════════════════════ -->
+<section id="s5">
+<div class="section-number">Section 5</div>
+<h2>Series &amp; Film Reference Cards</h2>
+<p>Individual reference cards for all major canon titles. Ordered chronologically by in-universe setting. Filter by typing a title or era below.</p>
+
+<div class="table-controls">
+  <input type="text" id="s5-search" placeholder="Filter by title, character, faction…" oninput="filterCards(this.value)">
+  <span class="filter-count" id="s5-count"></span>
+</div>
+
+<div class="ref-cards-grid" id="s5-grid">
+
+<div class="ref-card" data-tags="young jedi adventures high republic jedi">
+  <div class="ref-card-head">
+    <div class="rc-title">Young Jedi Adventures</div>
+    <div class="rc-meta"><span class="media">Anim Series</span><span class="status st-ongoing">Ongoing</span><span class="era era-high">High Republic</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2023– (S1 2023–24, S2 2024–25, S3 announced) · Disney Junior / Disney+</dd>
+    <dt>Setting</dt><dd>c. 232 BBY</dd>
+    <dt>Premise</dt><dd>Young Jedi initiates learn, train, and go on adventures in the galaxy during the golden age of the Republic.</dd>
+    <dt>Principal Characters</dt><dd>Kai Brightstar, Lys Solay, Nubs, Nash Durango, Master Yoda (voice)</dd>
+    <dt>Factions</dt><dd>Jedi Order, Galactic Republic</dd>
+    <dt>Connections</dt><dd>High Republic era; shares setting with The Acolyte (different century)</dd>
+    <dt>Prerequisites</dt><dd>None — entry-level; children's series</dd>
+    <dt>Notes</dt><dd>Not listed in StarWars.com main chronological guide. Emmy Award winner (Season 1).</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="acolyte high republic sith jedi mae osha qimir">
+  <div class="ref-card-head">
+    <div class="rc-title">The Acolyte</div>
+    <div class="rc-meta"><span class="media">LA Series</span><span class="status st-cancelled">Cancelled</span><span class="era era-high">High Republic</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2024 · 1 season · 8 eps · Disney+</dd>
+    <dt>Setting</dt><dd>c. 100 BBY</dd>
+    <dt>Premise</dt><dd>Former Jedi Padawan investigates a string of Jedi murders, uncovering a secret Sith tradition at the waning of the High Republic era.</dd>
+    <dt>Principal Characters</dt><dd>Osha, Mae (twins), Sol (Jedi Master), Qimir / "The Stranger," Vernestra Rwoh</dd>
+    <dt>Factions</dt><dd>Jedi Order, secret Sith/dark-side tradition</dd>
+    <dt>Connections</dt><dd>Bridges High Republic publications to the prequel era</dd>
+    <dt>Prerequisites</dt><dd>None — but High Republic novel readers will recognise Vernestra Rwoh</dd>
+    <dt>Notes</dt><dd class="spoiler">Cancelled August 2024 after one season. Significant story threads (the Sith's identity, the twins' fate) are unresolved on screen. Showrunner Leslye Headland confirmed the story was planned for multiple seasons.</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="phantom menace anakin qui-gon obi-wan maul padme">
+  <div class="ref-card-head">
+    <div class="rc-title">★ The Phantom Menace (Episode I)</div>
+    <div class="rc-meta"><span class="media">Film</span><span class="status st-complete">Canon</span><span class="era era-fall">Fall of the Jedi</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>1999 · Theatrical</dd>
+    <dt>Setting</dt><dd>32 BBY</dd>
+    <dt>Premise</dt><dd>Jedi Qui-Gon Jinn and Obi-Wan Kenobi discover a young boy of extraordinary Force potential on Tatooine; the Sith resurface publicly for the first time in a millennium.</dd>
+    <dt>Principal Characters</dt><dd>Qui-Gon Jinn, Obi-Wan Kenobi, Anakin Skywalker, Padmé Amidala, Darth Maul, Darth Sidious (Palpatine), Yoda, Mace Windu, Jar Jar Binks</dd>
+    <dt>Factions</dt><dd>Jedi Order, Galactic Republic, Trade Federation, Sith</dd>
+    <dt>Connections</dt><dd>Direct lead-in to Attack of the Clones; introduces virtually all prequel-era characters</dd>
+    <dt>Prerequisites</dt><dd>None — franchise entry point</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="attack clones anakin padme obi-wan dooku clone army">
+  <div class="ref-card-head">
+    <div class="rc-title">★ Attack of the Clones (Episode II)</div>
+    <div class="rc-meta"><span class="media">Film</span><span class="status st-complete">Canon</span><span class="era era-fall">Fall of the Jedi</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2002 · Theatrical</dd>
+    <dt>Setting</dt><dd>22 BBY</dd>
+    <dt>Premise</dt><dd>The discovery of a secret clone army triggers the Clone Wars; Anakin and Padmé secretly fall in love and wed.</dd>
+    <dt>Principal Characters</dt><dd>Anakin Skywalker, Padmé Amidala, Obi-Wan Kenobi, Count Dooku / Darth Tyranus, Jango Fett, young Boba Fett, Yoda, Mace Windu, Palpatine</dd>
+    <dt>Factions</dt><dd>Jedi Order, Republic, Separatists (CIS), Sith, Kamino cloners</dd>
+    <dt>Connections</dt><dd>Leads directly into The Clone Wars film/series and Revenge of the Sith</dd>
+    <dt>Prerequisites</dt><dd>The Phantom Menace recommended</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="clone wars animated ahsoka anakin rex maul grievous">
+  <div class="ref-card-head">
+    <div class="rc-title">★ The Clone Wars (Film + Series)</div>
+    <div class="rc-meta"><span class="media">Anim Series</span><span class="status st-complete">Complete</span><span class="era era-fall">Fall of the Jedi</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>Film: 2008 · Series: 2008–2020 · 7 seasons · 133 eps + film</dd>
+    <dt>Setting</dt><dd>22–19 BBY</dd>
+    <dt>Premise</dt><dd>The definitive account of the Clone Wars, following Anakin, Obi-Wan, Ahsoka Tano, and Clone Captain Rex through pivotal campaigns, political intrigue, and personal arcs. Season 7 (2020) runs concurrently with Revenge of the Sith.</dd>
+    <dt>Principal Characters</dt><dd>Anakin Skywalker, Ahsoka Tano, Obi-Wan Kenobi, Captain Rex, Darth Maul, Asajj Ventress, Count Dooku, Padmé Amidala, Yoda, Bo-Katan Kryze, Hondo Ohnaka</dd>
+    <dt>Factions</dt><dd>Jedi Order, Republic / GAR, CIS, Sith, Death Watch (Mandalorian splinter group), various crime syndicates</dd>
+    <dt>Connections</dt><dd>Essential prerequisite for Rebels, Ahsoka, The Bad Batch, Tales of the Jedi. Season 7 ("Siege of Mandalore" arc) directly dovetails with Revenge of the Sith.</dd>
+    <dt>Prerequisites</dt><dd>Episodes I–II strongly recommended; works as standalone for casual viewers</dd>
+    <dt>Notes</dt><dd>Non-linear within its run — many story arcs were produced out of broadcast order. The Chronological Episode Guide on StarWars.com gives the preferred viewing order within the series.</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="revenge sith anakin vader order 66 palpatine mustafar">
+  <div class="ref-card-head">
+    <div class="rc-title">★ Revenge of the Sith (Episode III)</div>
+    <div class="rc-meta"><span class="media">Film</span><span class="status st-complete">Canon</span><span class="era era-fall">Fall of the Jedi</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2005 · Theatrical</dd>
+    <dt>Setting</dt><dd>19 BBY</dd>
+    <dt>Premise</dt><dd>Anakin Skywalker, consumed by fear of losing Padmé, turns to the dark side and becomes Darth Vader. Order 66 destroys the Jedi; the Republic becomes the Empire.</dd>
+    <dt>Principal Characters</dt><dd>Anakin Skywalker / Darth Vader, Obi-Wan Kenobi, Padmé Amidala, Emperor Palpatine / Darth Sidious, Yoda, Mace Windu, Ahsoka (referenced), Tarkin</dd>
+    <dt>Factions</dt><dd>Jedi Order (destroyed), Galactic Republic (becomes Empire), Sith, CIS (destroyed)</dd>
+    <dt>Connections</dt><dd>Directly precedes The Bad Batch, Obi-Wan Kenobi, Rebels. Clone Wars Season 7 leads directly into this film. ⚠ Major reveals.</dd>
+    <dt>Prerequisites</dt><dd>Episodes I–II and Clone Wars Season 7 for full context</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="bad batch omega clone force 99 empire crosshair hunter">
+  <div class="ref-card-head">
+    <div class="rc-title">★ The Bad Batch</div>
+    <div class="rc-meta"><span class="media">Anim Series</span><span class="status st-complete">Complete</span><span class="era era-empire">Reign of the Empire</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2021–2024 · 3 seasons · 47 eps · Disney+</dd>
+    <dt>Setting</dt><dd>19–17 BBY</dd>
+    <dt>Premise</dt><dd>Clone Force 99 — Hunter, Wrecker, Tech, Echo, and young Omega — go rogue after Order 66, navigating a galaxy rapidly falling under Imperial control while protecting Omega and uncovering the Empire's secret clone experiments.</dd>
+    <dt>Principal Characters</dt><dd>Hunter, Wrecker, Tech, Echo, Omega, Crosshair, Hemlock (villain), Nala Se, Rampart</dd>
+    <dt>Factions</dt><dd>Galactic Empire, Clone Force 99, Kaminoan scientists, Bounty Hunters' Guild</dd>
+    <dt>Connections</dt><dd>Direct sequel to The Clone Wars (Season 7). Cameos from Saw Gerrera, Fennec Shand, young Caleb Dume (Kanan Jarrus of Rebels), Tarkin. Connects to Rebels era.</dd>
+    <dt>Prerequisites</dt><dd>The Clone Wars strongly recommended; Revenge of the Sith helpful</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="maul shadow lord dave filoni imperial era criminal">
+  <div class="ref-card-head">
+    <div class="rc-title">Maul – Shadow Lord</div>
+    <div class="rc-meta"><span class="media">Anim Series</span><span class="status st-ongoing">S2 Announced</span><span class="era era-empire">Reign of the Empire</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2026– · Season 1 (10 eps) Apr–May 2026 · Disney+</dd>
+    <dt>Setting</dt><dd>c. 17–14 BBY <span class="uncertain-label">Uncertain — c. date</span></dd>
+    <dt>Premise</dt><dd>Maul, alone and adrift after the fall of his criminal empire, rebuilds his power on the planet Janix and encounters a young Jedi Padawan who could be his new apprentice.</dd>
+    <dt>Principal Characters</dt><dd>Maul (Sam Witwer), unnamed Jedi Padawan</dd>
+    <dt>Factions</dt><dd>Shadow Collective remnants, Galactic Empire, Jedi survivors</dd>
+    <dt>Connections</dt><dd>Bridges The Bad Batch and Solo. A five-issue prequel comic (Shadow of Maul, March 2026) provides additional context.</dd>
+    <dt>Prerequisites</dt><dd>The Clone Wars (Maul's return arc, Season 4–5); The Bad Batch helpful for Imperial context</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="solo han chewbacca lando qi'ra kessel run crimson dawn">
+  <div class="ref-card-head">
+    <div class="rc-title">Solo: A Star Wars Story</div>
+    <div class="rc-meta"><span class="media">Film</span><span class="status st-complete">Canon</span><span class="era era-empire">Reign of the Empire</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2018 · Theatrical</dd>
+    <dt>Setting</dt><dd>c. 13–10 BBY</dd>
+    <dt>Premise</dt><dd>Origin story of Han Solo: meeting Chewbacca and Lando Calrissian, making the Kessel Run in under 12 parsecs, and his first brush with criminal syndicates — including a shocking encounter with Maul.</dd>
+    <dt>Principal Characters</dt><dd>Han Solo, Chewbacca, Lando Calrissian, Qi'ra, Tobias Beckett, Maul, Enfys Nest</dd>
+    <dt>Factions</dt><dd>Galactic Empire, Crimson Dawn, Pyke Syndicate, Cloud-Riders (early rebels)</dd>
+    <dt>Connections</dt><dd>Maul's appearance connects to The Clone Wars and Maul – Shadow Lord. Crimson Dawn storyline expanded in canon comics (non-screen).</dd>
+    <dt>Prerequisites</dt><dd>Standalone; Clone Wars Maul arc adds context for the finale</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="obi-wan kenobi tatooine leia inquisitors vader reva">
+  <div class="ref-card-head">
+    <div class="rc-title">Obi-Wan Kenobi</div>
+    <div class="rc-meta"><span class="media">Ltd Series</span><span class="status st-complete">Complete</span><span class="era era-empire">Reign of the Empire</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2022 · 1 season · 6 eps · Disney+</dd>
+    <dt>Setting</dt><dd>9 BBY</dd>
+    <dt>Premise</dt><dd>Obi-Wan Kenobi breaks his Tatooine exile to rescue a kidnapped young Leia from the Imperial Inquisitorius, and faces Darth Vader for the first time since their duel on Mustafar.</dd>
+    <dt>Principal Characters</dt><dd>Obi-Wan Kenobi, Darth Vader / Anakin Skywalker, young Leia Organa, Reva (Third Sister), Grand Inquisitor, Owen Lars</dd>
+    <dt>Factions</dt><dd>Galactic Empire, Inquisitorius, early Rebel sympathisers</dd>
+    <dt>Connections</dt><dd>Directly connects to Revenge of the Sith and A New Hope. Leia's personality and her trust of Obi-Wan in Episode IV is given emotional foundation here.</dd>
+    <dt>Prerequisites</dt><dd>Revenge of the Sith; Episodes IV–VI helpful for emotional resonance</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="andor cassian rebellion dedra meero luthen syril">
+  <div class="ref-card-head">
+    <div class="rc-title">★ Andor</div>
+    <div class="rc-meta"><span class="media">LA Series</span><span class="status st-complete">Complete</span><span class="era era-empire">Reign of the Empire</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2022–2025 · 2 seasons · 24 eps total · Disney+</dd>
+    <dt>Setting</dt><dd>5–0 BBY (Season 1: ~5 BBY; Season 2: ~4–0 BBY)</dd>
+    <dt>Premise</dt><dd>The radicalization of Cassian Andor from self-interested survivor to committed Rebel. Explores the systemic brutality of the Empire and the moral cost of resistance with unmatched dramatic depth.</dd>
+    <dt>Principal Characters</dt><dd>Cassian Andor, Luthen Rael, Mon Mothma, Dedra Meero (ISB), Syril Karn, Bix Caleen, Maarva Andor</dd>
+    <dt>Factions</dt><dd>Galactic Empire / ISB, nascent Rebel Alliance, Fulcrum network</dd>
+    <dt>Connections</dt><dd>Runs concurrently with Rebels in Season 2. Ends immediately before Rogue One; Cassian's journey concludes there. Mon Mothma's arc connects to the formation of the Rebel Alliance.</dd>
+    <dt>Prerequisites</dt><dd>Rogue One (viewing first is fine; context enriches Season 2); standalone-accessible for Season 1</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="rebels kanan hera ezra sabine chopper zeb thrawn fulcrum">
+  <div class="ref-card-head">
+    <div class="rc-title">★ Star Wars Rebels</div>
+    <div class="rc-meta"><span class="media">Anim Series</span><span class="status st-complete">Complete</span><span class="era era-empire">Reign of the Empire</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2014–2018 · 4 seasons · 75 eps · Disney XD / Disney+</dd>
+    <dt>Setting</dt><dd>5–0 BBY (epilogue: ~4–5 ABY)</dd>
+    <dt>Premise</dt><dd>The crew of the Ghost — Jedi Kanan Jarrus, Padawan Ezra Bridger, Hera Syndulla, Sabine Wren, Garazeb "Zeb" Orrelios, and Chopper — become foundational to the Rebel Alliance while navigating the Force, loss, and galactic oppression.</dd>
+    <dt>Principal Characters</dt><dd>Kanan Jarrus, Hera Syndulla, Ezra Bridger, Sabine Wren, Garazeb Orrelios, Chopper, Grand Admiral Thrawn, Ahsoka Tano (Fulcrum), Darth Maul, the Bendu</dd>
+    <dt>Factions</dt><dd>Rebel Alliance (Ghost Crew), Galactic Empire, Mandalorian factions, Nightsister lore</dd>
+    <dt>Connections</dt><dd>Essential prerequisite for Ahsoka. Introduces Thrawn, the Darksaber arc. Concurrent with Andor. Epilogue resolves Sabine and Ahsoka's fates — directly picked up in Ahsoka Season 1. †</dd>
+    <dt>Prerequisites</dt><dd>The Clone Wars recommended (Ahsoka, Maul arcs); benefits enormously from Clone Wars context</dd>
+    <dt>Notes</dt><dd class="spoiler">Season 2–4 contain the World Between Worlds and major Ahsoka / Vader confrontation. See Section 6.</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="rogue one jyn erso cassian k-2so bodhi galen death star">
+  <div class="ref-card-head">
+    <div class="rc-title">★ Rogue One: A Star Wars Story</div>
+    <div class="rc-meta"><span class="media">Film</span><span class="status st-complete">Canon</span><span class="era era-rebellion">Age of Rebellion</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2016 · Theatrical</dd>
+    <dt>Setting</dt><dd>0 BBY</dd>
+    <dt>Premise</dt><dd>Jyn Erso and Cassian Andor lead a mission to steal the Death Star plans — immediately preceding A New Hope. Every member of Rogue One dies in the effort.</dd>
+    <dt>Principal Characters</dt><dd>Jyn Erso, Cassian Andor, K-2SO, Bodhi Rook, Chirrut Îmwe, Baze Malbus, Galen Erso, Grand Moff Tarkin, Darth Vader, Director Krennic</dd>
+    <dt>Factions</dt><dd>Rebel Alliance, Galactic Empire, Death Star project</dd>
+    <dt>Connections</dt><dd>Direct lead-in to A New Hope's opening scene. Andor is the full origin story of Cassian; watch Andor before or after, both work. Saw Gerrera (from Clone Wars and Andor) appears.</dd>
+    <dt>Prerequisites</dt><dd>A New Hope (context); Andor enriches Cassian enormously; standalone-accessible</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="mandalorian din djarin grogu baby yoda mando new republic">
+  <div class="ref-card-head">
+    <div class="rc-title">★ The Mandalorian</div>
+    <div class="rc-meta"><span class="media">LA Series</span><span class="status st-production">Continuing</span><span class="era era-republic">New Republic</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2019–2023 · 3 seasons · 24 eps · Disney+</dd>
+    <dt>Setting</dt><dd>c. 9 ABY</dd>
+    <dt>Premise</dt><dd>Lone Mandalorian bounty hunter Din Djarin ("Mando") is hired to retrieve a Force-sensitive child — Grogu — but instead becomes his protector and adoptive father figure, galvanising the Mando-verse of connected stories.</dd>
+    <dt>Principal Characters</dt><dd>Din Djarin, Grogu, Bo-Katan Kryze, Greef Karga, Cara Dune, Moff Gideon, Ahsoka Tano (cameo), Luke Skywalker (cameo), Boba Fett (cameo)</dd>
+    <dt>Factions</dt><dd>Mandalorian covert, Imperial remnants (Moff Gideon), New Republic, Bounty Hunters' Guild</dd>
+    <dt>Connections</dt><dd>Anchor series for the Mando-verse. Watch before Book of Boba Fett and Ahsoka. BoBF Chapters 5–6 are effectively Mandalorian Season 2.5. Continuing via The Mandalorian and Grogu (film, 2026) and Season 4 (in production).</dd>
+    <dt>Prerequisites</dt><dd>Return of the Jedi (context for New Republic); works as franchise entry point</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="ahsoka tano rebels thrawn sabine ezra purrgil world between worlds">
+  <div class="ref-card-head">
+    <div class="rc-title">★ Ahsoka</div>
+    <div class="rc-meta"><span class="media">LA Series</span><span class="status st-upcoming">S2 Jan 2027</span><span class="era era-republic">New Republic</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>2023– · Season 1 (8 eps) complete; Season 2 premieres Jan 20, 2027 · Disney+</dd>
+    <dt>Setting</dt><dd>c. 9 ABY</dd>
+    <dt>Premise</dt><dd>Ahsoka Tano investigates the return of Grand Admiral Thrawn, is pulled through a Purrgil hyperspace jump to a distant galaxy, and confronts her deepest ties to Anakin Skywalker. Season 2 features Hayden Christensen as Force ghost Anakin; Thrawn declares open war.</dd>
+    <dt>Principal Characters</dt><dd>Ahsoka Tano, Sabine Wren, Hera Syndulla, Ezra Bridger, Grand Admiral Thrawn, Baylan Skoll (Season 1 / recast S2), Shin Hati, Anakin Skywalker (Force ghost, S2)</dd>
+    <dt>Factions</dt><dd>New Republic, Imperial remnant loyalists (Thrawn), Morgan Elsbeth's forces, Nightsisters of Dathomir</dd>
+    <dt>Connections</dt><dd>Direct live-action sequel to Rebels. Requires Rebels for full comprehension — especially the Thrawn arc and Ezra's disappearance. World Between Worlds referenced. †</dd>
+    <dt>Prerequisites</dt><dd>Rebels (Seasons 3–4 critical); The Mandalorian helpful for New Republic context</dd>
+    <dt>Notes</dt><dd>Ray Stevenson (Baylan Skoll) passed away in 2023; the role is recast with Rory McCann for Season 2.</dd>
+  </dl></div>
+</div>
+
+<div class="ref-card" data-tags="mandalorian grogu film theatrical pedro pascal jon favreau">
+  <div class="ref-card-head">
+    <div class="rc-title">★ The Mandalorian and Grogu</div>
+    <div class="rc-meta"><span class="media">Film</span><span class="status st-complete">Canon</span><span class="era era-republic">New Republic</span></div>
+  </div>
+  <div class="ref-card-body"><dl>
+    <dt>Release</dt><dd>May 22, 2026 · Theatrical · PG-13 · 2h 12m</dd>
+    <dt>Setting</dt><dd>c. 9–10 ABY</dd>
+    <dt>Premise</dt><dd>Din Djarin and Grogu are enlisted by the New Republic to confront scattered Imperial warlords. The first Star Wars theatrical film since 2019.</dd>
+    <dt>Principal Characters</dt><dd>Din Djarin (Pedro Pascal), Grogu, plus Sigourney Weaver and Jeremy Allen White (characters undisclosed at research date), Zeb Orrelios (live action debut)</dd>
+    <dt>Factions</dt><dd>New Republic, Imperial warlords</dd>
+    <dt>Connections</dt><dd>Direct continuation of The Mandalorian Season 3. Zeb Orrelios' appearance bridges to Rebels continuity. Directed and produced by Jon Favreau.</dd>
+    <dt>Prerequisites</dt><dd>The Mandalorian Seasons 1–3; The Book of Boba Fett Chapters 5–6</dd>
+  </dl></div>
+</div>
+
+</div><!-- end ref-cards-grid -->
+<p class="inline-note">Cards shown for principal canon titles. LEGO specials, non-canon Visions volumes, and vintage Legends titles are addressed in Sections 6–7.</p>
+</section>
+
+<!-- ══ SECTION 6 ═══════════════════════════════════════ -->
+<section id="s6">
+<div class="section-number">Section 6</div>
+<h2>Alternate Realities, Force Visions &amp; Temporal Anomalies</h2>
+
+<h3>How Star Wars Generally Treats the Force, Destiny, and Visions</h3>
+<p>Star Wars does not operate on a formal multiverse model. The Force is presented as a mystical, living energy field that connects all life — it can show visions of possible futures, echoes of the past, and metaphysical experiences that transcend physical reality. <strong>Not every Force vision creates a separate timeline.</strong> Official Lucasfilm sources treat most visions and anomalous Force experiences as aspects of a single continuous timeline, not branches.</p>
+<div class="callout note"><strong>Official position:</strong> Lucasfilm Story Group has not described Star Wars as a multiverse. The World Between Worlds is a confirmed, in-universe location that enables true temporal intervention in specific instances; it is not a general portal to alternate histories. All confirmed timeline changes via the World Between Worlds remain in the primary canon continuity.</div>
+
+<h3>The World Between Worlds</h3>
+<p>First introduced in <em>Star Wars Rebels</em> Season 4 ("A World Between Worlds"), the World Between Worlds is a mystical plane of existence accessible through a portal on Lothal. It exists outside of conventional time and space, containing doorways into moments throughout history.</p>
+<ul style="font-size:0.85rem; color:var(--text2); padding-left:1.5rem;">
+  <li><strong>Confirmed canonical intervention:</strong> Ezra Bridger pulls Ahsoka Tano from the moment of her duel with Darth Vader on Malachor (Rebels Season 2 finale, "Twilight of the Apprentice"), effectively removing her from that point in time and depositing her into the Season 4 timeframe. This is a <em>confirmed, canon change to the timeline</em> — Ahsoka's survival is explained by this intervention.</li>
+  <li><strong>Ezra's encounter with the Emperor:</strong> Emperor Palpatine attempts to use the World Between Worlds to alter history (specifically to prevent the Battle of Yavin / save the Empire). Ezra and Ahsoka collectively prevent this. The Emperor's attempt fails — no timeline alteration occurs from his effort. <span class="uncertain-label">Interpretive: the exact mechanism Palpatine intended is not fully explained on screen.</span></li>
+  <li><strong>Nature of the space:</strong> Within it, figures from the past and future are visible through doorways but not directly interactable. The space is connected to the Cosmic Force. Its precise rules are not fully defined on screen.</li>
+  <li><strong>Ahsoka (series):</strong> The World Between Worlds is referenced but does not serve as a plot mechanism in Season 1. <span class="uncertain-label">Uncertain — Season 2 scope is not yet known.</span></li>
+</ul>
+
+<h3>Mortis (The Clone Wars, Seasons 3–4)</h3>
+<p>The "Mortis arc" (<em>The Clone Wars</em> Seasons 3–4, episodes "Overlords," "Altar of Mortis," "Ghosts of Mortis") takes Anakin, Obi-Wan, and Ahsoka to a mysterious realm where three powerful Force-wielders — the Father, the Son (dark side), and the Daughter (light side) — maintain the balance of the Force.</p>
+<ul style="font-size:0.85rem; color:var(--text2); padding-left:1.5rem;">
+  <li>The Daughter dies to save Ahsoka's life, transferring her life energy into Ahsoka. This is considered a canonical event contributing to Ahsoka's unusual resilience and Force connection.</li>
+  <li>The Father shows Anakin a vision of his future as Darth Vader — but then wipes his memory of the vision. This is presented in-universe as something that actually happens, not a dream.</li>
+  <li>The arc is widely interpreted as allegorical and mythological in tone. It is <em>not</em> a separate timeline or alternate reality — these events occur within the primary canon continuity.</li>
+  <li><span class="uncertain-label">Interpretive:</span> Whether Mortis is a literal physical location or a Force-created state is left deliberately ambiguous by the showrunners.</li>
+</ul>
+
+<h3>The Mortis Gods and Ahsoka Season 1</h3>
+<p>The imagery and themes of Mortis — particularly the Son and Daughter — reappear symbolically in Ahsoka Season 1 through the Nightsisters and certain visual motifs. Whether this constitutes a direct narrative connection is <span class="uncertain-label">Interpretive — not confirmed by official sources.</span></p>
+
+<h3>Major Force Visions and Prophetic Experiences</h3>
+<p>These are presented as occurring within the primary timeline, not as alternate realities:</p>
+<ul style="font-size:0.85rem; color:var(--text2); padding-left:1.5rem;">
+  <li><strong>Luke's cave vision on Dagobah</strong> (Empire Strikes Back): Luke faces a vision of himself defeating Vader, only to see Vader's face in the helmet. Widely interpreted as a warning or psychological truth about Luke's own darkness. Not a separate timeline.</li>
+  <li><strong>Rey and Kylo Ren's Force bond</strong> (The Last Jedi / The Rise of Skywalker): A dyad in the Force creates a genuine cross-space connection. Not a vision — confirmed real by both characters and by the in-universe Force mechanics established in the films.</li>
+  <li><strong>Anakin's prophetic visions of Padmé's death</strong> (Revenge of the Sith): Arguably self-fulfilling. Not a separate timeline; they occur within the primary continuity and drive the plot.</li>
+  <li><strong>Ahsoka's World Between Worlds experience with Anakin</strong> (Ahsoka Season 1): Ahsoka experiences a Force-mediated encounter with Anakin that revisits their history. <span class="uncertain-label">Interpretive — whether this is a literal Force encounter or a psychological experience is left ambiguous on screen.</span></li>
+</ul>
+
+<h3>Star Wars: Visions — Official Non-Canon Anthology</h3>
+<p>Star Wars: Visions (Volume 1: 2021, Volume 2: 2023) is an officially licensed anthology of animated short films in which Lucasfilm invited animation studios to create their own Star Wars-inspired stories. These are <strong>explicitly non-canon</strong> — they do not occur within the primary continuity and are not intended to. They are celebratory creative expressions of the Star Wars aesthetic by artists worldwide, not story-group-approved additions to the timeline.</p>
+<div class="callout warn"><strong>Not to be confused with canon anthology series</strong> (Tales of the Jedi, Tales of the Empire, Tales of the Underworld), which are fully canonical and produced directly by Lucasfilm Animation.</div>
+
+<h3>Confirmed Continuity Changes vs. Interpretation</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Event</th><th>Status</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Ahsoka saved from Malachor via World Between Worlds</td><td><span class="status st-complete">Confirmed Canon Change</span></td><td>Rebels S4; Dave Filoni interviews</td></tr>
+<tr><td>The Father erasing Anakin's memory of his Vader vision</td><td><span class="status st-complete">Confirmed Canon Event</span></td><td>Clone Wars S3–4 on screen</td></tr>
+<tr><td>Daughter's life energy sustaining Ahsoka</td><td><span class="status st-complete">Confirmed Canon Event</span></td><td>Clone Wars on screen; confirmed by Filoni</td></tr>
+<tr><td>Mortis as literal physical location vs. Force state</td><td><span class="uncertain-label">Interpretive</span></td><td>Deliberately ambiguous; showrunner comments vary</td></tr>
+<tr><td>Ahsoka's WBW encounter with Anakin as literal vs. psychological</td><td><span class="uncertain-label">Interpretive</span></td><td>Not resolved in Ahsoka S1</td></tr>
+<tr><td>Palpatine's WBW attempt to change history</td><td><span class="status st-complete">Failed — no change</span></td><td>Rebels S4 on screen</td></tr>
+<tr><td>Any Visions short as canon event</td><td><span class="status st-cancelled">Non-Canon</span></td><td>Lucasfilm official statement; StarWars.com</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<!-- ══ SECTION 7 ═══════════════════════════════════════ -->
+<section id="s7">
+<div class="section-number">Section 7</div>
+<h2>Legends Companion Guide</h2>
+<div class="callout legend-note"><strong>This section covers a separate continuity.</strong> Legends material does not inform current canon storytelling and should never be merged with the timeline in Sections 1–6. It is presented here as a reference for viewers who encountered these stories and want to understand their relationship to current canon.</div>
+
+<h3>What Is Legends?</h3>
+<p>From 1976 through April 2014, an expansive collection of novels, comics, games, and other materials built out the Star Wars universe under various "levels of canonicity" (C-canon, G-canon, etc.). In April 2014, Lucasfilm declared a clean continuity reset. Everything except the six theatrical films (Episodes I–VI), <em>The Clone Wars</em> animated series, and any newly produced material would be relabeled <strong>Legends</strong> — an officially acknowledged alternate continuity. Legends material remains in print and sale, but no longer informs or constrains current story development.</p>
+
+<h3>What the 2014 Reset Did — and Did Not — Mean</h3>
+<ul style="font-size:0.85rem;color:var(--text2);padding-left:1.5rem;">
+  <li><strong>Did mean:</strong> Characters, events, and history established only in Legends works (Mara Jade, Jacen Solo, the Old Republic era as depicted in KOTOR, the New Jedi Order novels) are no longer canonical facts. New stories may re-use names, concepts, or ideas from Legends without being bound by them.</li>
+  <li><strong>Did not mean:</strong> The six films or The Clone Wars were changed. Material that appeared in those works remained canon regardless of the reset.</li>
+  <li><strong>Did not mean:</strong> Legends is "wrong" or worthless — it is simply a different continuity. Many fans hold both in equal regard.</li>
+  <li><strong>Did not mean:</strong> Canon and Legends will never overlap — new canon occasionally re-canonises a Legends character or concept (e.g., Grand Admiral Thrawn was Legends until his introduction into Rebels in 2016 made him canon).</li>
+</ul>
+
+<h3>Key Legends Eras Relevant to Screen Viewers</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Era</th><th>Approx. Period</th><th>What It Is</th><th>Key Screen-Adjacent Works</th></tr></thead>
+<tbody>
+<tr><td><strong>Tales of the Jedi</strong></td><td>~5,000 BBY</td><td>The ancient Old Republic-era Jedi and Sith; Naga Sadow, Ulic Qel-Droma, Exar Kun. The first detailed Sith war.</td><td>Dark Horse Comics series (comics, not screen)</td></tr>
+<tr><td><strong>Knights of the Old Republic</strong></td><td>~3,956–3,951 BBY</td><td>The Mandalorian Wars and Jedi Civil War; Revan and Malak. One of Legends' most beloved eras, with a distinct cast unrelated to the Skywalker Saga.</td><td>KOTOR video games (not screen); referenced in tone by The Acolyte's era</td></tr>
+<tr><td><strong>The Old Republic</strong></td><td>~3,640 BBY</td><td>Cold war between the Republic and resurgent Sith Empire; large-scale MMO continuity.</td><td>SWTOR MMO (not screen)</td></tr>
+<tr><td><strong>Clone Wars (2003 Micro-Series)</strong></td><td>22–19 BBY</td><td>Genndy Tartakovsky's stylised 2D animated series covering events of the Clone Wars. Became Legends in 2014 when the 2008 series was confirmed as canon. Available on Disney+ (Vintage Collection).</td><td>Available on Disney+; Legends status</td></tr>
+<tr><td><strong>Expanded New Republic</strong></td><td>4–25 ABY</td><td>Extensive novel series covering the New Republic's formation, the Thrawn Trilogy (Mara Jade, Talon Karrde), and Luke's efforts to rebuild the Jedi Order. Timothy Zahn's <em>Heir to the Empire</em> (1991) launched the modern EU.</td><td>Novels only; Thrawn re-canonised in Rebels/Ahsoka (in a new continuity)</td></tr>
+<tr><td><strong>New Jedi Order</strong></td><td>25–30 ABY</td><td>The Yuuzhan Vong War — an extragalactic invasion that killed many beloved characters. Dark and sprawling. No canon equivalent exists.</td><td>19-novel series; not screen</td></tr>
+<tr><td><strong>Legacy</strong></td><td>~130–137 ABY</td><td>Cade Skywalker, a descendant of Luke, in a galaxy dominated by the One Sith. A visually distinctive future.</td><td>Dark Horse Comics; not screen</td></tr>
+</tbody>
+</table></div>
+
+<h3>Legends Titles Currently Available on Disney+</h3>
+<p>Disney+ hosts several Legends works under its "Vintage Collection" banner. These are labeled as historical/legacy content and do not represent current canon:</p>
+<ul style="font-size:0.85rem;color:var(--text2);padding-left:1.5rem;">
+  <li><em>Clone Wars 2D Micro-Series</em> (2003–2005, Genndy Tartakovsky) — Legends</li>
+  <li><em>Caravan of Courage: An Ewok Adventure</em> (1984 TV film) — Legends</li>
+  <li><em>Ewoks: The Battle for Endor</em> (1985 TV film) — Legends</li>
+  <li><em>Droids: The Adventures of R2-D2 and C-3PO</em> (1985 animated series) — Legends</li>
+  <li><em>Ewoks</em> (1985–1986 animated series) — Legends</li>
+  <li><em>The Star Wars Holiday Special</em> (1978) — Legends; officially awkward</li>
+</ul>
+</section>
+
+<!-- ══ SECTION 8 ═══════════════════════════════════════ -->
+<section id="s8">
+<div class="section-number">Section 8</div>
+<h2>Recommended Viewing Paths</h2>
+<p>All paths below are for current canon only. Legends and non-canon Visions titles are excluded unless a path explicitly calls for them. No path is definitively correct — each optimises for a different experience.</p>
+
+<details class="path-card" open>
+  <summary>★ Release Order — First-Time Viewers (Classic Path)</summary>
+  <div class="path-body">
+    <p>The order in which the creative team intended audiences to experience the saga. Preserves all major dramatic reveals, especially the Vader revelation in Episode V. <strong>This is the recommended default for anyone who has never seen Star Wars.</strong></p>
+    <ol>
+      <li>A New Hope (1977)</li>
+      <li>The Empire Strikes Back (1980) ⚠</li>
+      <li>Return of the Jedi (1983)</li>
+      <li>The Phantom Menace (1999)</li>
+      <li>Attack of the Clones (2002)</li>
+      <li>The Clone Wars film (2008)</li>
+      <li>The Clone Wars series (2008–2020) — or continue to Episode III first and return to TCW for full context</li>
+      <li>Revenge of the Sith (2005)</li>
+      <li>Rogue One (2016)</li>
+      <li>The Force Awakens (2015)</li>
+      <li>The Last Jedi (2017)</li>
+      <li>The Rise of Skywalker (2019)</li>
+    </ol>
+    <p>Then add Disney+ series in any order, using the Mando-verse path and Rebels-to-Ahsoka path as guides.</p>
+  </div>
+</details>
+
+<details class="path-card">
+  <summary>Chronological Canon Order</summary>
+  <div class="path-body">
+    <p>Follows the official StarWars.com chronological guide. Optimises for world-building coherence but <strong>significantly weakens the Vader reveal</strong> — you already know Vader's identity before Episode V. Not recommended for first-time viewers unfamiliar with the saga.</p>
+    <ol>
+      <li>Young Jedi Adventures (optional; children's series)</li>
+      <li>The Acolyte (cancelled after S1)</li>
+      <li>The Phantom Menace</li>
+      <li>Attack of the Clones</li>
+      <li>The Clone Wars (film, then series)</li>
+      <li>Tales of the Jedi (interleaved — Dooku arc fits pre-TCW; Ahsoka arc fits post-TCW)</li>
+      <li>Revenge of the Sith</li>
+      <li>Tales of the Empire</li>
+      <li>Tales of the Underworld (Ventress arc fits here)</li>
+      <li>The Bad Batch</li>
+      <li>Maul – Shadow Lord</li>
+      <li>Solo</li>
+      <li>Obi-Wan Kenobi</li>
+      <li>Andor</li>
+      <li>Rebels (concurrent with Andor's later episodes)</li>
+      <li>Rogue One</li>
+      <li>A New Hope → Empire → Return of the Jedi</li>
+      <li>The Mandalorian → Book of Boba Fett (Ch.5–6 in order) → Mandalorian S3</li>
+      <li>Ahsoka Season 1</li>
+      <li>Skeleton Crew</li>
+      <li>The Mandalorian and Grogu (2026)</li>
+      <li>Resistance → Force Awakens → Last Jedi → Rise of Skywalker</li>
+    </ol>
+  </div>
+</details>
+
+<details class="path-card">
+  <summary>Films Only</summary>
+  <div class="path-body">
+    <p>All theatrical canon films in release order. Complete in approximately 20 hours.</p>
+    <ol>
+      <li>A New Hope (1977)</li>
+      <li>The Empire Strikes Back (1980)</li>
+      <li>Return of the Jedi (1983)</li>
+      <li>The Phantom Menace (1999)</li>
+      <li>Attack of the Clones (2002)</li>
+      <li>Revenge of the Sith (2005)</li>
+      <li>The Force Awakens (2015)</li>
+      <li>Rogue One (2016)</li>
+      <li>The Last Jedi (2017)</li>
+      <li>Solo (2018)</li>
+      <li>The Rise of Skywalker (2019)</li>
+      <li>The Mandalorian and Grogu (2026)</li>
+    </ol>
+  </div>
+</details>
+
+<details class="path-card">
+  <summary>Clone Wars / Animation Deep Dive</summary>
+  <div class="path-body">
+    <p>For viewers who want the full animated experience. Heavy time investment (~200+ hours complete); a curated essential path is marked.</p>
+    <ol>
+      <li>★ Attack of the Clones (sets up the war)</li>
+      <li>★ The Clone Wars film (2008)</li>
+      <li>★ The Clone Wars series (2008–2020) — essential arcs: Umbara, Mortis, Onderon, Maul's return, Darth Maul S4–5, Ahsoka's arc S5, Bad Batch S7, Siege of Mandalore S7</li>
+      <li>★ Revenge of the Sith (watch immediately after TCW S7)</li>
+      <li>Tales of the Jedi (all 6 shorts)</li>
+      <li>★ The Bad Batch (3 seasons)</li>
+      <li>Tales of the Empire (all 6 shorts)</li>
+      <li>Tales of the Underworld (all 6 shorts)</li>
+      <li>★ Star Wars Rebels (4 seasons)</li>
+      <li>★ Ahsoka Season 1 (live-action Rebels sequel)</li>
+      <li>Star Wars Resistance (optional; lighter tone, sequel-era setting)</li>
+    </ol>
+  </div>
+</details>
+
+<details class="path-card">
+  <summary>Mando-verse Path (New Republic Era)</summary>
+  <div class="path-body">
+    <p>All content set in the ~9 ABY New Republic era, in the correct viewing order. Requires Return of the Jedi as foundation.</p>
+    <ol>
+      <li>Return of the Jedi (essential foundation)</li>
+      <li>The Mandalorian Season 1 (2019)</li>
+      <li>The Mandalorian Season 2 (2020)</li>
+      <li>The Book of Boba Fett Chapters 1–4 (2021–2022)</li>
+      <li>The Book of Boba Fett Chapters 5–6 (effectively Mandalorian S2.5 — <strong>must watch before Mandalorian S3</strong>)</li>
+      <li>The Book of Boba Fett Chapter 7 (finale)</li>
+      <li>The Mandalorian Season 3 (2023)</li>
+      <li>Ahsoka Season 1 (2023) — <em>note: Rebels context strongly recommended before this</em></li>
+      <li>Skeleton Crew Season 1 (2024)</li>
+      <li>The Mandalorian and Grogu (film, 2026)</li>
+      <li>Ahsoka Season 2 (Jan 2027 — upcoming)</li>
+    </ol>
+  </div>
+</details>
+
+<details class="path-card">
+  <summary>Rebels-to-Ahsoka Path</summary>
+  <div class="path-body">
+    <p>The complete Ahsoka/Rebels narrative thread from the Clone Wars through the live-action continuation.</p>
+    <ol>
+      <li>The Clone Wars — focus on Ahsoka arcs (S1–3 intro, S5 Ahsoka leaves Order, S7 Siege of Mandalore)</li>
+      <li>Revenge of the Sith (concurrent with TCW S7)</li>
+      <li>Tales of the Jedi (Ahsoka arc: 3 shorts)</li>
+      <li>Star Wars Rebels Seasons 1–4 (full series; Ahsoka appears S1–2, disappears S2 finale, returns S4)</li>
+      <li>Tales of the Empire (Morgan Elsbeth origin — connects to Ahsoka antagonists)</li>
+      <li>Ahsoka Season 1 (2023)</li>
+      <li>Ahsoka Season 2 (2027 — upcoming)</li>
+    </ol>
+    <p>Optional supplements: Maul – Shadow Lord (fills the Maul gap between Bad Batch and Solo); The Mandalorian (establishes New Republic setting for Ahsoka).</p>
+  </div>
+</details>
+
+<details class="path-card">
+  <summary>Andor-to-Rogue One-to-Original Trilogy Path</summary>
+  <div class="path-body">
+    <p>The complete Rebel formation thread — the most politically and dramatically mature through-line in canon.</p>
+    <ol>
+      <li>Revenge of the Sith (understand the Empire's birth)</li>
+      <li>Andor Season 1 (2022) — 5 BBY</li>
+      <li>Andor Season 2 (2025) — 4–0 BBY, ends at Rogue One</li>
+      <li>Rebels Seasons 1–4 (concurrent with Andor; both lead into Rogue One)</li>
+      <li>Rogue One (0 BBY — the death star plans stolen)</li>
+      <li>A New Hope (immediately follows Rogue One)</li>
+      <li>The Empire Strikes Back</li>
+      <li>Return of the Jedi</li>
+    </ol>
+    <p><em>Note: Watching Andor Season 2 immediately before Rogue One is particularly powerful — Cassian's complete arc becomes visible.</em></p>
+  </div>
+</details>
+
+<details class="path-card">
+  <summary>⚠ Spoiler-Conscious "Best First Experience" Order</summary>
+  <div class="path-body">
+    <p>Designed for a viewer's very first time with Star Wars — preserves all major reveals, especially the Vader revelation. <strong>Do not show Episodes I–III first to a first-timer.</strong></p>
+    <ol>
+      <li>A New Hope</li>
+      <li>The Empire Strikes Back — the Vader reveal lands correctly here ⚠</li>
+      <li>Return of the Jedi</li>
+      <li><em>Pause. Talk about the galaxy. Let the original trilogy breathe.</em></li>
+      <li>The Phantom Menace (now Vader's origin becomes a tragedy, not a spoiler)</li>
+      <li>Attack of the Clones</li>
+      <li>Revenge of the Sith (devastating, in the right way)</li>
+      <li>The Clone Wars series (now Anakin and Ahsoka are already loved characters)</li>
+      <li>Star Wars Rebels</li>
+      <li>Rogue One</li>
+      <li>The Force Awakens</li>
+      <li>The Last Jedi</li>
+      <li>The Rise of Skywalker</li>
+      <li>The Mandalorian + Mando-verse (victory lap in a galaxy you now love)</li>
+    </ol>
+    <p class="callout warn" style="margin-top:0.75rem;"><strong>Why chronological order hurts first-timers:</strong> Watching Episodes I–III before IV–VI means you already know Darth Vader is Anakin Skywalker — one of cinema's great reveals, carefully engineered across three films, is simply gone. The prequels gain enormous emotional depth when watched after the originals; they become a tragedy rather than a biography.</p>
+  </div>
+</details>
+
+</section>
+
+<!-- ══ SECTION 9 ═══════════════════════════════════════ -->
+<section id="s9">
+<div class="section-number">Section 9</div>
+<h2>Continuity Notes &amp; Caveats</h2>
+
+<h3>The 2003 Clone Wars Micro-Series vs. the 2008 Series</h3>
+<p>These are two different productions covering similar story territory:</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>2003 Micro-Series</th><th>2008 Series</th></tr></thead>
+<tbody>
+<tr><td><strong>Creator</strong></td><td>Genndy Tartakovsky (Cartoon Network)</td><td>Dave Filoni / George Lucas (Lucasfilm)</td></tr>
+<tr><td><strong>Style</strong></td><td>Stylised 2D animation, action-focused, minimal dialogue</td><td>CGI, character-driven, serialised arcs</td></tr>
+<tr><td><strong>Episodes</strong></td><td>25 micro-chapters (~3–12 min each)</td><td>133 episodes (~22 min each) + film</td></tr>
+<tr><td><strong>Canon status</strong></td><td><span class="status st-legends">Legends</span> since 2014</td><td><span class="status st-complete">Current Canon</span></td></tr>
+<tr><td><strong>Availability</strong></td><td>Disney+ (Vintage Collection)</td><td>Disney+ (main library)</td></tr>
+<tr><td><strong>Conflict</strong></td><td>Some events in the 2003 series directly contradict the 2008 series (different portrayal of General Grievous's introduction, different context for certain battles)</td><td>The 2008 series is the canonical account</td></tr>
+</tbody>
+</table></div>
+<p>The 2003 series is presented on Disney+ for historical interest. It tells compelling stories and is beloved by many fans, but viewers should understand its Legends status before treating its events as canon.</p>
+
+<h3>Original Version vs. Special Editions</h3>
+<p>The original trilogy has been revised across every major home video format — each release introduced new changes on top of the previous version, compounding across decades. <strong>The Disney+ version contains at least one change not present on any physical media release.</strong> The original theatrical cuts have never received an official HD release; the closest is the non-anamorphic 2006 DVD bonus disc. This document does not adjudicate between versions — it describes what exists and where.</p>
+
+<h4 style="margin:1.5rem 0 0.6rem;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);">Home Video Release History</h4>
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+  <thead>
+    <tr style="border-bottom:1px solid var(--border);">
+      <th style="text-align:left;padding:0.5rem 0.7rem;color:var(--text3);font-weight:600;white-space:nowrap;">Release</th>
+      <th style="text-align:left;padding:0.5rem 0.7rem;color:var(--text3);font-weight:600;white-space:nowrap;">Year</th>
+      <th style="text-align:left;padding:0.5rem 0.7rem;color:var(--text3);font-weight:600;white-space:nowrap;">Format</th>
+      <th style="text-align:left;padding:0.5rem 0.7rem;color:var(--text3);font-weight:600;">Contains Original Footage?</th>
+      <th style="text-align:left;padding:0.5rem 0.7rem;color:var(--text3);font-weight:600;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom:1px solid var(--border);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">Original Theatrical</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">1977 / 1980 / 1983</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">35mm film</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-complete">Yes — baseline</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">The unaltered theatrical cuts. Only exist as film prints; none issued officially on any high-quality digital format.</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">CBS/Fox VHS</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">1982 – 1986</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">VHS</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-complete">Yes</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">First home video release. Pan-and-scan editions primarily; a widescreen letterbox version also produced. Original theatrical content, limited by VHS quality.</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">LaserDisc</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">1982 – 1993</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">LaserDisc</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-complete">Yes</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">Multiple releases across the decade. The <strong>1993 "Definitive Collection" (THX-certified)</strong> is widely considered the highest-quality preservation of the original theatrical cuts. This master was later used as the source for the 2006 DVD bonus discs.</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">THX VHS</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">1995</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">VHS</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-complete">Yes</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">THX-remastered audio and video. Last major home video release of the original cuts before the Special Editions. Marketed as the definitive version at the time.</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border);background:rgba(212,95,95,0.05);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">Special Editions</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">1997</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">Theatrical + VHS</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-cancelled">No — revised</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">Major revision for the 20th anniversary theatrical re-release. Introduced extensive CGI additions and scene changes across all three films. <em>See changes below.</em></td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border);background:rgba(212,95,95,0.05);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">DVD — Special Edition</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">2004</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">DVD</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-cancelled">No — further revised</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">First DVD release. Based on 1997 SE with additional changes layered on top. <em>See changes below.</em> Heavy DNR (digital noise reduction) applied — controversial for smoothing film grain. Anamorphic widescreen.</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border);background:rgba(77,158,212,0.07);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">DVD — Limited Edition bonus disc</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">2006</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">DVD</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-complete">Yes — original cuts</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);"><strong>The only official modern release of the original unaltered theatrical versions.</strong> Sourced from the 1993 LaserDisc master. Packaged as a bonus disc alongside each 2004 SE DVD. Significant caveats: non-anamorphic (letterboxed, not widescreen-flagged), standard definition, not remastered for DVD. Picture quality is noticeably inferior to the SE disc. Still: it's the OG content.</td>
+    </tr>
+    <tr style="border-bottom:1px solid var(--border);background:rgba(212,95,95,0.05);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">Blu-ray</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">2011</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">Blu-ray</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-cancelled">No — further revised</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">First HD release. Based on 2004 DVD with additional changes. Highest-quality presentation of the SE versions on physical media. <em>See changes below.</em></td>
+    </tr>
+    <tr style="background:rgba(212,95,95,0.05);">
+      <td style="padding:0.5rem 0.7rem;color:var(--text);white-space:nowrap;font-weight:600;">Disney+ Streaming</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">2019 – present</td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);white-space:nowrap;">Streaming (4K HDR)</td>
+      <td style="padding:0.5rem 0.7rem;"><span class="status st-cancelled">No — further revised</span></td>
+      <td style="padding:0.5rem 0.7rem;color:var(--text2);">Based on 2011 Blu-ray masters with at least one exclusive additional change added at Disney+ launch. <em>See changes below.</em> 4K HDR presentation. No physical media equivalent as of 2026.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4 style="margin:1.75rem 0 0.6rem;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);">What Changed and When</h4>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:1rem;margin-bottom:1rem;">
+
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1rem;">
+    <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--text3);margin-bottom:0.6rem;">1997 Special Editions — all three films</div>
+    <ul style="margin:0;padding-left:1.25rem;font-size:0.8rem;color:var(--text2);line-height:1.7;">
+      <li><em>A New Hope:</em> Mos Eisley approach replaced with CGI overhaul; larger CGI dewbacks added; deleted CGI Jabba scene restored (Jabba now confronts Han before departure); Greedo revised to shoot first (Han still fires simultaneously); Biggs restored at Anchorhead (brief)</li>
+      <li><em>Empire Strikes Back:</em> Cloud City exterior windows added (shows cityscape); Wampa scenes extended; Emperor hologram changed to Ian McDiarmid's face (voice still Clive Revill)</li>
+      <li><em>Return of the Jedi:</em> Lapti Nek replaced by "Jedi Rocks" with new CGI musical number at Jabba's palace; Sarlacc given a CGI beak; victory celebration scenes extended across multiple planets (Coruscant, Naboo, Tatooine, Bespin, Endor); Anakin Force ghost remains Sebastian Shaw</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1rem;">
+    <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--text3);margin-bottom:0.6rem;">2004 DVD — additional changes over 1997 SE</div>
+    <ul style="margin:0;padding-left:1.25rem;font-size:0.8rem;color:var(--text2);line-height:1.7;">
+      <li><em>A New Hope:</em> Greedo/Han timing adjusted (both fire near-simultaneously, but Greedo still visually first); further CGI refinements throughout Mos Eisley; Jabba's tail no longer awkwardly passes through Han</li>
+      <li><em>Empire Strikes Back:</em> Emperor hologram scene fully reshot — Ian McDiarmid performs new dialogue aligning with prequel continuity; Clive Revill voice replaced entirely</li>
+      <li><em>Return of the Jedi:</em> Sebastian Shaw's Anakin Force ghost replaced with Hayden Christensen (the most controversial change); Yoda's eyes digitally retouched</li>
+      <li><em>All films:</em> Heavy DNR processing (smoothed grain, controversial); color timing adjustments</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1rem;">
+    <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--text3);margin-bottom:0.6rem;">2011 Blu-ray — additional changes over 2004 DVD</div>
+    <ul style="margin:0;padding-left:1.25rem;font-size:0.8rem;color:var(--text2);line-height:1.7;">
+      <li><em>Return of the Jedi:</em> Vader now shouts "No! No!" before throwing the Emperor into the shaft — inserted from prequel-established Vader voice performance; Ewok eyes digitally widened/made more expressive</li>
+      <li><em>All films:</em> Full HD presentation (1080p); improved color grading vs. the 2004 DNR master; various minor CGI touch-ups and cleanup; Sarlacc beak, Hayden ghost, all prior SE and 2004 changes carried forward</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:1rem;">
+    <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--accent);margin-bottom:0.6rem;">Disney+ (2019) — exclusive change, no physical equivalent</div>
+    <ul style="margin:0;padding-left:1.25rem;font-size:0.8rem;color:var(--text2);line-height:1.7;">
+      <li><em>A New Hope:</em> "Maclunkey!" — George Lucas added a new line of dialogue for Greedo spoken immediately before the cantina confrontation. Greedo says "Maclunkey!" then draws and fires; Han fires back. This change was added at Disney+ launch in 2019 and exists only in the streaming version. It is not present on any Blu-ray, DVD, or earlier format.</li>
+      <li><em>All films:</em> 4K HDR presentation (upscaled from 2011 master); based on 2011 Blu-ray with all prior changes carried forward plus the above</li>
+    </ul>
+    <div style="margin-top:0.6rem;font-size:0.75rem;color:var(--text3);">As of 2026, no 4K UHD physical media release of the original trilogy exists. Disney+ is the only source for HDR presentation of these films.</div>
+  </div>
+
+</div>
+
+<div class="callout" style="margin-top:0;">
+  <strong>If you want to watch the closest thing to the original cuts:</strong> The 2006 DVD bonus discs are the only official option — sourced from the 1993 LaserDisc master, standard definition, non-anamorphic letterbox. Fan restoration projects (most notably Harmy's "Despecialized Edition") exist and are widely discussed online but are unofficial. The original theatrical film prints are held by the Academy Film Archive and have been screened publicly on rare occasions, but no high-quality digital transfer of the original versions has been officially released.
+</div>
+
+<h3>Evolving Production Choices and Retroactive Continuity</h3>
+<p>Several creative decisions in later productions create tension with earlier material. This document describes these as <em>evolving production choices</em> unless official sources explicitly describe them as corrections or errors.</p>
+<ul style="font-size:0.85rem;color:var(--text2);padding-left:1.5rem;">
+  <li><strong>Obi-Wan Kenobi and Ahsoka's non-recognition:</strong> A New Hope implies Obi-Wan had not seen a Jedi in a long time. Obi-Wan Kenobi (2022) shows them interacting as recently as ~9 BBY, and Ahsoka is alive and a known figure in the Rebel network. The films' dialogue is interpreted by production teams as referring to active Jedi, not former Padawans. <span class="uncertain-label">Interpretive — not explicitly addressed on screen.</span></li>
+  <li><strong>Leia's memory of her mother:</strong> In Return of the Jedi, Leia says she has "just images, feelings" of her mother, who was "very beautiful, kind, but sad." In Revenge of the Sith, Padmé dies immediately after childbirth. Lucasfilm has not officially resolved this; fan explanations include the Force, implanted memories, or the films simply being made decades apart. <span class="uncertain-label">Unresolved.</span></li>
+  <li><strong>Darth Maul's survival:</strong> Maul was cut in half in Episode I. His survival, first shown in The Clone Wars Season 4, was a retcon introduced by Dave Filoni and approved by George Lucas. It is confirmed canon; the in-universe explanation involves Force-fueled survival and mechanical legs.</li>
+  <li><strong>Cassian Andor's age:</strong> Andor (series) established Cassian was taken by the Separatists as a young child during the Clone Wars (~22–19 BBY). This makes him approximately 26–28 in Rogue One — consistent with Diego Luna's appearance but not explicitly stated in the film.</li>
+  <li><strong>The Ahsoka/Vader duel resolution:</strong> Rebels Season 2 showed the duel's initiation; Season 4's World Between Worlds revealed Ahsoka survived. This is not a retcon — the original broadcast of the S2 finale left her fate deliberately ambiguous. The Season 4 explanation is the intended canonical resolution.</li>
+</ul>
+
+<h3>Deleted Scenes and Director's Intent</h3>
+<p>Deleted scenes are not canon unless they appear in a released, official cut. Director's intent and pre-production material (concept art, early scripts) are informative context but not canonical facts. This document does not cite them as timeline evidence.</p>
+
+<h3>Episode Chronology Within Series</h3>
+<p>The Clone Wars was produced and broadcast partly out of story-order due to production timelines and network scheduling. Lucasfilm has published an official "Chronological Episode Guide" on StarWars.com. For the purposes of this document, all Clone Wars content is treated as covering 22–19 BBY without tracking individual episode placements.</p>
+
+<h3>Uncertainty About Announced Projects</h3>
+<p>All announced-but-unaired projects have <span class="uncertain-label">Uncertain</span> status in this document. Their in-universe placement, cast, and canonical details may change before release. Projects currently in this category: The Mandalorian Season 4, Ahsoka Season 2 (Jan 2027 confirmed), any further Mando-verse or High Republic productions not yet formally announced.</p>
+</section>
+
+<hr>
+
+<!-- ══ SOURCES ═══════════════════════════════════════ -->
+<section id="sources">
+<h2>Sources</h2>
+<ul class="sources-list">
+  <li><a href="https://www.starwars.com/news/star-wars-movies-and-series-guide" target="_blank">StarWars.com — "Star Wars Movies and Series Viewing Guide" (updated May 2025)</a> — Official chronological order; series status; all primary release data</li>
+  <li><a href="https://www.imdb.com/news/ni64940977/" target="_blank">IMDB / Variety — Andor Season 2 premiere date (April 22, 2025)</a></li>
+  <li><a href="https://deadline.com/2024/08/the-acolyte-canceled-no-season-2-star-wars-disney-plus-1236044233/" target="_blank">Deadline — "The Acolyte Canceled: No Season 2" (August 2024)</a></li>
+  <li><a href="https://starwars.fandom.com/wiki/Star_Wars:_Maul_-_Shadow_Lord" target="_blank">Wookieepedia — Star Wars: Maul – Shadow Lord (Season 1 details, April–May 2026)</a></li>
+  <li><a href="https://www.starwars.com/news/star-wars-maul-shadow-lord-season-2" target="_blank">StarWars.com — Maul – Shadow Lord Season 2 announcement</a></li>
+  <li><a href="https://allears.net/2026/08/15/release-date-and-trailer-for-ahsoka-2-on-disney/" target="_blank">AllEars.net — Ahsoka Season 2 release date and trailer (August 15, 2026)</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/The_Mandalorian_and_Grogu" target="_blank">Wikipedia — The Mandalorian and Grogu (May 22, 2026; cast; director)</a></li>
+  <li><a href="https://starwars.fandom.com/wiki/Star_Wars:_Tales_of_the_Underworld" target="_blank">Wookieepedia — Tales of the Underworld (6 shorts; May 4, 2025)</a></li>
+  <li><a href="https://www.starwars.com/news/young-jedi-adventures-season-3" target="_blank">StarWars.com — Young Jedi Adventures Season 3 announcement</a></li>
+  <li><a href="https://www.cancelledscifi.com/2026/02/12/sci-fi-tv-production-report-work-begins-on-the-mandalorian-season-4-skeleton-crew-season-2-and-more/" target="_blank">CancelledSciFi.com — Production begins on Mandalorian Season 4 and Skeleton Crew Season 2 (February 2026)</a></li>
+  <li><a href="https://starwars.fandom.com/wiki/Star_Wars:_Visions_Volume_2" target="_blank">Wookieepedia — Star Wars: Visions Volume 2 (May 4, 2023; global studios)</a></li>
+  <li>StarWars.com Databank — Era definitions and official designations (accessed September 2026)</li>
+  <li>Wookieepedia (starwars.fandom.com) — BBY/ABY dating conventions; individual title placements (accessed September 2026)</li>
+</ul>
+</section>
+
+<!-- ══ FUTURE UPDATES ══════════════════════════════════ -->
+<section id="future">
+<h2>Future Updates</h2>
+<p>Items to revisit as new information becomes available:</p>
+<ul class="future-list">
+  <li><strong>Ahsoka Season 2 (premieres Jan 20, 2027):</strong> Precise in-universe placement, World Between Worlds involvement (if any), resolution of Baylan Skoll's arc with new actor Rory McCann, Thrawn's declared war and its connection to the Mando-verse timeline.</li>
+  <li><strong>The Mandalorian Season 4:</strong> Confirmed in production (c. early 2026) but no release date. Placement relative to Mandalorian and Grogu film TBD — unknown whether it precedes or follows the film.</li>
+  <li><strong>Skeleton Crew Season 2:</strong> In production c. early 2026; no release date or confirmed renewal announcement. When released, precise Mando-verse placement may be clarified.</li>
+  <li><strong>Maul – Shadow Lord Season 2:</strong> Announced; no release date. Will affect Maul's timeline placement and the c. 17–14 BBY date estimate.</li>
+  <li><strong>Young Jedi Adventures Season 3:</strong> Announced; no release date. Precise High Republic setting (~232 BBY) to be verified against official season 3 materials.</li>
+  <li><strong>The Acolyte unresolved story threads:</strong> If the cancelled series is ever revisited (via another format, comic, or novel), the ~100 BBY Sith storyline may receive canonical resolution on screen.</li>
+  <li><strong>Any new theatrical film announcements:</strong> Multiple projects have been reported in development (Sharmeen Obaid-Chinoy / Daisy Ridley New Jedi Order film; Filoni's film connecting Mando-verse to sequels). None have confirmed release dates as of September 2026. If confirmed, this document needs a post-sequel era section.</li>
+  <li><strong>High Republic era expansion:</strong> The on-screen High Republic era (Young Jedi Adventures, The Acolyte) covers only two narrow windows (~232 BBY, ~100 BBY). Announced projects may fill the centuries between them.</li>
+  <li><strong>Tales anthology continuation:</strong> Whether a fourth "Tales of the ___" anthology follows Tales of the Underworld is unconfirmed.</li>
+  <li><strong>Clone Wars chronological episode guide:</strong> Individual episode placements within The Clone Wars (22–19 BBY) are tracked separately on StarWars.com; this document does not enumerate them.</li>
+</ul>
+</section>
+
+<p class="inline-note" style="margin-top:2rem;">Document compiled September 2026. All BBY/ABY dates are fan-convention approximations from Lucasfilm reference materials unless otherwise noted. All uncertain claims are labeled. Never invent dates, placements, or canon status — if in doubt, consult StarWars.com and Wookieepedia directly.</p>
+
+</main>
+
+<script>
+// ── Theme toggle ───────────────────────────────────────
+function toggleTheme() {
+  const root = document.documentElement;
+  const btn  = document.getElementById('theme-toggle');
+  if (root.getAttribute('data-theme') === 'light') {
+    root.removeAttribute('data-theme');
+    localStorage.removeItem('sw-theme');
+    if (btn) btn.textContent = '◐ TOGGLE THEME';
+  } else {
+    root.setAttribute('data-theme', 'light');
+    localStorage.setItem('sw-theme', 'light');
+    if (btn) btn.textContent = '◑ TOGGLE THEME';
+  }
+}
+(function() {
+  if (localStorage.getItem('sw-theme') === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '◑ TOGGLE THEME';
+  }
+})();
+
+// ── Table sorting ──────────────────────────────────────
+function sortTable(tableId, col) {
+  const tbl = document.getElementById(tableId);
+  if (!tbl) return;
+  const tbody = tbl.querySelector('tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  const th = tbl.querySelectorAll('thead th')[col];
+  const asc = th.classList.contains('sorted-asc');
+  tbl.querySelectorAll('thead th').forEach(t => t.classList.remove('sorted-asc','sorted-desc'));
+  th.classList.add(asc ? 'sorted-desc' : 'sorted-asc');
+  rows.sort((a, b) => {
+    const at = a.querySelectorAll('td')[col]?.textContent.trim() || '';
+    const bt = b.querySelectorAll('td')[col]?.textContent.trim() || '';
+    const cmp = at.localeCompare(bt, undefined, {numeric: true, sensitivity: 'base'});
+    return asc ? -cmp : cmp;
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const tbl = th.closest('table');
+    sortTable(tbl.id, parseInt(th.dataset.col));
+  });
+});
+
+// ── Table text filter ──────────────────────────────────
+function filterTable(tableId, query, countId) {
+  const tbl = document.getElementById(tableId);
+  if (!tbl) return;
+  const q = query.toLowerCase();
+  const rows = tbl.querySelectorAll('tbody tr');
+  let visible = 0;
+  rows.forEach(r => {
+    const match = r.textContent.toLowerCase().includes(q);
+    r.hidden = !match;
+    if (match) visible++;
+  });
+  const cnt = document.getElementById(countId);
+  if (cnt) cnt.textContent = q ? `${visible} of ${rows.length} shown` : '';
+}
+
+// ── Era dropdown filter ────────────────────────────────
+function filterTableByEra(tableId, era, countId) {
+  const tbl = document.getElementById(tableId);
+  if (!tbl) return;
+  const rows = tbl.querySelectorAll('tbody tr');
+  let visible = 0;
+  rows.forEach(r => {
+    const match = !era || (r.dataset.era || '').includes(era);
+    r.hidden = !match;
+    if (match) visible++;
+  });
+  const cnt = document.getElementById(countId);
+  if (cnt) cnt.textContent = era ? `${visible} of ${rows.length} shown` : '';
+}
+
+// ── Reference card filter ──────────────────────────────
+function filterCards(query) {
+  const q = query.toLowerCase();
+  const cards = document.querySelectorAll('#s5-grid .ref-card');
+  let visible = 0;
+  cards.forEach(c => {
+    const txt = (c.textContent + ' ' + (c.dataset.tags || '')).toLowerCase();
+    const match = txt.includes(q);
+    c.hidden = !match;
+    if (match) visible++;
+  });
+  const cnt = document.getElementById('s5-count');
+  if (cnt) cnt.textContent = q ? `${visible} of ${cards.length} shown` : '';
+}
+
+// ── Constrain Seasons/Eps column via wrapper div ────────
+(function() {
+  const tbl = document.getElementById('s2-table');
+  if (!tbl) return;
+  tbl.querySelectorAll('tbody tr, thead tr').forEach(row => {
+    const cell = row.querySelectorAll('td, th')[4]; // 5th column (0-indexed)
+    if (!cell) return;
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'width:130px;white-space:normal;';
+    while (cell.firstChild) wrapper.appendChild(cell.firstChild);
+    cell.appendChild(wrapper);
+  });
+})();
+
+// ── Merge summary column into title cell (s2-table) ────
+(function() {
+  const tbl = document.getElementById('s2-table');
+  if (!tbl) return;
+  tbl.querySelectorAll('tbody tr').forEach(row => {
+    const titleCell = row.querySelectorAll('td')[1];
+    const summaryCell = row.querySelector('td.col-summary');
+    if (!titleCell || !summaryCell) return;
+    const text = summaryCell.textContent.trim();
+    if (text) {
+      const d = document.createElement('div');
+      d.className = 'td-summary-inline';
+      d.textContent = text;
+      titleCell.appendChild(d);
+    }
+    summaryCell.hidden = true;
+  });
+  const lastTh = tbl.querySelector('thead th:last-child');
+  if (lastTh) lastTh.hidden = true;
+})();
+
+// ── Prevent legend date text from breaking mid-number ──
+document.querySelectorAll('.legend-box .badge-row').forEach(row => {
+  row.childNodes.forEach(node => {
+    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+      const s = document.createElement('span');
+      s.style.whiteSpace = 'nowrap';
+      s.textContent = node.textContent;
+      node.replaceWith(s);
+    }
+  });
+});
+
+// ── Smooth scroll active nav ───────────────────────────
+const sections = document.querySelectorAll('section[id], section[id]');
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.style.borderLeftColor = '');
+      const active = document.querySelector(`nav a[href="#${e.target.id}"]`);
+      if (active) { active.style.color = 'var(--text)'; active.style.borderLeftColor = 'var(--accent)'; }
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

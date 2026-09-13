@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPACENERD</title>
+  <meta name="description" content="Fan reference hub for Star Trek, Star Wars, and whatever comes next.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Deliberate single-theme: deep space dark ── */
+    :root {
+      --bg:       #040a13;
+      --surface:  #0b1628;
+      --surface2: #122038;
+      --border:   #1a3050;
+      --text:     #dce4f0;
+      --text2:    #7a90aa;
+      --amber:    #f0a500;
+      --gold:     #c9a84c;
+      --teal:     #00b8c0;
+      --fd: 'Antonio', sans-serif;
+      --fb: 'Source Sans 3', sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--fb);
+      overflow-x: hidden;
+    }
+
+    /* ── Starfield canvas ── */
+    #stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Layout ── */
+    main {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 4rem 2rem 3rem;
+      gap: 0;
+    }
+
+    /* ── Emblem ── */
+    .emblem-wrap {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin-bottom: 2.75rem;
+    }
+
+    .emblem-glow {
+      position: absolute;
+      inset: -30px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,165,0,0.07) 0%, transparent 65%);
+      pointer-events: none;
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 1.2; }
+    }
+
+    #globe {
+      display: block;
+      width: 200px;
+      height: 200px;
+    }
+
+    /* ── Brand ── */
+    .brand {
+      font-family: var(--fd);
+      font-size: clamp(2.6rem, 9vw, 5.2rem);
+      font-weight: 700;
+      letter-spacing: 0.36em;
+      color: var(--text);
+      text-transform: uppercase;
+      line-height: 1;
+      /* compensate for trailing letter-spacing */
+      padding-right: 0.36em;
+    }
+
+    .tagline {
+      font-family: var(--fb);
+      font-style: italic;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text2);
+      letter-spacing: 0.06em;
+      margin-top: 0.65rem;
+      margin-bottom: 3.75rem;
+    }
+
+    /* ── Nav cards ── */
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 265px);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .nav-grid {
+        grid-template-columns: min(320px, 90vw);
+      }
+    }
+
+    .nav-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 2px;
+      padding: 0 1.75rem 1.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    }
+
+    .nav-card-top {
+      height: 3px;
+      background: var(--c-accent, var(--border));
+      margin: 0 -1px 1.6rem;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .nav-card:hover {
+      background: var(--surface2);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .nav-card.trek    { --c-accent: var(--amber); }
+    .nav-card.wars    { --c-accent: var(--gold); }
+    .nav-card.future  { --c-accent: var(--teal); opacity: 0.45; pointer-events: none; }
+
+    .card-label {
+      font-family: var(--fm);
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-accent, var(--text2));
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-family: var(--fd);
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+      text-wrap: balance;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text2);
+    }
+
+    .card-cta {
+      display: inline-block;
+      font-family: var(--fm);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--c-accent);
+      margin-top: 1.5rem;
+    }
+
+    .card-cta::after { content: ' →'; }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      font-family: var(--fm);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #253545;
+    }
+
+    footer a {
+      color: #2e4560;
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--text2); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .emblem-glow { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<main>
+  <div class="emblem-wrap">
+    <div class="emblem-glow"></div>
+    <canvas id="globe"></canvas>
+  </div>
+
+  <h1 class="brand">SPACENERD</h1>
+  <p class="tagline">to boldly nerd…</p>
+
+  <nav class="nav-grid">
+    <a class="nav-card trek" href="Star Trek/trek-timeline.html">
+      <div class="nav-card-top"></div>
+      <div class="card-label">Timeline Reference</div>
+      <div class="card-title">Star Trek</div>
+      <div class="card-desc">All 28 screen productions across Prime, Kelvin, Mirror, and alternate timelines — 1966 to present. Sortable, filterable, with 10+ alternate timeline deep-dives.</div>
+      <span class="card-cta">Explore</span>
+    </a>
+
+    <a class="nav-card wars" href="Star Wars/star-wars-timeline.html">
+      <div class="nav-card-top"></div>
+      <div class="card-label">Canon Guide</div>
+      <div class="card-title">Star Wars</div>
+      <div class="card-desc">The complete Disney Canon era — films, animated series, and live-action television in in-universe chronological order from the High Republic to the New Republic.</div>
+      <span class="card-cta">Explore</span>
+    </a>
+
+    <div class="nav-card future">
+      <div class="nav-card-top"></div>
+      <div class="card-label">Coming Soon</div>
+      <div class="card-title">Next Mission</div>
+      <div class="card-desc">More deep dives in progress. The universe is large and the nerd is thorough.</div>
+    </div>
+  </nav>
+</main>
+
+<footer>
+  <a href="https://github.com/trvanlin/spacenerd">trvanlin.github.io/spacenerd</a>
+  &nbsp;·&nbsp; fan reference &nbsp;·&nbsp; not affiliated with any studio
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  Starfield
+// ════════════════════════════════════════════════════════
+const starCanvas = document.getElementById('stars');
+const starCtx    = starCanvas.getContext('2d');
+
+function resizeStars() {
+  starCanvas.width  = window.innerWidth;
+  starCanvas.height = window.innerHeight;
+}
+resizeStars();
+window.addEventListener('resize', resizeStars);
+
+const STAR_COUNT = 260;
+const STARS = Array.from({ length: STAR_COUNT }, () => ({
+  x:  Math.random(),
+  y:  Math.random(),
+  r:  Math.random() * 1.1 + 0.15,
+  a:  Math.random() * 0.65 + 0.12,
+  twinkles:  Math.random() > 0.62,
+  phase:     Math.random() * Math.PI * 2,
+  speed:     (Math.random() * 0.4 + 0.1) * (Math.random() > 0.5 ? 1 : -1) * 0.008,
+}));
+
+function drawStars() {
+  const w = starCanvas.width, h = starCanvas.height;
+  starCtx.clearRect(0, 0, w, h);
+  for (const s of STARS) {
+    if (s.twinkles) s.phase += s.speed;
+    const alpha = s.twinkles ? s.a * (0.45 + 0.55 * Math.abs(Math.sin(s.phase))) : s.a;
+    starCtx.beginPath();
+    starCtx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2);
+    starCtx.fillStyle = `rgba(220,230,245,${alpha.toFixed(3)})`;
+    starCtx.fill();
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  Globe emblem
+// ════════════════════════════════════════════════════════
+const globeCanvas = document.getElementById('globe');
+const gCtx        = globeCanvas.getContext('2d');
+const DPR  = Math.min(window.devicePixelRatio || 1, 2);
+const GW   = 200, GH = 200;
+globeCanvas.width  = GW * DPR;
+globeCanvas.height = GH * DPR;
+gCtx.scale(DPR, DPR);
+
+const CX = GW / 2, CY = GH / 2;
+const GR = 72;   // globe radius
+
+// Pre-seed stars scattered on the globe face
+const GLOBE_DOTS = (() => {
+  const dots = [];
+  while (dots.length < 48) {
+    const x = (Math.random() * 2 - 1) * GR;
+    const y = (Math.random() * 2 - 1) * GR;
+    if (x*x + y*y <= GR*GR * 0.92) {
+      dots.push({ x, y, r: Math.random() * 0.85 + 0.2, a: Math.random() * 0.55 + 0.25 });
+    }
+  }
+  return dots;
+})();
+
+// ── Satellite ─────────────────────────────────────────
+const ORBIT_R     = GR + 24;
+const ORBIT_SPEED = (2 * Math.PI) / 38;   // one orbit every 38 s
+
+function drawSatellite(ctx, cx, cy, angle) {
+  const sx = cx + ORBIT_R * Math.cos(angle);
+  const sy = cy + ORBIT_R * Math.sin(angle);
+
+  ctx.save();
+  ctx.translate(sx, sy);
+  // rotate so local +x = radial outward (solar panels point toward/away from globe)
+  ctx.rotate(angle);
+
+  // Solar panels (along local x-axis)
+  const panelL = 7, panelW = 1.8;
+  ctx.fillStyle = 'rgba(240,165,0,0.72)';
+  ctx.fillRect(-3 - panelL, -panelW / 2, panelL, panelW);
+  ctx.fillRect(3,            -panelW / 2, panelL, panelW);
+
+  // Body
+  ctx.beginPath();
+  ctx.arc(0, 0, 2.8, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,195,60,0.95)';
+  ctx.fill();
+
+  // Glow
+  const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, 9);
+  glow.addColorStop(0, 'rgba(240,165,0,0.28)');
+  glow.addColorStop(1, 'rgba(240,165,0,0)');
+  ctx.beginPath();
+  ctx.arc(0, 0, 9, 0, Math.PI * 2);
+  ctx.fillStyle = glow;
+  ctx.fill();
+
+  ctx.restore();
+
+  // Faint orbital trail (45° arc behind satellite)
+  const trailLen = Math.PI / 4;
+  ctx.beginPath();
+  ctx.arc(cx, cy, ORBIT_R, angle - trailLen, angle);
+  const trailGrad = ctx.createConicalGradient
+    ? null   // not supported; fall back to uniform
+    : null;
+  ctx.strokeStyle = 'rgba(240,165,0,0.18)';
+  ctx.lineWidth   = 1.2;
+  ctx.stroke();
+}
+
+// ── Globe ─────────────────────────────────────────────
+function drawGlobe(t) {   // t = raw seconds
+  const ctx = gCtx;
+  ctx.clearRect(0, 0, GW, GH);
+
+  // ── Outer rings ──
+  // Dashed orbit track
+  ctx.beginPath();
+  ctx.arc(CX, CY, ORBIT_R, 0, Math.PI * 2);
+  ctx.setLineDash([2.5, 5]);
+  ctx.strokeStyle = 'rgba(240,165,0,0.2)';
+  ctx.lineWidth = 0.8;
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+
+  // ── Globe fill (clip) ──
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(CX, CY, GR, 0, Math.PI * 2);
+  const bg = ctx.createRadialGradient(CX - 18, CY - 22, 0, CX, CY, GR);
+  bg.addColorStop(0, '#0d1e38');
+  bg.addColorStop(1, '#040a13');
+  ctx.fillStyle = bg;
+  ctx.fill();
+  ctx.clip();
+
+  // Stars
+  for (const s of GLOBE_DOTS) {
+    ctx.beginPath();
+    ctx.arc(CX + s.x, CY + s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(220,230,245,${s.a})`;
+    ctx.fill();
+  }
+
+  // Latitude lines (5 parallels)
+  const latitudes = [-0.65, -0.35, 0, 0.35, 0.65];
+  for (const d of latitudes) {
+    const yOff = d * GR;
+    const rx   = Math.sqrt(GR * GR - yOff * yOff);
+    const ry   = rx * 0.17;
+    const isEq = d === 0;
+    ctx.beginPath();
+    ctx.ellipse(CX, CY + yOff, rx, ry, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(240,165,0,${isEq ? 0.38 : 0.18})`;
+    ctx.lineWidth   = isEq ? 1.0 : 0.65;
+    ctx.stroke();
+  }
+
+  // Longitude lines — rotating
+  for (let i = 0; i < 7; i++) {
+    const phase = t * SPIN + i * Math.PI / 7;
+    const rx    = Math.abs(Math.cos(phase)) * GR;
+    if (rx < 0.8) continue;
+    const a = 0.08 + 0.3 * Math.abs(Math.cos(phase));
+    ctx.beginPath();
+    ctx.ellipse(CX, CY, rx, GR, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(240,165,0,${a.toFixed(3)})`;
+    ctx.lineWidth   = 0.65;
+    ctx.stroke();
+  }
+
+  ctx.restore();
+
+  // Globe border
+  ctx.beginPath();
+  ctx.arc(CX, CY, GR, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(240,165,0,0.62)';
+  ctx.lineWidth   = 1.5;
+  ctx.stroke();
+
+  // Satellite in orbit
+  drawSatellite(ctx, CX, CY, t * ORBIT_SPEED);
+
+}
+
+// ════════════════════════════════════════════════════════
+//  Animation loop
+// ════════════════════════════════════════════════════════
+const SPIN = 0.28;   // radians per second
+let   t0   = null;
+
+function frame(ts) {
+  if (!t0) t0 = ts;
+  const t = (ts - t0) / 1000;
+  drawStars();
+  drawGlobe(t);
+  requestAnimationFrame(frame);
+}
+
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
