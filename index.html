@@ -61,8 +61,8 @@
     /* ── Emblem ── */
     .emblem-wrap {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 240px;
+      height: 240px;
       margin-bottom: 2.75rem;
     }
 
@@ -82,8 +82,8 @@
 
     #globe {
       display: block;
-      width: 200px;
-      height: 200px;
+      width: 240px;
+      height: 240px;
     }
 
     /* ── Brand ── */
@@ -302,7 +302,7 @@ function drawStars() {
 const globeCanvas = document.getElementById('globe');
 const gCtx        = globeCanvas.getContext('2d');
 const DPR  = Math.min(window.devicePixelRatio || 1, 2);
-const GW   = 200, GH = 200;
+const GW   = 240, GH = 240;
 globeCanvas.width  = GW * DPR;
 globeCanvas.height = GH * DPR;
 gCtx.scale(DPR, DPR);
