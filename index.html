@@ -332,8 +332,7 @@ function drawSatellite(ctx, cx, cy, angle) {
 
   ctx.save();
   ctx.translate(sx, sy);
-  // rotate so local +x = radial outward (solar panels point toward/away from globe)
-  ctx.rotate(angle);
+  // no rotation — panels stay as fixed horizontal wings
 
   // Solar panels (along local x-axis)
   const panelL = 7, panelW = 1.8;
