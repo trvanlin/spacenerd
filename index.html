@@ -131,7 +131,8 @@
     }
 
     .nav-card {
-      display: block;
+      display: flex;
+      flex-direction: column;
       background: var(--surface);
       border: 1px solid var(--border);
       border-top: none;
@@ -184,18 +185,31 @@
       font-size: 0.875rem;
       line-height: 1.65;
       color: var(--text2);
+      flex: 1;
+    }
+
+    .card-footer {
+      margin-top: 1.5rem;
     }
 
     .card-cta {
-      display: inline-block;
+      display: block;
       font-family: var(--fm);
       font-size: 0.7rem;
       letter-spacing: 0.1em;
       color: var(--c-accent);
-      margin-top: 1.5rem;
     }
 
     .card-cta::after { content: ' →'; }
+
+    .card-date {
+      display: block;
+      font-family: var(--fm);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      color: #2a3d52;
+      margin-top: 0.35rem;
+    }
 
     /* ── Footer ── */
     footer {
@@ -235,12 +249,26 @@
   <p class="tagline">to boldly nerd…</p>
 
   <nav class="nav-grid">
+    <a class="nav-card bttf" href="Back to the Future/bttf-timeline.html">
+      <div class="nav-card-top"></div>
+      <div class="card-label">Trilogy Reference</div>
+      <div class="card-title">Back to the Future</div>
+      <div class="card-desc">All three films, the time travel rules, the Biffhorrific branch, and the continuity notes — plus a chalkboard timeline map in progress.</div>
+      <div class="card-footer">
+        <span class="card-cta">Explore</span>
+        <span class="card-date">Updated Sep 2026</span>
+      </div>
+    </a>
+
     <a class="nav-card trek" href="Star Trek/trek-timeline.html">
       <div class="nav-card-top"></div>
       <div class="card-label">Timeline Reference</div>
       <div class="card-title">Star Trek</div>
       <div class="card-desc">All 28 screen productions across Prime, Kelvin, Mirror, and alternate timelines — 1966 to present. Sortable, filterable, with 10+ alternate timeline deep-dives.</div>
-      <span class="card-cta">Explore</span>
+      <div class="card-footer">
+        <span class="card-cta">Explore</span>
+        <span class="card-date">Updated Sep 2026</span>
+      </div>
     </a>
 
     <a class="nav-card wars" href="Star Wars/star-wars-timeline.html">
@@ -248,15 +276,10 @@
       <div class="card-label">Canon Guide</div>
       <div class="card-title">Star Wars</div>
       <div class="card-desc">The complete Disney Canon era — films, animated series, and live-action television in in-universe chronological order from the High Republic to the New Republic.</div>
-      <span class="card-cta">Explore</span>
-    </a>
-
-    <a class="nav-card bttf" href="Back to the Future/bttf-timeline.html">
-      <div class="nav-card-top"></div>
-      <div class="card-label">Trilogy Reference</div>
-      <div class="card-title">Back to the Future</div>
-      <div class="card-desc">All three films, the time travel rules, the Biffhorrific branch, and the continuity notes — plus a chalkboard timeline map in progress.</div>
-      <span class="card-cta">Explore</span>
+      <div class="card-footer">
+        <span class="card-cta">Explore</span>
+        <span class="card-date">Updated Sep 2026</span>
+      </div>
     </a>
 
     <div class="nav-card future">
