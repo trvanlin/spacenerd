@@ -114,11 +114,17 @@
     /* ── Nav cards ── */
     .nav-grid {
       display: grid;
-      grid-template-columns: repeat(3, 265px);
+      grid-template-columns: repeat(4, 250px);
       gap: 1.25rem;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1120px) {
+      .nav-grid {
+        grid-template-columns: repeat(2, 265px);
+      }
+    }
+
+    @media (max-width: 600px) {
       .nav-grid {
         grid-template-columns: min(320px, 90vw);
       }
@@ -151,6 +157,7 @@
 
     .nav-card.trek    { --c-accent: var(--amber); }
     .nav-card.wars    { --c-accent: var(--gold); }
+    .nav-card.bttf    { --c-accent: var(--teal); }
     .nav-card.future  { --c-accent: var(--teal); opacity: 0.45; pointer-events: none; }
 
     .card-label {
@@ -244,11 +251,19 @@
       <span class="card-cta">Explore</span>
     </a>
 
+    <a class="nav-card bttf" href="Back to the Future/bttf-timeline.html">
+      <div class="nav-card-top"></div>
+      <div class="card-label">Trilogy Reference</div>
+      <div class="card-title">Back to the Future</div>
+      <div class="card-desc">All three films, the time travel rules, the Biffhorrific branch, and the continuity notes — plus a chalkboard timeline map in progress.</div>
+      <span class="card-cta">Explore</span>
+    </a>
+
     <div class="nav-card future">
       <div class="nav-card-top"></div>
-      <div class="card-label">Coming Soon</div>
-      <div class="card-title">Next Mission</div>
-      <div class="card-desc">More deep dives in progress. The universe is large and the nerd is thorough.</div>
+      <div class="card-label">Next Mission</div>
+      <div class="card-title">???</div>
+      <div class="card-desc">The next franchise reference document is in the works. Check back.</div>
     </div>
   </nav>
 </main>

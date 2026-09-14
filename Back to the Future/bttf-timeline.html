@@ -1,0 +1,1006 @@
+<title>Back to the Future Timeline</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23040a13' stroke='%23f0a500' stroke-width='1.2'/><ellipse cx='16' cy='16' rx='15' ry='4.5' fill='none' stroke='%23f0a500' stroke-width='0.6' opacity='0.5'/><ellipse cx='16' cy='16' rx='15' ry='4.5' fill='none' stroke='%23f0a500' stroke-width='0.6' opacity='0.5' transform='rotate(60 16 16)'/><ellipse cx='16' cy='16' rx='15' ry='4.5' fill='none' stroke='%23f0a500' stroke-width='0.6' opacity='0.5' transform='rotate(120 16 16)'/><circle cx='16' cy='16' r='15' fill='none' stroke='%23f0a500' stroke-width='1.2'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+:root {
+  --bg: #f2f5fc;
+  --surface: #ffffff;
+  --surface-2: #eaf0fa;
+  --surface-3: #dde7f5;
+  --border: #c5d5ed;
+  --border-subtle: #dce8f7;
+  --text: #16233a;
+  --text-2: #3d5880;
+  --text-3: #7a9ac0;
+  --sidebar-bg: #080e1c;
+  --sidebar-text: #8aaccc;
+  --sidebar-active: #f0a500;
+  --sidebar-border: #18305a;
+  --prime: #c47d00;
+  --prime-bg: #fff8e6;
+  --prime-border: #f0c060;
+  /* BTTF accent colors */
+  --bttf-amber: #c47d00;
+  --bttf-amber-bg: #fff8e6;
+  --bttf-amber-border: #f0c060;
+  --bttf-red: #bf3a2b;
+  --bttf-red-bg: #fdecea;
+  --bttf-red-border: #e8a09a;
+  --bttf-teal: #00807a;
+  --bttf-teal-bg: #e6f7f6;
+  --bttf-teal-border: #80ccc8;
+  --bttf-gold: #8a6800;
+  --bttf-gold-bg: #fdf6e0;
+  --bttf-gold-border: #d4b050;
+  --sw: 240px;
+  --fd: 'Antonio', sans-serif;
+  --fb: 'Source Sans 3', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #060c1a; --surface: #0b1626; --surface-2: #101e38;
+    --surface-3: #152444; --border: #1d3257; --border-subtle: #122040;
+    --text: #ccdaf0; --text-2: #6888b8; --text-3: #3c5880;
+    --prime: #f0a500; --prime-bg: rgba(240,165,0,.1); --prime-border: rgba(240,165,0,.28);
+    --bttf-amber: #f0a500; --bttf-amber-bg: rgba(240,165,0,.1); --bttf-amber-border: rgba(240,165,0,.28);
+    --bttf-red: #e05848; --bttf-red-bg: rgba(224,88,72,.1); --bttf-red-border: rgba(224,88,72,.28);
+    --bttf-teal: #00c8b8; --bttf-teal-bg: rgba(0,200,184,.1); --bttf-teal-border: rgba(0,200,184,.28);
+    --bttf-gold: #d4a820; --bttf-gold-bg: rgba(212,168,32,.1); --bttf-gold-border: rgba(212,168,32,.28);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #060c1a; --surface: #0b1626; --surface-2: #101e38;
+  --surface-3: #152444; --border: #1d3257; --border-subtle: #122040;
+  --text: #ccdaf0; --text-2: #6888b8; --text-3: #3c5880;
+  --prime: #f0a500; --prime-bg: rgba(240,165,0,.1); --prime-border: rgba(240,165,0,.28);
+  --bttf-amber: #f0a500; --bttf-amber-bg: rgba(240,165,0,.1); --bttf-amber-border: rgba(240,165,0,.28);
+  --bttf-red: #e05848; --bttf-red-bg: rgba(224,88,72,.1); --bttf-red-border: rgba(224,88,72,.28);
+  --bttf-teal: #00c8b8; --bttf-teal-bg: rgba(0,200,184,.1); --bttf-teal-border: rgba(0,200,184,.28);
+  --bttf-gold: #d4a820; --bttf-gold-bg: rgba(212,168,32,.1); --bttf-gold-border: rgba(212,168,32,.28);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  display: flex;
+  min-height: 100vh;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: var(--sw);
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-header {
+  padding: 20px 16px 0;
+  border-bottom: 1px solid var(--sidebar-border);
+  padding-bottom: 16px;
+}
+.sidebar-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.sidebar-pip {
+  width: 6px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.sidebar-pip span {
+  display: block;
+  height: 18px;
+  border-radius: 2px;
+}
+.sidebar-pip span:nth-child(1) { background: #f0a500; }
+.sidebar-pip span:nth-child(2) { background: #da483a; }
+.sidebar-pip span:nth-child(3) { background: #00c4b4; }
+.sidebar-pip span:nth-child(4) { background: #d4a820; }
+.sidebar-title {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: .01em;
+  line-height: 1.2;
+}
+.sidebar-sub {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--sidebar-text);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.sidebar-nav { padding: 10px 0; flex: 1; }
+.sidebar-section-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sidebar-text);
+  padding: 8px 16px 4px;
+  opacity: .6;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: var(--fb);
+  font-weight: 400;
+  transition: color .15s, background .15s;
+  border-left: 3px solid transparent;
+}
+.sidebar-link:hover { color: #fff; background: rgba(255,255,255,.04); }
+.sidebar-link.active { color: var(--sidebar-active); border-left-color: var(--sidebar-active); background: rgba(240,165,0,.07); }
+.sidebar-link .snum {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--sidebar-text);
+  opacity: .6;
+  width: 18px;
+  flex-shrink: 0;
+}
+.sidebar-link.active .snum { color: var(--sidebar-active); opacity: .8; }
+.sidebar-home {
+  display: block;
+  padding: 8px 16px;
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--sidebar-border);
+  opacity: 0.55;
+  transition: opacity 0.15s, color 0.15s;
+}
+.sidebar-home:hover { opacity: 1; color: var(--prime); }
+.sidebar-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--sidebar-border);
+  font-size: 11px;
+  color: var(--sidebar-text);
+  opacity: .5;
+}
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  font-size: 11px;
+  font-family: var(--fm);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+  text-align: left;
+  letter-spacing: .06em;
+}
+.theme-toggle:hover { color: #fff; }
+
+/* ── MAIN ── */
+#main {
+  margin-left: var(--sw);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── HERO ── */
+.page-hero {
+  background: var(--sidebar-bg);
+  border-bottom: 3px solid var(--prime);
+  padding: 28px 40px 24px;
+}
+.hero-eyebrow {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--prime);
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--fd);
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+.hero-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,.5);
+  margin-top: 4px;
+}
+.hero-meta {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: rgba(255,255,255,.35);
+  margin-top: 8px;
+  letter-spacing: .06em;
+}
+.hero-meta span { margin-right: 20px; }
+
+/* ── TIMELINE MAP PLACEHOLDER ── */
+.map-placeholder {
+  background: #1f2d1c;
+  border-bottom: 1px solid var(--border);
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.map-placeholder-inner {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: rgba(238,242,225,0.45);
+  letter-spacing: .06em;
+}
+.map-placeholder-inner strong {
+  display: block;
+  font-size: 13px;
+  color: rgba(238,242,225,0.65);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+
+/* ── SECTIONS ── */
+.section {
+  padding: 40px 40px 50px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.section:last-of-type { border-bottom: none; }
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: var(--prime);
+  letter-spacing: .1em;
+  opacity: .8;
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: var(--fd);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-subtitle {
+  font-size: 14px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+/* ── PROSE ── */
+.prose h3 {
+  font-family: var(--fd);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 22px 0 6px;
+  letter-spacing: .01em;
+}
+.prose p { margin-bottom: 12px; color: var(--text-2); }
+.prose ul { padding-left: 20px; margin-bottom: 12px; }
+.prose ol { padding-left: 20px; margin-bottom: 12px; }
+.prose li { margin-bottom: 5px; color: var(--text-2); }
+.prose strong { color: var(--text); }
+.prose em { color: var(--text-2); font-style: italic; }
+.aside {
+  background: var(--surface-2);
+  border-left: 3px solid var(--prime);
+  padding: 10px 14px;
+  margin: 14px 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  color: var(--text-2);
+}
+.aside.red { border-left-color: var(--bttf-red); }
+.aside.teal { border-left-color: var(--bttf-teal); }
+
+/* ── TABLES ── */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; margin: 14px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th {
+  background: var(--surface-2);
+  font-family: var(--fd);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  padding: 9px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--surface-2); }
+.td-num { font-family: var(--fm); font-size: 12px; color: var(--text-3); width: 36px; }
+.td-title { font-weight: 600; }
+.td-title .sub { font-weight: 400; color: var(--text-2); font-size: 12px; display: block; margin-top: 2px; }
+.td-mono { font-family: var(--fm); font-size: 12px; white-space: nowrap; }
+.td-desc { min-width: 200px; font-size: 13px; color: var(--text-2); }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--fm);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.badge-amber { background: var(--bttf-amber-bg); color: var(--bttf-amber); border: 1px solid var(--bttf-amber-border); }
+.badge-red   { background: var(--bttf-red-bg);   color: var(--bttf-red);   border: 1px solid var(--bttf-red-border); }
+.badge-teal  { background: var(--bttf-teal-bg);  color: var(--bttf-teal);  border: 1px solid var(--bttf-teal-border); }
+.badge-gold  { background: var(--bttf-gold-bg);  color: var(--bttf-gold);  border: 1px solid var(--bttf-gold-border); }
+.badge-dim   { background: var(--surface-2); color: var(--text-3); border: 1px solid var(--border); }
+
+/* ── REFERENCE CARDS ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+.ref-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ref-card-head {
+  padding: 14px 16px 12px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.ref-card-head .rc-num {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--prime);
+  margin-bottom: 4px;
+}
+.ref-card-head .rc-title {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+  line-height: 1.2;
+}
+.ref-card-head .rc-tagline {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-top: 4px;
+}
+.ref-card-head .rc-badges { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+.ref-card-body { padding: 14px 16px; }
+.ref-card-body dl { margin: 0; }
+.ref-card-body dt {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 10px;
+}
+.ref-card-body dt:first-child { margin-top: 0; }
+.ref-card-body dd {
+  color: var(--text-2);
+  font-size: 13px;
+  margin: 3px 0 0;
+}
+.ref-card-body dd strong { color: var(--text); }
+
+/* ── VIEWING PATH ── */
+.path-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+.path-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+.path-step-num {
+  font-family: var(--fm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--prime);
+  flex-shrink: 0;
+  width: 22px;
+}
+.path-step-body { flex: 1; min-width: 0; }
+.path-step-title { font-weight: 600; color: var(--text); font-size: 14px; }
+.path-step-note { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+
+/* ── SOURCES / UPDATES LIST ── */
+.src-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.src-item { font-size: 13px; color: var(--text-2); display: flex; gap: 10px; align-items: baseline; }
+.src-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  flex-shrink: 0;
+  width: 60px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 760px) {
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  .section { padding: 28px 20px 36px; }
+  .page-hero { padding: 22px 20px 18px; }
+  .map-placeholder { padding: 16px 20px; }
+  .cards-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <a class="sidebar-home" href="../index.html">← SPACENERD</a>
+  <div class="sidebar-header">
+    <div class="sidebar-brand">
+      <div class="sidebar-pip"><span></span><span></span><span></span><span></span></div>
+      <div>
+        <div class="sidebar-title">BACK TO<br>THE FUTURE</div>
+        <div class="sidebar-sub">Reference Document</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav" id="toc">
+    <div class="sidebar-section-label">Navigation</div>
+    <a class="sidebar-link" href="#s0"><span class="snum">—</span> Timeline Map</a>
+    <a class="sidebar-link" href="#s1"><span class="snum">01</span> Executive Guide</a>
+    <a class="sidebar-link" href="#s2"><span class="snum">02</span> The Trilogy</a>
+    <a class="sidebar-link" href="#s3"><span class="snum">03</span> Beyond the Films</a>
+    <a class="sidebar-link" href="#s4"><span class="snum">04</span> Time Travel Rules</a>
+    <a class="sidebar-link" href="#s5"><span class="snum">05</span> Reference Cards</a>
+    <a class="sidebar-link" href="#s6"><span class="snum">06</span> Viewing Order</a>
+    <a class="sidebar-link" href="#s7"><span class="snum">07</span> Continuity Notes</a>
+    <a class="sidebar-link" href="#sources"><span class="snum">—</span> Sources</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div>Trilogy complete · 1985–1990</div>
+    <div>Updated: <span id="bttf-updated"></span></div>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle theme</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="hero-eyebrow">Fan Reference Document · Trilogy Complete · Universal Pictures / Amblin</div>
+    <div class="hero-title">Back to the Future</div>
+    <div class="hero-desc">Three films, one DeLorean, and a flux capacitor — the definitive time-travel trilogy</div>
+    <div class="hero-meta">
+      <span>3 theatrical films</span>
+      <span>1985 · 1989 · 1990</span>
+      <span>Dir. Robert Zemeckis · Wr. Zemeckis &amp; Bob Gale</span>
+      <span>Research date: September 2026</span>
+    </div>
+  </div>
+
+  <!-- TIMELINE MAP PLACEHOLDER -->
+  <div class="map-placeholder" id="s0">
+    <div class="map-placeholder-inner">
+      <strong>⚡ CHALKBOARD TIMELINE MAP — IN PROGRESS</strong>
+      Doc Brown's three-register canvas diagram will live here: original timeline · Marty's story · the Biffhorrific branch. Coming soon.
+    </div>
+  </div>
+
+  <!-- SECTION 1: EXECUTIVE GUIDE -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div>
+        <div class="section-title">Executive Guide</div>
+        <div class="section-subtitle">What the trilogy is, how it was made, and how to think about it</div>
+      </div>
+    </div>
+    <div class="prose">
+      <h3>The Trilogy</h3>
+      <p>Back to the Future is a self-contained trilogy of theatrical comedy-adventure films produced by Steven Spielberg's Amblin Entertainment and released by Universal Pictures between 1985 and 1990. All three were directed by Robert Zemeckis and written by Zemeckis and Bob Gale. The same two lead actors — <strong>Michael J. Fox</strong> as Marty McFly and <strong>Christopher Lloyd</strong> as Dr. Emmett "Doc" Brown — appear in all three films. The trilogy is complete; no sequel, reboot, or remake has been produced as of this document's research date.</p>
+      <p>The story begins on October 26, 1985, when teenager Marty McFly is accidentally sent thirty years into the past in a time machine built inside a DeLorean DMC-12. The second and third films were developed concurrently and shot largely back-to-back, released seven months apart in 1989–1990. The tonal register shifts across the trilogy: Part I is a comedy-drama grounded in suburban 1985; Part II escalates to baroque science-fiction satire; Part III is a western-comedy with a genuine romantic subplot for Doc Brown.</p>
+
+      <h3>Zemeckis &amp; Gale</h3>
+      <p>Robert Zemeckis and Bob Gale co-wrote all three screenplays. Gale produced all three; Zemeckis directed all three. Their collaboration on the series represents one of the most consistent creative partnerships in franchise history — every script, every frame of every film came from the same two people. This is unusual for a multi-film trilogy and is a major reason the series maintains internal coherence despite its increasingly elaborate time-travel logic. Gale has remained the primary guardian of the franchise's continuity and licensing, including consulting on the IDW comic series.</p>
+
+      <h3>The DeLorean</h3>
+      <p>The time machine is a <strong>DeLorean DMC-12</strong>, a stainless steel sports car produced between 1981 and 1982 before its manufacturer went bankrupt. Doc Brown chose it because "if you're going to build a time machine into a car, why not do it with some style?" — and, in-universe, because the stainless steel construction is "necessary for the flux dispersal." The car was not yet considered a classic when production began; it was chosen partly for its distinctive gull-wing doors and futuristic appearance. By the time the first film was released, DeLorean production had already ceased, inadvertently making the car a period artifact.</p>
+
+      <div class="aside">The DeLorean's fate across the trilogy: destroyed by lightning in Part I (and returned from 2015 with hover conversion and Mr. Fusion); destroyed again by a freight train in the Old West at the end of Part III. Doc and Clara arrive in a time-traveling steam locomotive.</div>
+
+      <h3>Franchise Status</h3>
+      <p>The trilogy has not been rebooted or continued in live-action film form. Universal and Amblin hold the rights; Bob Gale and the estate of Robert Zemeckis (who died in 2025) retain creative control provisions. Zemeckis and Gale publicly opposed reboots throughout Zemeckis's lifetime, and as of 2026 no reboot is in active development. The <strong>IDW Publishing comic series</strong> (2011–2019) expanded the universe with Gale's involvement and is generally considered supplemental quasi-canon. The <strong>animated series</strong> (1991–1993) is discussed in Section 3.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE TRILOGY -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <div class="section-title">The Trilogy</div>
+        <div class="section-subtitle">All three theatrical films in release order</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="td-num">#</th>
+            <th>Title</th>
+            <th>Released</th>
+            <th>Runtime</th>
+            <th>In-Universe Settings</th>
+            <th class="td-desc">Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-num">I</td>
+            <td class="td-title">
+              Back to the Future
+              <span class="sub">Dir. Robert Zemeckis · Wr. Zemeckis &amp; Bob Gale</span>
+            </td>
+            <td class="td-mono">Jul 3, 1985</td>
+            <td class="td-mono">116 min</td>
+            <td>
+              <span class="badge badge-amber">1985</span>
+              <span class="badge badge-dim">1955</span>
+            </td>
+            <td class="td-desc">Marty McFly is accidentally sent to 1955 in Doc Brown's DeLorean. He must ensure his parents fall in love at the Enchantment Under the Sea dance — or he'll cease to exist — then find a way home using the power of a lightning strike at the Hill Valley clock tower.</td>
+          </tr>
+          <tr>
+            <td class="td-num">II</td>
+            <td class="td-title">
+              Back to the Future Part II
+              <span class="sub">Dir. Robert Zemeckis · Wr. Zemeckis &amp; Bob Gale</span>
+            </td>
+            <td class="td-mono">Nov 22, 1989</td>
+            <td class="td-mono">108 min</td>
+            <td>
+              <span class="badge badge-amber">1985</span>
+              <span class="badge badge-teal">2015</span>
+              <span class="badge badge-red">Alt. 1985</span>
+              <span class="badge badge-dim">1955</span>
+            </td>
+            <td class="td-desc">Doc and Marty travel to 2015 to prevent Marty's son from ruining the family. Old Biff steals the DeLorean, delivers a sports almanac to his 1955 self, and returns — creating a catastrophic alternate 1985 in which Biff dominates Hill Valley. Marty and Doc travel to 1955 to undo the damage; Doc is struck by lightning and sent to 1885. Ends on a cliffhanger.</td>
+          </tr>
+          <tr>
+            <td class="td-num">III</td>
+            <td class="td-title">
+              Back to the Future Part III
+              <span class="sub">Dir. Robert Zemeckis · Wr. Zemeckis &amp; Bob Gale</span>
+            </td>
+            <td class="td-mono">May 25, 1990</td>
+            <td class="td-mono">118 min</td>
+            <td>
+              <span class="badge badge-dim">1955</span>
+              <span class="badge badge-gold">1885</span>
+              <span class="badge badge-amber">1985</span>
+            </td>
+            <td class="td-desc">Marty travels to 1885 to rescue Doc, who has settled into life as the town blacksmith and fallen in love with schoolteacher Clara Clayton. With the DeLorean out of fuel and no gas stations for a century, they must push the car to 88 mph using a steam locomotive. Doc chooses to remain in the past; the DeLorean is destroyed by a freight train. Doc and Clara later arrive in 1985 in a time-traveling steam locomotive.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="aside">Parts II and III were developed and shot largely concurrently. The cast and crew moved directly from one production to the other, with Part II finishing principal photography in early 1989 and Part III completing in mid-1989 — both released before the end of 1990. This back-to-back approach is visible in the story: Part II ends on a literal "To Be Continued…" card, the only film in the trilogy to do so.</div>
+
+    <h3 style="font-family:var(--fd);font-size:17px;font-weight:700;color:var(--text);margin:22px 0 8px;">Box Office</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Budget</th>
+            <th>Worldwide Gross</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-num">I</td>
+            <td class="td-mono">~$19M</td>
+            <td class="td-mono">$381M</td>
+            <td class="td-desc">Highest-grossing film of 1985 in North America. Originally rejected by multiple studios; Disney passed because of the incest subplot (Lorraine develops feelings for her own son).</td>
+          </tr>
+          <tr>
+            <td class="td-num">II</td>
+            <td class="td-mono">~$40M</td>
+            <td class="td-mono">$332M</td>
+            <td class="td-desc">Strong commercial performance despite mixed initial reviews. The vision of 2015 — hoverboards, flying cars, self-lacing shoes, video-calling — became one of the most-referenced pop-culture futures.</td>
+          </tr>
+          <tr>
+            <td class="td-num">III</td>
+            <td class="td-mono">~$40M</td>
+            <td class="td-mono">$244M</td>
+            <td class="td-desc">Lowest-grossing of the three but still profitable. Praised as a satisfying conclusion; the western genre-shift gave the series a distinct third act.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 3: BEYOND THE FILMS -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div>
+        <div class="section-title">Beyond the Films</div>
+        <div class="section-subtitle">Animated series, comics, the Universal ride, and extended media</div>
+      </div>
+    </div>
+    <div class="prose">
+      <h3>Back to the Future: The Animated Series (1991–1993)</h3>
+      <p>CBS broadcast an animated series based on the films across two seasons (26 episodes total). The show follows Doc Brown, his wife Clara, and their sons Jules and Verne (who appear at the end of Part III) travelling through time, with Marty as a recurring character. Each episode featured a <strong>live-action segment</strong> with Christopher Lloyd as the actual Doc Brown, breaking the fourth wall to explain the real-world science illustrated in that episode — a genuinely unusual and charming device.</p>
+      <p>The animated series is considered <strong>supplemental/non-canonical</strong> relative to the films. Bob Gale was not directly involved in its production, and several story elements conflict with or extend the film canon in ways that were never reconciled. It is a fun companion piece and historically interesting, but this document treats the three theatrical films as the authoritative canon.</p>
+
+      <h3>IDW Publishing Comics (2011–2019)</h3>
+      <p>IDW Publishing produced an ongoing comic series with direct involvement from Bob Gale. The comics fill in gaps the films left deliberately open: Doc Brown's backstory, events between films, and alternate timeline explorations. Because of Gale's involvement, the comics are generally treated as <strong>quasi-canonical</strong> — more reliable than the animated series, but still secondary to the films. IDW's BTTF run concluded in 2019.</p>
+
+      <h3>Back to the Future: The Ride (1991–2007)</h3>
+      <p>Universal Studios operated a motion-simulator attraction based on the films from 1991 until 2007 (when it was replaced by The Simpsons Ride). The attraction featured original footage with Christopher Lloyd and Thomas F. Wilson (Biff) and was set as a canonical post-trilogy epilogue in which Biff Tannen steals Doc's time machine again. For roughly sixteen years it was the only official BTTF continuation, and it had genuine fun with the premise.</p>
+
+      <h3>The 2015 Predictions</h3>
+      <p>Part II's vision of October 21, 2015 has been extensively analyzed against reality. <strong>What came true:</strong> flat-screen wall televisions, video-calling, wearable technology, drone cameras, fingerprint payment, and tablet computers. <strong>What didn't:</strong> hoverboards (real ones exist but nothing like the film's version), flying cars, self-drying clothes, and — famously — the Cubs' World Series win was set in 2015. The Cubs won in 2016, one year late. Zemeckis and Gale have called this "close enough."</p>
+    </div>
+  </section>
+
+  <!-- SECTION 4: TIME TRAVEL RULES -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div>
+        <div class="section-title">Time Travel Rules</div>
+        <div class="section-subtitle">The mechanics, the logic, and the deliberate contradictions</div>
+      </div>
+    </div>
+    <div class="prose">
+      <h3>The Hardware</h3>
+      <p>The time machine is built into a <strong>DeLorean DMC-12</strong>. The key components:</p>
+      <ul>
+        <li><strong>The Flux Capacitor</strong> — "the part that makes time travel possible." A Y-shaped device installed in the car's interior. Doc conceived it on November 5, 1955, when he slipped from a clock he was hanging and hit his head, having a vision of the circuit. It was thirty years before he could build it.</li>
+        <li><strong>88 miles per hour</strong> — the speed required to activate the time displacement. Below 88 mph, nothing happens.</li>
+        <li><strong>1.21 gigawatts</strong> — the electrical power required to send the DeLorean through time. In 1985, this comes from plutonium (obtained from Libyan terrorists). After the upgrade from 2015, it comes from a compact fusion reactor called <strong>Mr. Fusion</strong>, which runs on household garbage.</li>
+        <li><strong>Temporal destination</strong> — set via a digital readout on the dashboard. The time circuits display destination time, present time, and last time departed.</li>
+      </ul>
+
+      <h3>The Ripple Effect</h3>
+      <p>Changes to the past affect the future — but not instantaneously. Part I demonstrates this with Marty's photograph: as his parents' meeting is threatened, his siblings and then Marty himself fade from the family photo. The change propagates forward gradually, giving the traveller time to correct mistakes before they are erased from existence. This is sometimes called the <strong>"soft" or "propagating" timeline</strong> model: history resists change but can be permanently altered.</p>
+
+      <h3>Fixed Timeline vs. Branching Timeline — The Core Contradiction</h3>
+      <p>The trilogy uses <strong>two incompatible models of time travel</strong>, and this is the most debated aspect of the series' internal logic:</p>
+      <ul>
+        <li><strong>Part I — Fixed (Convergent) Timeline:</strong> Marty's presence in 1955 was <em>always</em> the event that caused his parents to meet. The Enchantment Under the Sea dance went the way it went because Marty was there. George McFly punching Biff was always what happened. From this perspective, there is only one timeline — Marty's trip was "always" part of it, and he was always his own grandfather's friend.</li>
+        <li><strong>Part II — Branching Timeline:</strong> When Old Biff delivers the almanac to his 1955 self, a genuinely new, separate branch of history is created — an alternate 1985 that did not exist before Biff's interference. This is a fundamentally different model: history can fork into incompatible branches.</li>
+      </ul>
+      <p>Zemeckis and Gale have acknowledged this inconsistency in interviews. The most common fan reconciliation is that Part I involves a <em>self-consistent loop</em> (Marty's actions were always part of the causal chain), while Part II introduces a true branch because Biff's trip is an <em>external intervention</em> into a timeline he had no prior role in. Neither the films nor the creators have offered a canonical resolution. This document treats the inconsistency as a feature — it reflects the films' priorities (dramatic storytelling over airtight physics) rather than an error to be explained away.</p>
+      <div class="aside red">The Doc Brown rule: "Your future hasn't been written yet. No one's has. Your future is whatever you make it — so make it a good one." This is the trilogy's thematic position on free will and time travel, and it implicitly endorses the branching model. The films want you to believe choices matter.</div>
+
+      <h3>The Grandfather Paradox</h3>
+      <p>The trilogy sidesteps the classic grandfather paradox (if you kill your grandfather, you won't exist to travel back) through the ripple-effect model: if Marty prevents his parents from meeting, he fades from existence <em>gradually</em> rather than instantaneously, giving him time to fix it. The films do not engage with the deeper paradox — if Marty succeeds in returning to 1985, then his parents always met, so he was never at risk, so there was no tension — and this is intentional. The films are not philosophy texts; the rules exist to create stakes, not to resolve paradoxes.</p>
+
+      <h3>Power Sources</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Film</th>
+              <th>Power Source</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-num">I</td>
+              <td><strong>Plutonium</strong></td>
+              <td class="td-desc">Libyan terrorists supply Doc with plutonium; he uses it in a portable nuclear reactor to generate 1.21 GW. Doc had promised to build them a bomb and delivered a casing filled with pinball machine parts.</td>
+            </tr>
+            <tr>
+              <td class="td-num">I</td>
+              <td><strong>Lightning bolt</strong></td>
+              <td class="td-desc">Marty uses the Nov 5, 1955 clock-tower lightning strike to power the return trip. Doc calculated the exact time of the strike from historical records. This is also the moment Doc invented the flux capacitor.</td>
+            </tr>
+            <tr>
+              <td class="td-num">II–III</td>
+              <td><strong>Mr. Fusion</strong></td>
+              <td class="td-desc">Doc returns from 2015 with a household fusion reactor that converts garbage into 1.21 GW. Eliminates the plutonium dependency. In Part III, the DeLorean runs out of fuel entirely and must be pushed by a steam locomotive.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: REFERENCE CARDS -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div>
+        <div class="section-title">Reference Cards</div>
+        <div class="section-subtitle">Per-film quick reference</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- CARD: PART I -->
+      <div class="ref-card">
+        <div class="ref-card-head">
+          <div class="rc-num">Film I · 1985</div>
+          <div class="rc-title">Back to the Future</div>
+          <div class="rc-tagline">"He's the only kid ever to get into trouble before he was born."</div>
+          <div class="rc-badges">
+            <span class="badge badge-amber">1985</span>
+            <span class="badge badge-dim">1955</span>
+          </div>
+        </div>
+        <div class="ref-card-body">
+          <dl>
+            <dt>Director / Writer</dt>
+            <dd>Robert Zemeckis / Zemeckis &amp; Bob Gale</dd>
+            <dt>Lead Cast</dt>
+            <dd>Michael J. Fox, Christopher Lloyd, Lea Thompson, Crispin Glover, Thomas F. Wilson</dd>
+            <dt>Premise</dt>
+            <dd>Marty is sent to 1955; must ensure his parents meet while Doc finds a way to send him home using a lightning strike.</dd>
+            <dt>Key Time Periods</dt>
+            <dd><strong>1985</strong> — suburban Hill Valley, Twin Pines Mall<br><strong>1955</strong> — postwar Hill Valley, Enchantment Under the Sea dance</dd>
+            <dt>DeLorean Status at End</dt>
+            <dd>Struck by lightning while returning Marty to 1985; Doc returns moments later from 2015 in an upgraded, hovering, Mr. Fusion–powered DeLorean.</dd>
+            <dt>Prerequisite</dt>
+            <dd>None — the entry point.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- CARD: PART II -->
+      <div class="ref-card">
+        <div class="ref-card-head">
+          <div class="rc-num">Film II · 1989</div>
+          <div class="rc-title">Back to the Future Part II</div>
+          <div class="rc-tagline">"Getting back was only the beginning."</div>
+          <div class="rc-badges">
+            <span class="badge badge-amber">1985</span>
+            <span class="badge badge-teal">2015</span>
+            <span class="badge badge-red">Alt. 1985</span>
+            <span class="badge badge-dim">1955</span>
+          </div>
+        </div>
+        <div class="ref-card-body">
+          <dl>
+            <dt>Director / Writer</dt>
+            <dd>Robert Zemeckis / Zemeckis &amp; Bob Gale</dd>
+            <dt>Lead Cast</dt>
+            <dd>Michael J. Fox, Christopher Lloyd, Lea Thompson, Thomas F. Wilson, Elisabeth Shue</dd>
+            <dt>Premise</dt>
+            <dd>A trip to 2015 to fix Marty Jr.'s life sets off a chain of temporal disasters when Old Biff obtains a sports almanac and creates an authoritarian alternate 1985.</dd>
+            <dt>Key Time Periods</dt>
+            <dd><strong>2015</strong> — hoverboards, self-lacing Nikes, the Cafe 80s, Biff's casino<br><strong>Alt. 1985</strong> — Biff Tannen's Hill Valley<br><strong>1955</strong> — same dance as Part I, seen from new angles</dd>
+            <dt>DeLorean Status at End</dt>
+            <dd>Struck by lightning in 1955, sending Doc to 1885. Marty receives a 70-year-old letter delivered by Western Union.</dd>
+            <dt>Prerequisite</dt>
+            <dd>Part I — this film begins seconds after Part I ends.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- CARD: PART III -->
+      <div class="ref-card">
+        <div class="ref-card-head">
+          <div class="rc-num">Film III · 1990</div>
+          <div class="rc-title">Back to the Future Part III</div>
+          <div class="rc-tagline">"They've saved the best trip for last."</div>
+          <div class="rc-badges">
+            <span class="badge badge-dim">1955</span>
+            <span class="badge badge-gold">1885</span>
+            <span class="badge badge-amber">1985</span>
+          </div>
+        </div>
+        <div class="ref-card-body">
+          <dl>
+            <dt>Director / Writer</dt>
+            <dd>Robert Zemeckis / Zemeckis &amp; Bob Gale</dd>
+            <dt>Lead Cast</dt>
+            <dd>Michael J. Fox, Christopher Lloyd, Mary Steenburgen, Thomas F. Wilson, Lea Thompson</dd>
+            <dt>Premise</dt>
+            <dd>Marty travels to 1885 to rescue Doc, who has settled into the Old West and fallen in love. They must push a fuel-less DeLorean to 88 mph using a steam locomotive before a gunslinger kills Doc.</dd>
+            <dt>Key Time Periods</dt>
+            <dd><strong>1955</strong> — brief bridge from Part II<br><strong>1885</strong> — Old West Hill Valley, Native American territory, Shonash Ravine<br><strong>1985</strong> — resolution</dd>
+            <dt>DeLorean Status at End</dt>
+            <dd>Destroyed by a freight train crossing the ravine after launching Marty to 1985. Doc remains in 1885 by choice, later building a time-travelling steam locomotive with Clara. They appear in 1985 at the film's close.</dd>
+            <dt>Prerequisite</dt>
+            <dd>Parts I and II — Part III begins immediately after Part II's cliffhanger.</dd>
+          </dl>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 6: VIEWING ORDER -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div>
+        <div class="section-title">Viewing Order</div>
+        <div class="section-subtitle">The only one that makes sense</div>
+      </div>
+    </div>
+    <div class="prose">
+      <p>Unlike Star Trek or Star Wars, Back to the Future has exactly one correct viewing order: <strong>I → II → III</strong>, in release sequence. The films are a continuous narrative. Part II begins in the final minutes of Part I; Part III begins in the final minutes of Part II. Watching them out of order is not a meaningful alternative.</p>
+    </div>
+    <div class="path-steps">
+      <div class="path-step">
+        <div class="path-step-num">1</div>
+        <div class="path-step-body">
+          <div class="path-step-title">Back to the Future (1985)</div>
+          <div class="path-step-note">The complete story; works perfectly as a standalone film. Watch it even if you only want to watch one.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-step-num">2</div>
+        <div class="path-step-body">
+          <div class="path-step-title">Back to the Future Part II (1989)</div>
+          <div class="path-step-note">Picks up in the final scene of Part I. The most ambitious of the three — a structural puzzle that revisits 1955 from new angles. Ends on a cliffhanger; do not stop here.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-step-num">3</div>
+        <div class="path-step-body">
+          <div class="path-step-title">Back to the Future Part III (1990)</div>
+          <div class="path-step-note">Resolves Part II's cliffhanger and gives Doc Brown his own satisfying arc. The trilogy's most emotionally complete film. The DeLorean is gone; the story is finished.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-step-num" style="color:var(--text-3)">+</div>
+        <div class="path-step-body">
+          <div class="path-step-title" style="color:var(--text-2)">Animated Series (1991–1993) — Optional</div>
+          <div class="path-step-note">If you want more. Christopher Lloyd's live-action segments are the highlight. Non-canonical but charming.</div>
+        </div>
+      </div>
+    </div>
+    <div class="aside" style="margin-top:16px;">There is no "Machete Order" or alternate viewing path for BTTF. The trilogy is linear and the films are continuous. This is a feature.</div>
+  </section>
+
+  <!-- SECTION 7: CONTINUITY NOTES -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <div>
+        <div class="section-title">Continuity Notes &amp; Curiosities</div>
+        <div class="section-subtitle">Recasts, real-world predictions, production anomalies, and things worth knowing</div>
+      </div>
+    </div>
+    <div class="prose">
+      <h3>Eric Stoltz Was Marty McFly</h3>
+      <p><strong>Eric Stoltz</strong> was cast as Marty McFly and filmed for approximately five weeks of principal photography before Zemeckis and Gale concluded he was wrong for the role. The performance was technically accomplished but too dramatic — the comedy wasn't landing. Michael J. Fox had been their first choice, but was unavailable due to his commitment to the television series <em>Family Ties</em>. With Stoltz in place, production proceeded. When it became clear the film wasn't working, Zemeckis made the difficult decision to recast mid-shoot. Fox joined after negotiating a shooting schedule that allowed him to film <em>Family Ties</em> during the day and BTTF at night and on weekends. An estimated $3–4 million of Stoltz footage was shot and discarded. Stoltz's hands appear briefly in a rear-view mirror shot that survived the edit. The behind-the-scenes footage and stills from the Stoltz era are now widely circulated and represent one of cinema's most fascinating what-ifs.</p>
+
+      <h3>Crispin Glover Did Not Return</h3>
+      <p><strong>Crispin Glover</strong> played George McFly in Part I with an acclaimed, eccentric performance. He did not return for Parts II or III, reportedly due to salary and creative disagreements. Actor <strong>Jeffrey Weissman</strong> played George McFly in Parts II and III in heavy prosthetic makeup designed to resemble Glover's likeness. Glover sued the production, arguing his appearance was used without his consent. The Screen Actors Guild subsequently amended its rules to prohibit studios from using prosthetics or special effects to re-create a living actor's likeness without that actor's written permission — the <strong>"Crispin Glover Rule,"</strong> now codified in SAG-AFTRA agreements.</p>
+
+      <h3>Jennifer Parker Recast</h3>
+      <p><strong>Claudia Wells</strong> played Marty's girlfriend Jennifer Parker in Part I. She did not return for Parts II and III (a family illness prevented her participation). <strong>Elisabeth Shue</strong> replaced her, with Part II reprising Part I's final scene using Shue in the role — a subtle but visible change for attentive viewers. The films treat this as seamless; no in-universe acknowledgment exists.</p>
+
+      <h3>Twin Pines Mall → Lone Pine Mall</h3>
+      <p>In 1985, the shopping mall where the time machine is first demonstrated is called <strong>Twin Pines Mall</strong>. When Marty arrives in 1955, he accidentally runs over one of old farmer Peabody's two pine trees. When he returns to 1985 at the end of Part I, the mall sign now reads <strong>Lone Pine Mall</strong>. This is a small, precise, and deeply satisfying demonstration of how Marty's presence in the past changed history in a minor but permanent way. It is widely regarded as one of the trilogy's best details.</p>
+
+      <h3>The Alternate Biff</h3>
+      <p>Biff Tannen in the alternate 1985 — dominating Hill Valley through a casino empire, wearing a toupee, and having married Lorraine after her husband's death — is widely read as a satire of a certain type of real-estate-mogul-turned-political-figure. Zemeckis and Gale have been ambiguous in interviews about whether this was intentional. The visual design, the casino branding, and the character's behavior all point in a specific direction. The trilogy does not belabor this; it is background texture, not thesis.</p>
+
+      <h3>The Hoverboard Hoax</h3>
+      <p>After Part II's release, a persistent rumour circulated (and was briefly encouraged by Zemeckis in a mock-serious interview) that hoverboards were real and had been deliberately kept off the market. This became one of the earliest large-scale pop-culture hoaxes. In 2015, several companies produced "hoverboard" products (none of which hovered) in time for the real October 21, 2015.</p>
+
+      <h3>Marty's Truck</h3>
+      <p>Marty's Toyota pickup truck is destroyed in the film's opening when the Libyan terrorists attack. At the end of Part I, the "improved" 1985 — the one where George McFly became a confident, successful man — includes a <strong>new, different-coloured truck</strong> in the McFly driveway. Some fans read this as evidence that the "improved" 1985 is itself a slightly alternate branch, not the exact original timeline. Zemeckis and Gale have said the truck is simply a gift from George's improved life circumstances — same timeline, different truck. The question has not been definitively resolved in the films.</p>
+
+      <h3>The Clock Tower</h3>
+      <p>The Hill Valley clock tower was damaged by a lightning strike on <strong>November 12, 1955</strong> (Marty's visit) and preserved as a historical landmark. The 1985 version of Hill Valley has a "Save the Clock Tower" campaign to prevent the town from repairing it. The clock tower appears in all three films; in Part III, the 1885 version is still under construction. It is perhaps the most consistent visual motif in the trilogy.</p>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="section" id="sources">
+    <div class="section-header">
+      <span class="section-num">—</span>
+      <div><div class="section-title">Sources</div></div>
+    </div>
+    <div class="src-list">
+      <div class="src-item"><span class="src-label">Primary</span>Back to the Future (1985), Part II (1989), Part III (1990) — theatrical releases, Universal Pictures / Amblin Entertainment</div>
+      <div class="src-item"><span class="src-label">Primary</span>Back to the Future: The Animated Series (1991–1993) — CBS, 2 seasons, 26 episodes</div>
+      <div class="src-item"><span class="src-label">Reference</span>Bob Gale and Robert Zemeckis, collected interviews — including the 2015 30th Anniversary retrospective (Universal)</div>
+      <div class="src-item"><span class="src-label">Reference</span>Back to the Future: The Complete Adventures (2015 Blu-ray set) — includes commentary tracks, making-of documentaries, and the "Approximately 30 Years Later" featurette</div>
+      <div class="src-item"><span class="src-label">Reference</span>IDW Publishing, Back to the Future comics (2011–2019) — 35 issues, with Bob Gale consulting</div>
+      <div class="src-item"><span class="src-label">Database</span>IMDb — release dates, cast and crew, box office figures</div>
+      <div class="src-item"><span class="src-label">Database</span>Box Office Mojo — worldwide gross figures (inflation-adjusted estimates)</div>
+      <div class="src-item"><span class="src-label">Legal</span>Screen Actors Guild / SAG-AFTRA — "Crispin Glover Rule" documentation</div>
+    </div>
+  </section>
+
+</div><!-- /main -->
+
+<script>
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+}
+
+function initTOC() {
+  const sections = document.querySelectorAll('section[id], div[id="s0"]');
+  const links = document.querySelectorAll('.sidebar-link');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTOC();
+  const d = new Date(document.lastModified);
+  document.getElementById('bttf-updated').textContent =
+    d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+});
+</script>
