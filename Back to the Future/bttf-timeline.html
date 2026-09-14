@@ -90,32 +90,45 @@ body {
   flex-direction: column;
 }
 .sidebar-header {
-  padding: 20px 16px 0;
+  padding: 14px 16px 12px;
   border-bottom: 1px solid var(--sidebar-border);
-  padding-bottom: 16px;
 }
 .sidebar-brand {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  flex-direction: column;
+  gap: 1px;
 }
-.sidebar-pip {
-  width: 6px;
+.sidebar-motif {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.motif-body {
+  display: grid;
+  grid-template-columns: repeat(14, 6px);
+  grid-template-rows: repeat(3, 6px);
+  gap: 3px;
   flex-shrink: 0;
-  margin-top: 3px;
+}
+.motif-head {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  flex-shrink: 0;
 }
-.sidebar-pip span {
+.head-row {
+  display: flex;
+  gap: 3px;
+}
+.motif-body span,
+.head-row span {
   display: block;
-  height: 18px;
-  border-radius: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f0a500;
+  opacity: 0.65;
 }
-.sidebar-pip span:nth-child(1) { background: #f0a500; }
-.sidebar-pip span:nth-child(2) { background: #da483a; }
-.sidebar-pip span:nth-child(3) { background: #00c4b4; }
-.sidebar-pip span:nth-child(4) { background: #d4a820; }
 .sidebar-title {
   font-family: var(--fd);
   font-weight: 700;
@@ -493,10 +506,25 @@ tr:hover td { background: var(--surface-2); }
   <a class="sidebar-home" href="../index.html">← SPACENERD</a>
   <div class="sidebar-header">
     <div class="sidebar-brand">
-      <div class="sidebar-pip"><span></span><span></span><span></span><span></span></div>
       <div>
         <div class="sidebar-title">BACK TO<br>THE FUTURE</div>
         <div class="sidebar-sub">Reference Document</div>
+      </div>
+      <div class="sidebar-motif">
+        <div class="motif-body">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="motif-head">
+          <div class="head-row"><span></span></div>
+          <div class="head-row"><span></span><span></span></div>
+          <div class="head-row"><span></span><span></span><span></span></div>
+          <div class="head-row"><span></span><span></span><span></span><span></span></div>
+          <div class="head-row"><span></span><span></span><span></span></div>
+          <div class="head-row"><span></span><span></span></div>
+          <div class="head-row"><span></span></div>
+        </div>
       </div>
     </div>
   </div>
