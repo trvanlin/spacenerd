@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokémon Base Set — Collection Tracker</title>
+<meta name="description" content="JP & EN Base Set (1996/1999) collection tracker — own/need quick reference for raw JP and PSA 9 + raw EN.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23cc2200' stroke='%23ff4422' stroke-width='1'/><path d='M1 16 Q16 10 31 16' fill='none' stroke='%23fff' stroke-width='1.5'/><circle cx='16' cy='16' r='5' fill='%23fff' stroke='%23cc2200' stroke-width='1.5'/><circle cx='16' cy='16' r='2.5' fill='%23cc2200'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+:root {
+  --bg: #faf8f0;
+  --surface: #ffffff;
+  --surface-2: #f5f2e7;
+  --surface-3: #ede9dc;
+  --border: #d5cdb8;
+  --border-subtle: #e8e2d4;
+  --text: #1a1208;
+  --text-2: #5a4828;
+  --text-3: #9a8868;
+  --sidebar-bg: #180802;
+  --sidebar-text: #b89060;
+  --sidebar-active: #e8c229;
+  --sidebar-border: #3a1805;
+  --prime: #cc2200;
+  --prime-bg: #fff0ec;
+  --prime-border: #f0b0a0;
+  --accent: #d4a800;
+  --accent-bg: #fffae4;
+  --accent-border: #e0c840;
+  --own: #1a7a38;
+  --own-bg: #e6f7ec;
+  --own-border: #70c890;
+  --need: #b83000;
+  --need-bg: #fdf0ec;
+  --need-border: #e09080;
+  --holo-glow: #d4a800;
+  --holo-bg: rgba(212,168,0,.07);
+  --sw: 240px;
+  --fd: 'Antonio', sans-serif;
+  --fb: 'Source Sans 3', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0500; --surface: #150a02; --surface-2: #1e1005;
+    --surface-3: #281508; --border: #3a200a; --border-subtle: #281508;
+    --text: #f0e0c8; --text-2: #b89060; --text-3: #6a5030;
+    --prime: #ff4422; --prime-bg: rgba(255,68,34,.1); --prime-border: rgba(255,68,34,.3);
+    --accent: #e8c229; --accent-bg: rgba(232,194,41,.1); --accent-border: rgba(232,194,41,.3);
+    --own: #28aa50; --own-bg: rgba(40,170,80,.1); --own-border: rgba(40,170,80,.3);
+    --need: #e05030; --need-bg: rgba(224,80,48,.1); --need-border: rgba(224,80,48,.3);
+    --holo-bg: rgba(232,194,41,.06);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0500; --surface: #150a02; --surface-2: #1e1005;
+  --surface-3: #281508; --border: #3a200a; --border-subtle: #281508;
+  --text: #f0e0c8; --text-2: #b89060; --text-3: #6a5030;
+  --prime: #ff4422; --prime-bg: rgba(255,68,34,.1); --prime-border: rgba(255,68,34,.3);
+  --accent: #e8c229; --accent-bg: rgba(232,194,41,.1); --accent-border: rgba(232,194,41,.3);
+  --own: #28aa50; --own-bg: rgba(40,170,80,.1); --own-border: rgba(40,170,80,.3);
+  --need: #e05030; --need-bg: rgba(224,80,48,.1); --need-border: rgba(224,80,48,.3);
+  --holo-bg: rgba(232,194,41,.06);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+  display: flex;
+  min-height: 100vh;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: var(--sw);
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-home {
+  display: block;
+  padding: 8px 16px;
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--sidebar-border);
+  opacity: .55;
+  transition: opacity .15s, color .15s;
+}
+.sidebar-home:hover { opacity: 1; color: var(--sidebar-active); }
+.sidebar-header {
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+.sidebar-title {
+  font-family: var(--fd);
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: .01em;
+  line-height: 1.2;
+}
+.sidebar-sub {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--sidebar-text);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.pokeball-pip {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--sidebar-active);
+  margin-bottom: 8px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pokeball-pip::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: var(--prime);
+}
+.pokeball-pip::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--sidebar-bg);
+  border: 1.5px solid var(--sidebar-active);
+}
+.sidebar-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-top: 2px;
+}
+.sidebar-nav { padding: 8px 0; flex: 1; }
+.sidebar-section-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sidebar-text);
+  padding: 10px 16px 3px;
+  opacity: .6;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: var(--fb);
+  transition: color .15s, background .15s;
+  border-left: 3px solid transparent;
+}
+.sidebar-link:hover { color: #fff; background: rgba(255,255,255,.04); }
+.sidebar-link.active { color: var(--sidebar-active); border-left-color: var(--sidebar-active); background: rgba(232,194,41,.07); }
+.sidebar-link .badge-tiny {
+  margin-left: auto;
+  font-family: var(--fm);
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  opacity: .65;
+}
+.badge-own { background: rgba(40,170,80,.2); color: #50d070; }
+.badge-need { background: rgba(224,80,48,.2); color: #f08070; }
+.sidebar-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--sidebar-border);
+  font-size: 11px;
+  color: var(--sidebar-text);
+  opacity: .5;
+}
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  font-size: 11px;
+  font-family: var(--fm);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+  text-align: left;
+  letter-spacing: .06em;
+}
+.theme-toggle:hover { color: #fff; }
+
+/* ── MAIN ── */
+#main {
+  margin-left: var(--sw);
+  flex: 1;
+  min-width: 0;
+}
+.page-hero {
+  background: var(--sidebar-bg);
+  border-bottom: 3px solid var(--prime);
+  padding: 28px 40px 22px;
+}
+.hero-eyebrow {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--prime);
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--fd);
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+.hero-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,.5);
+  margin-top: 4px;
+}
+.hero-meta {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: rgba(255,255,255,.3);
+  margin-top: 8px;
+  letter-spacing: .05em;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 32px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+.section-header {
+  margin-bottom: 20px;
+}
+.section-eyebrow {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--prime);
+  margin-bottom: 4px;
+}
+.section-title {
+  font-family: var(--fd);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-subtitle {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  padding: 14px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stat-label {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.stat-value {
+  font-family: var(--fd);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+.stat-value.green { color: var(--own); }
+.stat-value.red   { color: var(--need); }
+.stat-value.gold  { color: var(--accent); }
+.stat-divider {
+  width: 1px;
+  background: var(--border);
+  margin: 4px 4px;
+  align-self: stretch;
+}
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-family: var(--fm);
+  font-size: 11px;
+  letter-spacing: .06em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all .15s;
+}
+.filter-btn:hover { border-color: var(--text-2); color: var(--text); }
+.filter-btn.active {
+  background: var(--prime);
+  border-color: var(--prime);
+  color: #fff;
+}
+.filter-btn.f-own.active  { background: var(--own);  border-color: var(--own);  }
+.filter-btn.f-need.active { background: var(--need); border-color: var(--need); }
+.filter-label {
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: .08em;
+  margin-right: 2px;
+}
+
+/* ── SUBSECTION ── */
+.subsection {
+  margin-bottom: 28px;
+}
+.subsection-title {
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.subsection-title .count {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--text-3);
+  opacity: .7;
+}
+
+/* ── CARD TABLE ── */
+.card-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.card-table th {
+  font-family: var(--fm);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  text-align: left;
+  padding: 6px 10px 6px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.card-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+.card-table tr:last-child td { border-bottom: none; }
+.card-table tr.holo-row { background: var(--holo-bg); }
+.card-table tr.holo-row td:first-child { border-left: 2px solid var(--holo-glow); }
+.card-table tr.own-row   { background: transparent; }
+.card-table tr.need-row  { opacity: .75; }
+.card-table tr.hidden    { display: none; }
+
+.card-num {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.card-name {
+  font-weight: 600;
+  color: var(--text);
+}
+.card-type {
+  font-family: var(--fm);
+  font-size: 11px;
+  color: var(--text-3);
+}
+.holo-mark {
+  font-size: 11px;
+  color: var(--holo-glow);
+  margin-left: 3px;
+}
+
+/* ── STATUS BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--fm);
+  font-size: 10px;
+  letter-spacing: .04em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.badge-green {
+  background: var(--own-bg);
+  border: 1px solid var(--own-border);
+  color: var(--own);
+}
+.badge-red {
+  background: var(--need-bg);
+  border: 1px solid var(--need-border);
+  color: var(--need);
+}
+.badge-neutral {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-3);
+}
+.badge-gold {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+}
+
+/* ── EN dual-column status ── */
+.en-status {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.en-status .badge { min-width: 42px; justify-content: center; }
+
+/* ── LEGEND ── */
+.legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--fm);
+  font-size: 10px;
+  color: var(--text-3);
+  margin-bottom: 14px;
+  letter-spacing: .04em;
+  align-items: center;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.legend-swatch {
+  width: 10px; height: 10px;
+  border-radius: 2px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  :root { --sw: 0px; }
+  #sidebar { display: none; }
+  .section { padding: 20px 16px; }
+  .page-hero { padding: 20px 16px 18px; }
+  .stats-bar { gap: 10px; }
+  .hero-title { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<nav id="sidebar">
+  <a class="sidebar-home" href="../index.html">← SPACENERD</a>
+  <div class="sidebar-header">
+    <div class="sidebar-brand">
+      <div class="pokeball-pip"></div>
+      <div>
+        <div class="sidebar-title">Pokémon<br>Base Set</div>
+        <div class="sidebar-sub">1996 JP · 1999 EN</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="sidebar-section-label">JP Base Set (Raw)</div>
+    <a class="sidebar-link" href="#jp-overview">Overview</a>
+    <a class="sidebar-link" href="#jp-holos">Holos <span class="badge-tiny badge-own" id="sb-jp-holo-own"></span></a>
+    <a class="sidebar-link" href="#jp-nonholo">Non-Holo Pokémon</a>
+    <a class="sidebar-link" href="#jp-support">Trainers &amp; Energy</a>
+
+    <div class="sidebar-section-label" style="margin-top:8px">EN Base Set (PSA 9 + Raw)</div>
+    <a class="sidebar-link" href="#en-overview">Overview</a>
+    <a class="sidebar-link" href="#en-holos">Holo Rares <span class="badge-tiny badge-own" id="sb-en-holo-own"></span></a>
+    <a class="sidebar-link" href="#en-rares">Rares</a>
+    <a class="sidebar-link" href="#en-uncommons">Uncommons</a>
+    <a class="sidebar-link" href="#en-commons">Commons</a>
+    <a class="sidebar-link" href="#en-support">Trainers &amp; Energy</a>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Light/Dark</button>
+    <div style="margin-top:8px">Updated from<br>Pokemon.JP.EN.151.Only.Pro.xlsx</div>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div id="main">
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-eyebrow">Collection Tracker</div>
+    <div class="hero-title">Pokémon Base Set</div>
+    <div class="hero-desc">1996 Japanese (raw) &amp; 1999 English (PSA 9 + raw) — own/need quick reference</div>
+    <div class="hero-meta" id="hero-meta">102 cards · loading…</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- JP BASE SET -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div class="section" id="jp-overview">
+
+    <div class="section-header">
+      <div class="section-eyebrow">Japan · 1996 · Raw Only</div>
+      <div class="section-title">JP Base Set</div>
+      <div class="section-subtitle">Tracking raw/ungraded copies of all 102 cards</div>
+    </div>
+
+    <div class="stats-bar" id="jp-stats">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="filter-bar">
+      <span class="filter-label">SHOW:</span>
+      <button class="filter-btn active" onclick="setFilter('jp','all',this)">All</button>
+      <button class="filter-btn f-own" onclick="setFilter('jp','own',this)">OWN</button>
+      <button class="filter-btn f-need" onclick="setFilter('jp','need',this)">NEED</button>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--own-bg);border:1px solid var(--own-border)"></div> OWN
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--need-bg);border:1px solid var(--need-border)"></div> NEED
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--holo-bg);border-left:3px solid var(--holo-glow);border-radius:2px"></div> Holo
+      </div>
+    </div>
+
+    <!-- JP Holos -->
+    <div class="subsection" id="jp-holos">
+      <div class="subsection-title">
+        ✦ Holo Rares
+        <span class="count" id="jp-holo-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:72px">Pokédex</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th style="width:80px">Status</th>
+          </tr>
+        </thead>
+        <tbody id="jp-holo-body"></tbody>
+      </table>
+    </div>
+
+    <!-- JP Non-Holo Pokémon -->
+    <div class="subsection" id="jp-nonholo">
+      <div class="subsection-title">
+        Non-Holo Pokémon
+        <span class="count" id="jp-nonholo-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:72px">Pokédex</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th style="width:80px">Status</th>
+          </tr>
+        </thead>
+        <tbody id="jp-nonholo-body"></tbody>
+      </table>
+    </div>
+
+    <!-- JP Trainers & Energy -->
+    <div class="subsection" id="jp-support">
+      <div class="subsection-title">
+        Trainers &amp; Energy
+        <span class="count" id="jp-support-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:72px">Set #</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th style="width:80px">Status</th>
+          </tr>
+        </thead>
+        <tbody id="jp-support-body"></tbody>
+      </table>
+    </div>
+
+  </div><!-- /jp section -->
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- EN BASE SET -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div class="section" id="en-overview">
+
+    <div class="section-header">
+      <div class="section-eyebrow">English · 1999 · PSA 9 &amp; Raw</div>
+      <div class="section-title">EN Base Set</div>
+      <div class="section-subtitle">Tracking PSA 9 graded (especially holos) and raw copies separately</div>
+    </div>
+
+    <div class="stats-bar" id="en-stats">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="filter-bar">
+      <span class="filter-label">SHOW:</span>
+      <button class="filter-btn active" onclick="setFilter('en','all',this)">All</button>
+      <button class="filter-btn f-own" onclick="setFilter('en','psa9',this)">PSA 9 OWN</button>
+      <button class="filter-btn f-own" onclick="setFilter('en','raw',this)">Raw OWN</button>
+      <button class="filter-btn f-need" onclick="setFilter('en','need',this)">NEED</button>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--own-bg);border:1px solid var(--own-border)"></div> OWN
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--need-bg);border:1px solid var(--need-border)"></div> NEED
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--holo-bg);border-left:3px solid var(--holo-glow);border-radius:2px"></div> Holo Rare
+      </div>
+    </div>
+
+    <!-- EN Holo Rares -->
+    <div class="subsection" id="en-holos">
+      <div class="subsection-title">
+        ✦ Holo Rares
+        <span class="count" id="en-holo-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:60px">#</th>
+            <th>Name</th>
+            <th style="width:120px">PSA 9</th>
+            <th style="width:80px">Raw</th>
+          </tr>
+        </thead>
+        <tbody id="en-holo-body"></tbody>
+      </table>
+    </div>
+
+    <!-- EN Rares -->
+    <div class="subsection" id="en-rares">
+      <div class="subsection-title">
+        Rares (non-holo)
+        <span class="count" id="en-rare-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:60px">#</th>
+            <th>Name</th>
+            <th style="width:80px">PSA 9</th>
+            <th style="width:80px">Raw</th>
+          </tr>
+        </thead>
+        <tbody id="en-rare-body"></tbody>
+      </table>
+    </div>
+
+    <!-- EN Uncommons -->
+    <div class="subsection" id="en-uncommons">
+      <div class="subsection-title">
+        Uncommons
+        <span class="count" id="en-uncommon-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:60px">#</th>
+            <th>Name</th>
+            <th style="width:80px">PSA 9</th>
+            <th style="width:80px">Raw</th>
+          </tr>
+        </thead>
+        <tbody id="en-uncommon-body"></tbody>
+      </table>
+    </div>
+
+    <!-- EN Commons -->
+    <div class="subsection" id="en-commons">
+      <div class="subsection-title">
+        Commons
+        <span class="count" id="en-common-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:60px">#</th>
+            <th>Name</th>
+            <th style="width:80px">PSA 9</th>
+            <th style="width:80px">Raw</th>
+          </tr>
+        </thead>
+        <tbody id="en-common-body"></tbody>
+      </table>
+    </div>
+
+    <!-- EN Trainers & Energy -->
+    <div class="subsection" id="en-support">
+      <div class="subsection-title">
+        Trainers &amp; Energy
+        <span class="count" id="en-support-count"></span>
+      </div>
+      <table class="card-table">
+        <thead>
+          <tr>
+            <th style="width:60px">#</th>
+            <th>Name</th>
+            <th>Rarity</th>
+            <th style="width:80px">Raw</th>
+          </tr>
+        </thead>
+        <tbody id="en-support-body"></tbody>
+      </table>
+    </div>
+
+  </div><!-- /en section -->
+
+</div><!-- /#main -->
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const JP_CARDS = [
+  {num:'#0001',name:'Bulbasaur',type:'Grass',holo:false,own:true},
+  {num:'#0002',name:'Ivysaur',type:'Grass',holo:false,own:true},
+  {num:'#0003',name:'Venusaur',type:'Grass',holo:true,own:true},
+  {num:'#0004',name:'Charmander',type:'Fire',holo:false,own:true},
+  {num:'#0005',name:'Charmeleon',type:'Fire',holo:false,own:true},
+  {num:'#0006',name:'Charizard',type:'Fire',holo:true,own:false},
+  {num:'#0007',name:'Squirtle',type:'Water',holo:false,own:true},
+  {num:'#0008',name:'Wartortle',type:'Water',holo:false,own:true},
+  {num:'#0009',name:'Blastoise',type:'Water',holo:true,own:true},
+  {num:'#0010',name:'Caterpie',type:'Bug',holo:false,own:true},
+  {num:'#0011',name:'Metapod',type:'Bug',holo:false,own:true},
+  {num:'#0013',name:'Weedle',type:'Bug',holo:false,own:true},
+  {num:'#0014',name:'Kakuna',type:'Bug',holo:false,own:true},
+  {num:'#0015',name:'Beedrill',type:'Bug',holo:false,own:false},
+  {num:'#0016',name:'Pidgey',type:'Normal',holo:false,own:true},
+  {num:'#0017',name:'Pidgeotto',type:'Normal',holo:false,own:false},
+  {num:'#0019',name:'Rattata',type:'Normal',holo:false,own:true},
+  {num:'#0020',name:'Raticate',type:'Normal',holo:false,own:false},
+  {num:'#0025',name:'Pikachu',type:'Electric',holo:false,own:true},
+  {num:'#0026',name:'Raichu',type:'Electric',holo:true,own:false},
+  {num:'#0027',name:'Sandshrew',type:'Ground',holo:false,own:true},
+  {num:'#0032',name:'Nidoran♂',type:'Poison',holo:false,own:true},
+  {num:'#0033',name:'Nidorino',type:'Poison',holo:false,own:true},
+  {num:'#0034',name:'Nidoking',type:'Poison',holo:true,own:false},
+  {num:'#0035',name:'Clefairy',type:'Fairy',holo:true,own:true},
+  {num:'#0037',name:'Vulpix',type:'Fire',holo:false,own:true},
+  {num:'#0038',name:'Ninetales',type:'Fire',holo:true,own:false},
+  {num:'#0050',name:'Diglett',type:'Ground',holo:false,own:true},
+  {num:'#0051',name:'Dugtrio',type:'Ground',holo:false,own:false},
+  {num:'#0058',name:'Growlithe',type:'Fire',holo:false,own:true},
+  {num:'#0059',name:'Arcanine',type:'Fire',holo:false,own:false},
+  {num:'#0060',name:'Poliwag',type:'Water',holo:false,own:true},
+  {num:'#0061',name:'Poliwhirl',type:'Water',holo:false,own:true},
+  {num:'#0062',name:'Poliwrath',type:'Water',holo:true,own:false},
+  {num:'#0063',name:'Abra',type:'Psychic',holo:false,own:true},
+  {num:'#0064',name:'Kadabra',type:'Psychic',holo:false,own:true},
+  {num:'#0065',name:'Alakazam',type:'Psychic',holo:true,own:false},
+  {num:'#0066',name:'Machop',type:'Fighting',holo:false,own:true},
+  {num:'#0067',name:'Machoke',type:'Fighting',holo:false,own:true},
+  {num:'#0068',name:'Machamp',type:'Fighting',holo:true,own:false},
+  {num:'#0077',name:'Ponyta',type:'Fire',holo:false,own:true},
+  {num:'#0081',name:'Magnemite',type:'Electric',holo:false,own:true},
+  {num:'#0082',name:'Magneton',type:'Electric',holo:true,own:false},
+  {num:'#0083',name:"Farfetch'd",type:'Normal',holo:false,own:true},
+  {num:'#0084',name:'Doduo',type:'Normal',holo:false,own:true},
+  {num:'#0086',name:'Seel',type:'Water',holo:false,own:false},
+  {num:'#0087',name:'Dewgong',type:'Water',holo:false,own:true},
+  {num:'#0092',name:'Gastly',type:'Ghost',holo:false,own:false},
+  {num:'#0093',name:'Haunter',type:'Ghost',holo:false,own:true},
+  {num:'#0095',name:'Onix',type:'Rock',holo:false,own:true},
+  {num:'#0096',name:'Drowzee',type:'Psychic',holo:false,own:true},
+  {num:'#0100',name:'Voltorb',type:'Electric',holo:false,own:true},
+  {num:'#0101',name:'Electrode',type:'Electric',holo:false,own:false},
+  {num:'#0107',name:'Hitmonchan',type:'Fighting',holo:true,own:true},
+  {num:'#0109',name:'Koffing',type:'Poison',holo:false,own:true},
+  {num:'#0113',name:'Chansey',type:'Normal',holo:true,own:true},
+  {num:'#0114',name:'Tangela',type:'Grass',holo:false,own:true},
+  {num:'#0120',name:'Staryu',type:'Water',holo:false,own:true},
+  {num:'#0121',name:'Starmie',type:'Water',holo:false,own:true},
+  {num:'#0124',name:'Jynx',type:'Ice',holo:false,own:true},
+  {num:'#0125',name:'Electabuzz',type:'Electric',holo:false,own:false},
+  {num:'#0126',name:'Magmar',type:'Fire',holo:false,own:true},
+  {num:'#0129',name:'Magikarp',type:'Water',holo:false,own:true},
+  {num:'#0130',name:'Gyarados',type:'Water',holo:true,own:false},
+  {num:'#0137',name:'Porygon',type:'Normal',holo:false,own:true},
+  {num:'#0145',name:'Zapdos',type:'Electric',holo:true,own:false},
+  {num:'#0147',name:'Dratini',type:'Dragon',holo:false,own:false},
+  {num:'#0148',name:'Dragonair',type:'Dragon',holo:false,own:true},
+  {num:'#0150',name:'Mewtwo',type:'Psychic',holo:true,own:false},
+];
+
+const JP_TRAINERS = [
+  // JP trainers — same 26 cards as EN; spreadsheet confirmed own for TR1–3
+  {num:'TR1',name:'Maintenance',type:'Trainer',own:true},
+  {num:'TR2',name:'Energy Removal',type:'Trainer',own:true},
+  {num:'TR3',name:'Switch',type:'Trainer',own:true},
+  {num:'TR4',name:'Pokémon Breeder',type:'Trainer',own:false},
+  {num:'TR5',name:'Clefairy Doll',type:'Trainer',own:false},
+  {num:'TR6',name:'Computer Search',type:'Trainer',own:false},
+  {num:'TR7',name:'Devolution Spray',type:'Trainer',own:false},
+  {num:'TR8',name:'Imposter Prof. Oak',type:'Trainer',own:false},
+  {num:'TR9',name:'Item Finder',type:'Trainer',own:false},
+  {num:'TR10',name:'Lass',type:'Trainer',own:false},
+  {num:'TR11',name:'Pokémon Trader',type:'Trainer',own:false},
+  {num:'TR12',name:'Scoop Up',type:'Trainer',own:false},
+  {num:'TR13',name:'Super Energy Removal',type:'Trainer',own:false},
+  {num:'TR14',name:'Defender',type:'Trainer',own:false},
+  {num:'TR15',name:'Energy Retrieval',type:'Trainer',own:false},
+  {num:'TR16',name:'Full Heal',type:'Trainer',own:false},
+  {num:'TR17',name:'PlusPower',type:'Trainer',own:false},
+  {num:'TR18',name:'Pokémon Center',type:'Trainer',own:false},
+  {num:'TR19',name:'Pokémon Flute',type:'Trainer',own:false},
+  {num:'TR20',name:'Pokédex',type:'Trainer',own:false},
+  {num:'TR21',name:'Professor Oak',type:'Trainer',own:false},
+  {num:'TR22',name:'Revive',type:'Trainer',own:false},
+  {num:'TR23',name:'Super Potion',type:'Trainer',own:false},
+  {num:'TR24',name:'Bill',type:'Trainer',own:false},
+  {num:'TR25',name:'Gust of Wind',type:'Trainer',own:false},
+  {num:'TR26',name:'Potion',type:'Trainer',own:false},
+  {num:'EN1',name:'Fighting Energy',type:'Energy',own:false},
+  {num:'EN2',name:'Fire Energy',type:'Energy',own:false},
+  {num:'EN3',name:'Grass Energy',type:'Energy',own:false},
+  {num:'EN4',name:'Lightning Energy',type:'Energy',own:false},
+  {num:'EN5',name:'Psychic Energy',type:'Energy',own:false},
+  {num:'EN6',name:'Water Energy',type:'Energy',own:false},
+  {num:'EN7',name:'Double Colorless Energy',type:'Energy',own:false},
+];
+
+const EN_CARDS = [
+  {num:'1/102',name:'Alakazam',rarity:'Holo Rare',psa9:true,raw:false},
+  {num:'2/102',name:'Blastoise',rarity:'Holo Rare',psa9:false,raw:false},
+  {num:'3/102',name:'Chansey',rarity:'Holo Rare',psa9:false,raw:true},
+  {num:'4/102',name:'Charizard',rarity:'Holo Rare',psa9:true,raw:false},
+  {num:'5/102',name:'Clefairy',rarity:'Holo Rare',psa9:false,raw:false},
+  {num:'6/102',name:'Gyarados',rarity:'Holo Rare',psa9:true,raw:true},
+  {num:'7/102',name:'Hitmonchan',rarity:'Holo Rare',psa9:true,raw:true},
+  {num:'8/102',name:'Machamp *',rarity:'Holo Rare',psa9:false,raw:true},
+  {num:'9/102',name:'Magneton',rarity:'Holo Rare',psa9:false,raw:true},
+  {num:'10/102',name:'Mewtwo',rarity:'Holo Rare',psa9:false,raw:true},
+  {num:'11/102',name:'Nidoking',rarity:'Holo Rare',psa9:true,raw:true},
+  {num:'12/102',name:'Ninetales',rarity:'Holo Rare',psa9:false,raw:false},
+  {num:'13/102',name:'Poliwrath',rarity:'Holo Rare',psa9:false,raw:false},
+  {num:'14/102',name:'Raichu',rarity:'Holo Rare',psa9:false,raw:false},
+  {num:'15/102',name:'Venusaur',rarity:'Holo Rare',psa9:true,raw:true},
+  {num:'16/102',name:'Zapdos',rarity:'Holo Rare',psa9:true,raw:false},
+  {num:'17/102',name:'Beedrill',rarity:'Rare',psa9:false,raw:true},
+  {num:'18/102',name:'Dragonair',rarity:'Rare',psa9:false,raw:false},
+  {num:'19/102',name:'Dugtrio',rarity:'Rare',psa9:false,raw:false},
+  {num:'20/102',name:'Electabuzz',rarity:'Rare',psa9:false,raw:false},
+  {num:'21/102',name:'Electrode',rarity:'Rare',psa9:false,raw:false},
+  {num:'22/102',name:'Pidgeotto',rarity:'Rare',psa9:false,raw:false},
+  {num:'23/102',name:'Arcanine',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'24/102',name:'Charmeleon',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'25/102',name:'Dewgong',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'26/102',name:'Dratini',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'27/102',name:"Farfetch'd",rarity:'Uncommon',psa9:false,raw:true},
+  {num:'28/102',name:'Growlithe',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'29/102',name:'Haunter',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'30/102',name:'Ivysaur',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'31/102',name:'Jynx',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'32/102',name:'Kadabra',rarity:'Uncommon',psa9:true,raw:true},
+  {num:'33/102',name:'Kakuna',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'34/102',name:'Machoke',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'35/102',name:'Magikarp',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'36/102',name:'Magmar',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'37/102',name:'Nidorino',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'38/102',name:'Poliwhirl',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'39/102',name:'Porygon',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'40/102',name:'Raticate',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'41/102',name:'Seel',rarity:'Uncommon',psa9:false,raw:false},
+  {num:'42/102',name:'Wartortle',rarity:'Uncommon',psa9:false,raw:true},
+  {num:'43/102',name:'Abra',rarity:'Common',psa9:false,raw:true},
+  {num:'44/102',name:'Bulbasaur',rarity:'Common',psa9:true,raw:true},
+  {num:'45/102',name:'Caterpie',rarity:'Common',psa9:false,raw:true},
+  {num:'46/102',name:'Charmander',rarity:'Common',psa9:false,raw:true},
+  {num:'47/102',name:'Diglett',rarity:'Common',psa9:false,raw:true},
+  {num:'48/102',name:'Doduo',rarity:'Common',psa9:false,raw:true},
+  {num:'49/102',name:'Drowzee',rarity:'Common',psa9:false,raw:false},
+  {num:'50/102',name:'Gastly',rarity:'Common',psa9:false,raw:true},
+  {num:'51/102',name:'Koffing',rarity:'Common',psa9:false,raw:true},
+  {num:'52/102',name:'Machop',rarity:'Common',psa9:false,raw:true},
+  {num:'53/102',name:'Magnemite',rarity:'Common',psa9:false,raw:false},
+  {num:'54/102',name:'Metapod',rarity:'Common',psa9:false,raw:true},
+  {num:'55/102',name:'Nidoran M',rarity:'Common',psa9:false,raw:false},
+  {num:'56/102',name:'Onix',rarity:'Common',psa9:false,raw:false},
+  {num:'57/102',name:'Pidgey',rarity:'Common',psa9:false,raw:true},
+  {num:'58/102',name:'Pikachu',rarity:'Common',psa9:true,raw:true},
+  {num:'59/102',name:'Poliwag',rarity:'Common',psa9:false,raw:false},
+  {num:'60/102',name:'Ponyta',rarity:'Common',psa9:false,raw:true},
+  {num:'61/102',name:'Rattata',rarity:'Common',psa9:false,raw:true},
+  {num:'62/102',name:'Sandshrew',rarity:'Common',psa9:false,raw:false},
+  {num:'63/102',name:'Squirtle',rarity:'Common',psa9:true,raw:true},
+  {num:'64/102',name:'Starmie',rarity:'Common',psa9:false,raw:true},
+  {num:'65/102',name:'Staryu',rarity:'Common',psa9:false,raw:false},
+  {num:'66/102',name:'Tangela',rarity:'Common',psa9:false,raw:true},
+  {num:'67/102',name:'Voltorb',rarity:'Common',psa9:false,raw:true},
+  {num:'68/102',name:'Vulpix',rarity:'Common',psa9:false,raw:true},
+  {num:'69/102',name:'Weedle',rarity:'Common',psa9:false,raw:false},
+  {num:'70/102',name:'Clefairy Doll',rarity:'Trainer',psa9:false,raw:false},
+  {num:'71/102',name:'Computer Search',rarity:'Trainer',psa9:false,raw:false},
+  {num:'72/102',name:'Devolution Spray',rarity:'Trainer',psa9:false,raw:false},
+  {num:'73/102',name:'Imposter Prof. Oak',rarity:'Trainer',psa9:false,raw:false},
+  {num:'74/102',name:'Item Finder',rarity:'Trainer',psa9:false,raw:false},
+  {num:'75/102',name:'Lass',rarity:'Trainer',psa9:false,raw:false},
+  {num:'76/102',name:'Pokémon Breeder',rarity:'Trainer',psa9:false,raw:false},
+  {num:'77/102',name:'Pokémon Trader',rarity:'Trainer',psa9:false,raw:false},
+  {num:'78/102',name:'Scoop Up',rarity:'Trainer',psa9:false,raw:false},
+  {num:'79/102',name:'Super Energy Removal',rarity:'Trainer',psa9:false,raw:false},
+  {num:'80/102',name:'Defender',rarity:'Trainer',psa9:false,raw:false},
+  {num:'81/102',name:'Energy Retrieval',rarity:'Trainer',psa9:false,raw:false},
+  {num:'82/102',name:'Full Heal',rarity:'Trainer',psa9:false,raw:false},
+  {num:'83/102',name:'Maintenance',rarity:'Trainer',psa9:false,raw:false},
+  {num:'84/102',name:'PlusPower',rarity:'Trainer',psa9:false,raw:false},
+  {num:'85/102',name:'Pokémon Center',rarity:'Trainer',psa9:false,raw:false},
+  {num:'86/102',name:'Pokémon Flute',rarity:'Trainer',psa9:false,raw:false},
+  {num:'87/102',name:'Pokédex',rarity:'Trainer',psa9:false,raw:false},
+  {num:'88/102',name:'Professor Oak',rarity:'Trainer',psa9:false,raw:false},
+  {num:'89/102',name:'Revive',rarity:'Trainer',psa9:false,raw:false},
+  {num:'90/102',name:'Super Potion',rarity:'Trainer',psa9:false,raw:false},
+  {num:'91/102',name:'Bill',rarity:'Trainer',psa9:false,raw:false},
+  {num:'92/102',name:'Energy Removal',rarity:'Trainer',psa9:false,raw:false},
+  {num:'93/102',name:'Gust of Wind',rarity:'Trainer',psa9:false,raw:false},
+  {num:'94/102',name:'Potion',rarity:'Trainer',psa9:false,raw:true},
+  {num:'95/102',name:'Switch',rarity:'Trainer',psa9:false,raw:false},
+  {num:'96/102',name:'Double Colorless Energy',rarity:'Energy',psa9:false,raw:false},
+  {num:'97/102',name:'Fighting Energy',rarity:'Energy',psa9:false,raw:false},
+  {num:'98/102',name:'Fire Energy',rarity:'Energy',psa9:false,raw:false},
+  {num:'99/102',name:'Grass Energy',rarity:'Energy',psa9:false,raw:false},
+  {num:'100/102',name:'Lightning Energy',rarity:'Energy',psa9:false,raw:false},
+  {num:'101/102',name:'Psychic Energy',rarity:'Energy',psa9:false,raw:false},
+  {num:'102/102',name:'Water Energy',rarity:'Energy',psa9:false,raw:false},
+];
+
+// ── HELPERS ────────────────────────────────────────────────────────────────────
+
+function ownBadge(own) {
+  return own
+    ? `<span class="badge badge-green">✓ OWN</span>`
+    : `<span class="badge badge-red">✗ NEED</span>`;
+}
+
+function enBadge(own, label) {
+  return own
+    ? `<span class="badge badge-green">✓ OWN</span>`
+    : `<span class="badge badge-neutral">${label ? label : '—'}</span>`;
+}
+
+function pct(n, d) {
+  return d === 0 ? '0%' : Math.round(n/d*100) + '%';
+}
+
+// ── BUILD JP TABLE ROWS ───────────────────────────────────────────────────────
+
+let jpFilter = 'all';
+let enFilter = 'all';
+
+function jpRowClass(card) {
+  let cls = card.holo ? 'holo-row' : '';
+  cls += card.own ? ' own-row jp-own' : ' need-row jp-need';
+  return cls.trim();
+}
+
+function buildJPRow(card) {
+  return `<tr class="${jpRowClass(card)}" data-own="${card.own}">
+    <td class="card-num">${card.num}</td>
+    <td class="card-name">${card.name}${card.holo ? '<span class="holo-mark">✦</span>' : ''}</td>
+    <td class="card-type">${card.type}</td>
+    <td>${ownBadge(card.own)}</td>
+  </tr>`;
+}
+
+function buildJPSupportRow(card) {
+  return `<tr class="${card.own ? 'own-row jp-own' : 'need-row jp-need'}" data-own="${card.own}">
+    <td class="card-num">${card.num}</td>
+    <td class="card-name">${card.name}</td>
+    <td class="card-type">${card.type}</td>
+    <td>${ownBadge(card.own)}</td>
+  </tr>`;
+}
+
+function buildENRow(card) {
+  const isHolo = card.rarity === 'Holo Rare';
+  const anyOwn = card.psa9 || card.raw;
+  let cls = isHolo ? 'holo-row' : '';
+  if (!anyOwn) cls += ' need-row en-need';
+  else cls += ' own-row';
+  if (card.psa9) cls += ' en-psa9';
+  if (card.raw) cls += ' en-raw';
+  return `<tr class="${cls.trim()}" data-psa9="${card.psa9}" data-raw="${card.raw}" data-own="${anyOwn}">
+    <td class="card-num">${card.num}</td>
+    <td class="card-name">${card.name}${isHolo ? '<span class="holo-mark">✦</span>' : ''}</td>
+    <td>${enBadge(card.psa9)}</td>
+    <td>${enBadge(card.raw)}</td>
+  </tr>`;
+}
+
+function buildENSupportRow(card) {
+  return `<tr data-raw="${card.raw}" data-own="${card.raw}">
+    <td class="card-num">${card.num}</td>
+    <td class="card-name">${card.name}</td>
+    <td class="card-type">${card.rarity}</td>
+    <td>${enBadge(card.raw)}</td>
+  </tr>`;
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────────────
+
+function statHTML(label, value, cls) {
+  return `<div class="stat"><div class="stat-label">${label}</div><div class="stat-value ${cls||''}">${value}</div></div>`;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+
+function render() {
+  const jpPoke = JP_CARDS;
+  const jpHolos = jpPoke.filter(c => c.holo);
+  const jpNonHolo = jpPoke.filter(c => !c.holo);
+  const jpSupport = JP_TRAINERS;
+  const jpAll = [...jpPoke, ...jpSupport];
+
+  const jpOwnCount = jpAll.filter(c => c.own).length;
+  const jpTotal = jpAll.length;
+  const jpHoloOwn = jpHolos.filter(c => c.own).length;
+
+  // JP Stats
+  document.getElementById('jp-stats').innerHTML = [
+    statHTML('Owned', `${jpOwnCount}`, 'green'),
+    `<div class="stat-divider"></div>`,
+    statHTML('Needed', `${jpTotal - jpOwnCount}`, 'red'),
+    `<div class="stat-divider"></div>`,
+    statHTML('Complete', pct(jpOwnCount, jpTotal), jpOwnCount === jpTotal ? 'green' : ''),
+    `<div class="stat-divider"></div>`,
+    statHTML('Holos', `${jpHoloOwn} / ${jpHolos.length}`, 'gold'),
+  ].join('');
+
+  // JP Holo table
+  document.getElementById('jp-holo-body').innerHTML = jpHolos.map(buildJPRow).join('');
+  document.getElementById('jp-holo-count').textContent = `${jpHoloOwn} / ${jpHolos.length} owned`;
+
+  // JP Non-Holo table
+  const jpNHOwn = jpNonHolo.filter(c => c.own).length;
+  document.getElementById('jp-nonholo-body').innerHTML = jpNonHolo.map(buildJPRow).join('');
+  document.getElementById('jp-nonholo-count').textContent = `${jpNHOwn} / ${jpNonHolo.length} owned`;
+
+  // JP Support table
+  const jpSOwn = jpSupport.filter(c => c.own).length;
+  document.getElementById('jp-support-body').innerHTML = jpSupport.map(buildJPSupportRow).join('');
+  document.getElementById('jp-support-count').textContent = `${jpSOwn} / ${jpSupport.length} owned`;
+
+  // Sidebar JP holo badge
+  document.getElementById('sb-jp-holo-own').textContent = `${jpHoloOwn}/${jpHolos.length}`;
+
+  // ── EN ──
+  const enHolos = EN_CARDS.filter(c => c.rarity === 'Holo Rare');
+  const enRares = EN_CARDS.filter(c => c.rarity === 'Rare');
+  const enUncommons = EN_CARDS.filter(c => c.rarity === 'Uncommon');
+  const enCommons = EN_CARDS.filter(c => c.rarity === 'Common');
+  const enSupport = EN_CARDS.filter(c => c.rarity === 'Trainer' || c.rarity === 'Energy');
+
+  const enPsa9Own = EN_CARDS.filter(c => c.psa9).length;
+  const enRawOwn = EN_CARDS.filter(c => c.raw).length;
+  const enHoloPsa9 = enHolos.filter(c => c.psa9).length;
+  const enHoloRaw = enHolos.filter(c => c.raw).length;
+
+  document.getElementById('en-stats').innerHTML = [
+    statHTML('PSA 9 Owned', `${enPsa9Own}`, 'green'),
+    `<div class="stat-divider"></div>`,
+    statHTML('Raw Owned', `${enRawOwn}`, 'green'),
+    `<div class="stat-divider"></div>`,
+    statHTML('Holo PSA 9', `${enHoloPsa9} / ${enHolos.length}`, 'gold'),
+    `<div class="stat-divider"></div>`,
+    statHTML('Holo Raw', `${enHoloRaw} / ${enHolos.length}`, ''),
+  ].join('');
+
+  document.getElementById('en-holo-body').innerHTML = enHolos.map(buildENRow).join('');
+  document.getElementById('en-holo-count').textContent = `${enHoloPsa9} PSA 9 · ${enHoloRaw} raw owned`;
+
+  document.getElementById('en-rare-body').innerHTML = enRares.map(buildENRow).join('');
+  document.getElementById('en-rare-count').textContent = `${enRares.filter(c=>c.raw).length} / ${enRares.length} raw owned`;
+
+  document.getElementById('en-uncommon-body').innerHTML = enUncommons.map(buildENRow).join('');
+  document.getElementById('en-uncommon-count').textContent = `${enUncommons.filter(c=>c.raw||c.psa9).length} / ${enUncommons.length} owned`;
+
+  document.getElementById('en-common-body').innerHTML = enCommons.map(buildENRow).join('');
+  document.getElementById('en-common-count').textContent = `${enCommons.filter(c=>c.raw||c.psa9).length} / ${enCommons.length} owned`;
+
+  document.getElementById('en-support-body').innerHTML = enSupport.map(buildENSupportRow).join('');
+  document.getElementById('en-support-count').textContent = `${enSupport.filter(c=>c.raw).length} / ${enSupport.length} owned`;
+
+  document.getElementById('sb-en-holo-own').textContent = `${enHoloPsa9}/${enHolos.length} PSA 9`;
+
+  // Hero meta
+  document.getElementById('hero-meta').textContent =
+    `JP: ${jpOwnCount}/${jpTotal} owned · EN PSA 9: ${enPsa9Own} · EN Raw: ${enRawOwn}`;
+}
+
+// ── FILTER ────────────────────────────────────────────────────────────────────
+
+function setFilter(set, mode, btn) {
+  // update button state
+  btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  if (set === 'jp') {
+    jpFilter = mode;
+    document.querySelectorAll('.jp-own, .jp-need, [data-own]').forEach(row => {
+      if (!row.closest('#jp-overview')) return; // only JP section rows
+      const isOwn = row.dataset.own === 'true';
+      if (mode === 'all') row.classList.remove('hidden');
+      else if (mode === 'own') row.classList.toggle('hidden', !isOwn);
+      else if (mode === 'need') row.classList.toggle('hidden', isOwn);
+    });
+  } else {
+    enFilter = mode;
+    document.querySelectorAll('#en-overview tbody tr').forEach(row => {
+      const psa9 = row.dataset.psa9 === 'true';
+      const raw  = row.dataset.raw  === 'true';
+      const anyOwn = psa9 || raw;
+      if (mode === 'all')   row.classList.remove('hidden');
+      else if (mode === 'psa9') row.classList.toggle('hidden', !psa9);
+      else if (mode === 'raw')  row.classList.toggle('hidden', !raw);
+      else if (mode === 'need') row.classList.toggle('hidden', anyOwn);
+    });
+  }
+}
+
+// ── THEME ─────────────────────────────────────────────────────────────────────
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur = root.dataset.theme;
+  if (!cur) {
+    const sys = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = sys ? 'light' : 'dark';
+  } else {
+    root.dataset.theme = cur === 'dark' ? 'light' : 'dark';
+  }
+  try { localStorage.setItem('theme', root.dataset.theme); } catch(e) {}
+}
+
+// ── ACTIVE SIDEBAR LINK ───────────────────────────────────────────────────────
+
+function updateActiveLink() {
+  const anchors = [...document.querySelectorAll('#sidebar .sidebar-link')];
+  const sections = anchors.map(a => {
+    const id = a.getAttribute('href').replace('#','');
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  const fromTop = window.scrollY + 80;
+  let active = sections[0];
+  sections.forEach(s => { if (s.offsetTop <= fromTop) active = s; });
+  anchors.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#'+active.id);
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+
+try {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+} catch(e) {}
+
+render();
+window.addEventListener('scroll', updateActiveLink, {passive:true});
+updateActiveLink();
+</script>
+</body>
+</html>
