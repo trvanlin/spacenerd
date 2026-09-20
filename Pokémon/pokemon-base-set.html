@@ -21,7 +21,7 @@
   --border-subtle: #e8e2d4;
   --text: #1a1208;
   --text-2: #5a4828;
-  --text-3: #9a8868;
+  --text-3: #7a6040;
   --sidebar-bg: #180802;
   --sidebar-text: #b89060;
   --sidebar-active: #e8c229;
@@ -49,7 +49,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0d0500; --surface: #150a02; --surface-2: #1e1005;
     --surface-3: #281508; --border: #3a200a; --border-subtle: #281508;
-    --text: #f0e0c8; --text-2: #b89060; --text-3: #6a5030;
+    --text: #f0e0c8; --text-2: #b89060; --text-3: #c09a70;
     --prime: #ff4422; --prime-bg: rgba(255,68,34,.1); --prime-border: rgba(255,68,34,.3);
     --accent: #e8c229; --accent-bg: rgba(232,194,41,.1); --accent-border: rgba(232,194,41,.3);
     --own: #28aa50; --own-bg: rgba(40,170,80,.1); --own-border: rgba(40,170,80,.3);
@@ -60,7 +60,7 @@
 :root[data-theme="dark"] {
   --bg: #0d0500; --surface: #150a02; --surface-2: #1e1005;
   --surface-3: #281508; --border: #3a200a; --border-subtle: #281508;
-  --text: #f0e0c8; --text-2: #b89060; --text-3: #6a5030;
+  --text: #f0e0c8; --text-2: #b89060; --text-3: #c09a70;
   --prime: #ff4422; --prime-bg: rgba(255,68,34,.1); --prime-border: rgba(255,68,34,.3);
   --accent: #e8c229; --accent-bg: rgba(232,194,41,.1); --accent-border: rgba(232,194,41,.3);
   --own: #28aa50; --own-bg: rgba(40,170,80,.1); --own-border: rgba(40,170,80,.3);
@@ -73,7 +73,7 @@ body {
   font-family: var(--fb);
   background: var(--bg);
   color: var(--text);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.55;
   display: flex;
   min-height: 100vh;
@@ -162,8 +162,8 @@ body {
 .sidebar-nav { padding: 8px 0; flex: 1; }
 .sidebar-section-label {
   font-family: var(--fm);
-  font-size: 9px;
-  letter-spacing: .14em;
+  font-size: 10px;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--sidebar-text);
   padding: 10px 16px 3px;
@@ -267,8 +267,8 @@ body {
 }
 .section-eyebrow {
   font-family: var(--fm);
-  font-size: 10px;
-  letter-spacing: .14em;
+  font-size: 11px;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--prime);
   margin-bottom: 4px;
@@ -281,7 +281,7 @@ body {
 }
 .section-subtitle {
   font-size: 13px;
-  color: var(--text-3);
+  color: var(--text-2);
   margin-top: 2px;
 }
 
@@ -303,10 +303,10 @@ body {
 }
 .stat-label {
   font-family: var(--fm);
-  font-size: 9px;
-  letter-spacing: .12em;
+  font-size: 11px;
+  letter-spacing: .10em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-2);
 }
 .stat-value {
   font-family: var(--fd);
@@ -355,8 +355,8 @@ body {
 .filter-btn.f-need.active { background: var(--need); border-color: var(--need); }
 .filter-label {
   font-family: var(--fm);
-  font-size: 10px;
-  color: var(--text-3);
+  font-size: 11px;
+  color: var(--text-2);
   letter-spacing: .08em;
   margin-right: 2px;
 }
@@ -367,10 +367,10 @@ body {
 }
 .subsection-title {
   font-family: var(--fm);
-  font-size: 10px;
-  letter-spacing: .14em;
+  font-size: 11px;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-2);
   padding: 6px 0;
   border-bottom: 1px solid var(--border-subtle);
   margin-bottom: 0;
@@ -380,8 +380,8 @@ body {
 }
 .subsection-title .count {
   margin-left: auto;
-  font-size: 10px;
-  color: var(--text-3);
+  font-size: 11px;
+  color: var(--text-2);
   opacity: .7;
 }
 
@@ -393,8 +393,8 @@ body {
 }
 .card-table th {
   font-family: var(--fm);
-  font-size: 9px;
-  letter-spacing: .12em;
+  font-size: 11px;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--text-3);
   text-align: left;
@@ -416,7 +416,7 @@ body {
 
 .card-num {
   font-family: var(--fm);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-3);
   white-space: nowrap;
 }
@@ -426,8 +426,8 @@ body {
 }
 .card-type {
   font-family: var(--fm);
-  font-size: 11px;
-  color: var(--text-3);
+  font-size: 12px;
+  color: var(--text-2);
 }
 .holo-mark {
   font-size: 11px;
@@ -482,8 +482,8 @@ body {
   gap: 14px;
   flex-wrap: wrap;
   font-family: var(--fm);
-  font-size: 10px;
-  color: var(--text-3);
+  font-size: 11px;
+  color: var(--text-2);
   margin-bottom: 14px;
   letter-spacing: .04em;
   align-items: center;
