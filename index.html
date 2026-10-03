@@ -96,8 +96,8 @@
       color: var(--text);
       text-transform: uppercase;
       line-height: 1;
-      /* compensate for trailing letter-spacing */
-      padding-right: 0.36em;
+      /* cancel trailing letter-spacing from flex centering calc */
+      margin-right: -0.36em;
     }
 
     .tagline {
