@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Callboard — BFA Musical Theatre Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#efeae0;
+    --paper-raised:#f7f3ea;
+    --ink:#211d19;
+    --ink-soft:#5b5347;
+    --ink-faint:#8b8272;
+    --line:#cdc4b0;
+    --gold:#b8863b;
+    --gold-deep:#8f6423;
+    --green:#3f6656;
+    --green-deep:#2c473b;
+    --red:#8b3a3a;
+    --red-deep:#6b2c2c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px 80px;}
+
+  /* ===== Masthead ===== */
+  header.masthead{
+    padding:56px 0 28px;
+    border-bottom:3px double var(--ink);
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(44px, 7vw, 74px);
+    line-height:1.02;
+    margin:0 0 12px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:italic;font-weight:500;color:var(--green-deep);}
+  .dek{
+    font-size:19px;
+    color:var(--ink-soft);
+    max-width:680px;
+    line-height:1.6;
+    margin:0;
+  }
+  .meta-row{
+    display:flex;gap:24px;flex-wrap:wrap;
+    margin-top:22px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+    color:var(--ink-faint);
+  }
+
+  /* ===== Stat strip ===== */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-bottom:44px;
+  }
+  .stat{
+    background:var(--paper-raised);
+    padding:20px 22px;
+  }
+  .stat-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 8px;
+  }
+  .stat-value{
+    font-family:'Fraunces', serif;
+    font-size:31px;
+    font-weight:600;
+    margin:0 0 4px;
+    line-height:1.1;
+  }
+  .stat-sub{font-size:14.5px;color:var(--ink-soft);}
+
+  /* ===== Section headings ===== */
+  h2.section{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:26px;
+    margin:0 0 4px;
+    color:var(--green-deep);
+  }
+  p.section-note{
+    font-size:15.5px;
+    color:var(--ink-soft);
+    max-width:760px;
+    line-height:1.6;
+    margin:0 0 22px;
+  }
+
+  /* ===== Table ===== */
+  .table-scroll{overflow-x:auto;margin-bottom:12px;}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:980px;
+    background:var(--paper-raised);
+  }
+  thead th{
+    text-align:left;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding:12px 16px;
+    border-bottom:2px solid var(--ink);
+    cursor:pointer;
+    user-select:none;
+    white-space:nowrap;
+  }
+  thead th:hover{color:var(--green-deep);}
+  thead th .arrow{opacity:.35;font-size:10px;margin-left:4px;}
+  thead th.active .arrow{opacity:1;color:var(--gold-deep);}
+  tbody td{
+    padding:16px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+    font-size:15.5px;
+  }
+  tbody tr:hover{background:#efe6d3;}
+  td.school{min-width:170px;}
+  .school-name{font-family:'Fraunces', serif;font-weight:600;font-size:18.5px;display:block;}
+  .school-name a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);}
+  .school-name a:hover{color:var(--green-deep);border-bottom-color:var(--green-deep);}
+  .school-tag{font-size:13px;color:var(--ink-faint);}
+  .figure{font-family:'IBM Plex Mono', monospace;font-weight:600;font-size:17px;}
+  .figure-sub{display:block;font-size:13px;color:var(--ink-soft);font-family:'IBM Plex Sans',sans-serif;margin-top:2px;}
+  .best-case{color:var(--green-deep);font-weight:600;}
+  .dash{color:var(--ink-faint);}
+
+  /* bulb strip for recognition */
+  .bulbs{display:flex;gap:3px;align-items:center;margin-bottom:4px;}
+  .bulb{width:9px;height:9px;border-radius:50%;background:var(--line);}
+  .bulb.lit{background:var(--gold);box-shadow:0 0 0 1px var(--gold-deep) inset;}
+  .rec-label{font-size:13px;color:var(--ink-soft);}
+
+  .flag{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.03em;
+    padding:2px 7px;
+    border-radius:2px;
+    margin-bottom:4px;
+  }
+  .flag-red{background:#f1e2df;color:var(--red-deep);}
+  .flag-green{background:#e4ebe4;color:var(--green-deep);}
+  .flag-neutral{background:#e9e4d6;color:var(--ink-soft);}
+
+  tr.tier-value td.school .school-name::before{content:"";}
+
+  tr.divider-row td{
+    padding:10px 16px;
+    border-bottom:2px solid var(--ink);
+    border-top:2px solid var(--ink);
+    background:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  tr.divider-row:hover{background:var(--paper);}
+  .badge-not-bfa{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.03em;
+    padding:2px 7px;
+    border-radius:2px;
+    margin-top:6px;
+    background:#f1e2df;
+    color:var(--red-deep);
+  }
+
+  /* ===== Excluded strip ===== */
+  .excluded{
+    margin-top:40px;
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+    padding:20px 24px;
+  }
+  .footnote-marker{
+    font-family:-apple-system,system-ui,'Helvetica Neue',Arial,sans-serif;
+    font-size:.85em;
+    vertical-align:super;
+    line-height:0;
+    color:var(--gold-deep);
+    font-weight:700;
+    cursor:default;
+  }
+  h3 .footnote-marker{font-size:.8em;vertical-align:middle;line-height:normal;}
+  .footnotes{
+    margin-top:28px;
+    border:1px solid var(--gold-deep);
+    background:var(--paper-raised);
+    padding:20px 24px;
+  }
+  .footnotes h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    margin:0 0 12px;
+  }
+  .footnotes p{
+    font-size:15px;
+    color:var(--ink-soft);
+    line-height:1.7;
+    max-width:820px;
+    margin:0 0 10px;
+  }
+  .footnotes p:last-child{margin-bottom:0;}
+  .footnotes p b{color:var(--ink);}
+  .footnotes p a{color:var(--green-deep);}
+  .footnotes p a:hover{color:var(--gold-deep);}
+  .excluded h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 14px;
+  }
+  .excluded-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+  }
+  .excluded-item{border-left:2px solid var(--line);padding-left:12px;}
+  .excluded-item b{font-family:'Fraunces', serif;font-size:16.5px;display:block;margin-bottom:3px;}
+  .excluded-item span{font-size:14px;color:var(--ink-soft);line-height:1.5;}
+
+  /* ===== Methodology ===== */
+  .method{
+    margin-top:48px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .method h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 12px;
+  }
+  .method p{
+    font-size:15px;
+    color:var(--ink-soft);
+    line-height:1.7;
+    max-width:820px;
+    margin:0 0 12px;
+  }
+  .method p b{color:var(--ink);}
+
+  footer{
+    margin-top:56px;
+    padding-top:20px;
+    border-top:3px double var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink-faint);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  @media (max-width:720px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .wrap{padding:0 18px 60px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Callboard &mdash; posted for audition season 2026&ndash;27</p>
+    <h1>BFA Musical<br><em>Theatre</em>, compared.</h1>
+    <p class="dek">Thirteen confirmed Musical Theatre programs, sticker cost to out-of-pocket cost, weighed against how well each one is actually known in the field &mdash; since merit money is the only discount on the table. Twelve are BFA; one (OCU) is a BM, flagged accordingly. UCLA is included as a fourteenth, non-BFA comparison row since it was an early favorite.</p>
+    <div class="meta-row">
+      <span>12 BFA MT programs &plus; 1 BM Music Theater (OCU) &plus; 1 non-BFA comparison (UCLA)</span>
+      <span>&middot;</span>
+      <span>Merit aid only &mdash; no need-based aid assumed</span>
+      <span>&middot;</span>
+      <span>Top picks pinned at top &middot; rest sorted cheapest &rarr; most expensive</span>
+    </div>
+  </header>
+
+  <section class="stats">
+    <div class="stat">
+      <p class="stat-label">Cheapest option</p>
+      <p class="stat-value">$25.4K<span style="font-size:14px;">/yr</span></p>
+      <p class="stat-sub">Western Carolina &mdash; NC Promise out-of-state cap</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">Most expensive</p>
+      <p class="stat-value">$87.8K<span style="font-size:14px;">/yr</span></p>
+      <p class="stat-sub">Boston Conservatory &mdash; before its unconfirmed best-case estimate</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">Best national recognition</p>
+      <p class="stat-value">OCU</p>
+      <p class="stat-sub">Repeatedly cited on national top-10 MT lists (not BFA-specific &mdash; OCU itself is a BM)</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">Real cut risk, documented</p>
+      <p class="stat-value">8 of 13</p>
+      <p class="stat-sub">Montclair (yearly juries), WVU &amp; Nazareth (sophomore-year review), FSU (continuous review), OCU (mandatory juries), UNC (audition/role compliance), WCU (annual continuation policy), Shenandoah (C-minimum &amp; role acceptance) &mdash; among the 13 confirmed programs. AMDA has only a standard GPA-based process, so it isn't counted as a cut risk. Boston Conservatory not counted either way &mdash; its policies are real but genuinely unverifiable, not confirmed-clean like Chico/CSUF.</p>
+    </div>
+  </section>
+
+  <h2 class="section">The lineup</h2>
+  <p class="section-note">Top picks are pinned at the top, above the divider. Click any column header to re-sort &mdash; top picks stay grouped at top, sorted among themselves, with the rest sorted below. &ldquo;Recognition&rdquo; is not an official ranking &mdash; no single canonical one exists for undergraduate BFA MT &mdash; it's a directional 1&ndash;10 read on how known each program is in the field, built from national &ldquo;top&rdquo; program lists, notable faculty/alumni, and accreditation. See methodology below.</p>
+
+  <div class="table-scroll">
+  <table id="bfa-table">
+    <thead>
+      <tr>
+        <th data-key="school" data-type="text">School <span class="arrow">&#9662;</span></th>
+        <th data-key="cost" data-type="num" class="active">Sticker cost/yr <span class="arrow">&#9662;</span></th>
+        <th data-key="merit" data-type="num">Best case w/ merit <span class="arrow">&#9662;</span></th>
+        <th data-key="rec" data-type="num">Recognition <span class="arrow">&#9662;</span></th>
+        <th data-key="cut" data-type="text">Cut/retention risk <span class="arrow">&#9662;</span></th>
+        <th data-key="admit" data-type="text">Admission path <span class="arrow">&#9662;</span></th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.arts.uci.edu/drama/programs/bfa" target="_blank" rel="noopener">UC Irvine</a></span>
+          <span class="school-tag">Irvine, CA</span>
+        </td>
+        <td>
+          <span class="figure">$40,900</span>
+          <span class="figure-sub">Need-based aid only &mdash; sticker is the real number</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">6/10 &middot; UC academic halo; MT itself less cited</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Front-loaded &mdash; audition happens after enrolling</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">No audition to enroll &mdash; academic admit, then audition</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://tft.ucla.edu/programs/theater-ba/musical-theater-emphasis/" target="_blank" rel="noopener">UCLA</a></span>
+          <span class="school-tag">Los Angeles, CA</span>
+          <span class="badge-not-bfa">BA, NOT BFA</span>
+        </td>
+        <td>
+          <span class="figure">$45,500</span>
+          <span class="figure-sub">CA resident, on-campus &mdash; UCLA's own 2026&ndash;27 estimate</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <span class="rec-label">N/A &mdash; no BFA Musical Theatre program exists to score</span>
+        </td>
+        <td><span class="flag flag-neutral">&mdash;</span><br><span style="font-size:14px;">N/A &mdash; has a light MT emphasis, not a dedicated pipeline</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">General UCLA admission &mdash; has an audition-gated MT emphasis, but light/integrated, not a dedicated pipeline</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www2.naz.edu/academics/musical-theatre-degree-program/" target="_blank" rel="noopener">Nazareth University</a></span>
+          <span class="school-tag">Rochester, NY</span>
+        </td>
+        <td>
+          <span class="figure">$63,120</span>
+          <span class="figure-sub">Highest sticker on the list</span>
+        </td>
+        <td>
+          <span class="figure best-case">$38,000</span><sup class="footnote-marker">&dagger;</sup><span class="figure-sub">Automatic Presidential award at 93&ndash;100 weighted GPA &mdash; no separate application</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">6/10 &middot; Strong alumni placement, not top-10 cited</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Sophomore-year adjudication &amp; 3.0 major GPA required &mdash; documented</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Audition required, GPA-based merit stacks separately</td>
+      </tr>
+      <tr class="divider-row"><td colspan="6">Top picks, above &mdash; full field, below</td></tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.wcu.edu/learn/programs/theatre/" target="_blank" rel="noopener">Western Carolina University</a></span>
+          <span class="school-tag">Cullowhee, NC</span>
+        </td>
+        <td>
+          <span class="figure">$25,400</span>
+          <span class="figure-sub">NC Promise caps out-of-state tuition by state law</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">5/10 &middot; Regional, elevated by faculty</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Named annual "Program Continuation Policy" &amp; 2.5 GPA minimum &mdash; documented</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Audition/interview only, competitive entry</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.csuchico.edu/academics/majors-programs/musical-theatre-bfa.shtml" target="_blank" rel="noopener">Chico State</a></span>
+          <span class="school-tag">Chico, CA</span>
+        </td>
+        <td>
+          <span class="figure">$29,000</span>
+          <span class="figure-sub">Cheapest of the CA options; off-campus runs even cheaper</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">3/10 &middot; Regional CSU, not nationally ranked</span>
+        </td>
+        <td><span class="flag flag-green">CLEAR</span><br><span style="font-size:14px;">No formal policy found</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Video prescreen, virtual or on-campus</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.fullerton.edu/arts/theatre/students/areas-of-study/bfa-musical-theatre.html" target="_blank" rel="noopener">CSU Fullerton</a></span>
+          <span class="school-tag">Fullerton, CA</span>
+        </td>
+        <td>
+          <span class="figure">$32,000</span>
+          <span class="figure-sub">Small cohort keeps it competitive despite low cost</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">4/10 &middot; Small cohort adds selectivity, not prestige</span>
+        </td>
+        <td><span class="flag flag-green">CLEAR</span><br><span style="font-size:14px;">No cut system &mdash; confirmed by CSUF's own FAQ</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Prescreen + live callback &middot; 12&ndash;16 admitted/yr</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://cfa.fsu.edu/programs/bfa-music-theatre/" target="_blank" rel="noopener">Florida State University</a></span>
+          <span class="school-tag">Tallahassee, FL</span>
+        </td>
+        <td>
+          <span class="figure">$43,916</span>
+          <span class="figure-sub">Verified from FSU's own Fall 2026&ndash;Spring 2027 cost estimate page</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">7/10 &middot; Called out as strong value at its reputation tier</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Continuous semester review &mdash; probation then dismissal if standards slip &mdash; documented</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Video prescreen, joint Music/Theatre program</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.montclair.edu/academics/programs/bfa-musical-theatre" target="_blank" rel="noopener">Montclair State University</a></span>
+          <span class="school-tag">Montclair, NJ</span>
+        </td>
+        <td>
+          <span class="figure">$47,500</span>
+          <span class="figure-sub">12 miles from Manhattan</span>
+        </td>
+        <td>
+          <span class="figure best-case">$43,489</span><span class="figure-sub">w/ avg. merit award (&ndash;$4,011, relatively small)</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">6/10 &middot; NAST accredited, notable Broadway alum</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Yearly juries &mdash; real, documented</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Common Prescreen + optional Unifieds</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.wvu.edu/academics/programs/musical-theatre-bfa/" target="_blank" rel="noopener">West Virginia University</a></span>
+          <span class="school-tag">Morgantown, WV</span>
+        </td>
+        <td>
+          <span class="figure">$50,000</span>
+          <span class="figure-sub">Possible additional college-level tuition on top</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">5/10 &middot; Conservatory-style, not nationally listed</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Documented sophomore-year review &amp; probation</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Audition required, 20hrs/wk training jr/sr year</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.unco.edu/programs/musical-theatre-bachelor-fine-arts/" target="_blank" rel="noopener">University of Northern Colorado</a></span>
+          <span class="school-tag">Greeley, CO</span>
+        </td>
+        <td>
+          <span class="figure">$50,290</span>
+          <span class="figure-sub">Nonresident/non-WUE sticker &mdash; UNC's own 2025&ndash;26 published budget guide; 2026&ndash;27 rates finalize in June, expected to rise slightly</span>
+        </td>
+        <td>
+          <span class="figure best-case">$40,946</span><span class="figure-sub">WUE resident rate &mdash; CA qualifies, confirmed via WICHE's own eligibility finder</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">5/10 &middot; National recruiting, real industry pipeline, not top-10 listed</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Must audition for every mainstage show &amp; accept assigned roles &mdash; noncompliance risks expulsion &mdash; documented</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Audition only, national recruiting, NYC Senior Showcase</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.okcu.edu/programs/music-theater" target="_blank" rel="noopener">Oklahoma City University</a></span>
+          <span class="school-tag">Oklahoma City, OK</span>
+          <span class="badge-not-bfa">BM, NOT BFA</span>
+        </td>
+        <td>
+          <span class="figure">$51,400</span>
+          <span class="figure-sub">Sticker before talent scholarship</span>
+        </td>
+        <td>
+          <span class="figure best-case">$37,500</span><span class="figure-sub">typical w/ talent scholarship</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span></div>
+          <span class="rec-label">9/10 &middot; Repeatedly cited on national top-10 lists</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Mandatory semester juries &mdash; must hit performance benchmarks to advance/graduate &mdash; documented</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">National Common Prescreen circuit</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.su.edu/conservatory/areas-of-study/bachelor-of-fine-arts-in-musical-theatre/" target="_blank" rel="noopener">Shenandoah University</a></span>
+          <span class="school-tag">Winchester, VA</span>
+        </td>
+        <td>
+          <span class="figure">$61,422</span>
+          <span class="figure-sub">Verified from SU's own 2026&ndash;27 Conservatory cost of attendance page; no in-state/out-of-state distinction (private)</span>
+        </td>
+        <td>
+          <span class="dash">&mdash;</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">7/10 &middot; Only US program dedicated to pop/rock musical; ~18/yr admitted, &lt;3% acceptance (third-party estimate)</span>
+        </td>
+        <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">C-minimum in major courses &amp; mandatory audition/role acceptance &mdash; documented</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Two-step audition (prescreen + live)</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://www.amda.edu/academics/undergraduate/areas-of-study/musical-theatre/" target="_blank" rel="noopener">AMDA College of the Performing Arts</a></span>
+          <span class="school-tag">Los Angeles, CA</span>
+        </td>
+        <td>
+          <span class="figure">$74,600</span>
+          <span class="figure-sub">AMDA's own 2027&ndash;28 page: $65,600 billed on campus + $9,000 books/living &mdash; about $294K over 4 years</span>
+        </td>
+        <td>
+          <span class="figure best-case">$49,600</span><span class="figure-sub">Assumes the maximum $25K/yr audition scholarship AMDA advertises &mdash; a ceiling; typical award unknown</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">3/10 &middot; Not on the national top-MT lists used here; NAST accreditation ended Nov 2023; some industry-connected alumni</span>
+        </td>
+        <td><span class="flag flag-green">CLEAR</span><br><span style="font-size:14px;">Only a standard GPA process (under 2.0 &rarr; warning &rarr; probation &rarr; possible dismissal) &mdash; no performance-based cut found in the 2025&ndash;26 catalog</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Audition required; rolling admission, 2.0 GPA expected; published acceptance rates conflict (24.5%&ndash;79%)</td>
+      </tr>
+      <tr>
+        <td class="school">
+          <span class="school-name"><a href="https://bostonconservatory.berklee.edu/musical-theater/bfa-musical-theater" target="_blank" rel="noopener">Boston Conservatory at Berklee</a></span>
+          <span class="school-tag">Boston, MA</span>
+        </td>
+        <td>
+          <span class="figure">$87,817</span>
+          <span class="figure-sub">Confirmed official 2026&ndash;27 sticker &mdash; most expensive school in this comparison by a wide margin</span>
+        </td>
+        <td>
+          <span class="figure best-case">$67,600</span><sup class="footnote-marker">&Vert;</sup><span class="figure-sub">Extrapolated estimate, NOT confirmed &mdash; see footnote before trusting this number</span>
+        </td>
+        <td>
+          <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span></div>
+          <span class="rec-label">8/10 &middot; Playbill "Big 10" most-represented-on-Broadway; consistently ranked among top MT programs</span>
+        </td>
+        <td><span class="flag flag-neutral">&mdash;</span><br><span style="font-size:14px;">Policies exist but are locked behind Berklee's student portal &mdash; not publicly verifiable</span></td>
+        <td style="font-size:14px;color:var(--ink-soft);">Two-step audition; ~92% of students receive institutional aid (per BC's own materials)</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="footnotes">
+    <h3><span class="footnote-marker">&dagger;</span> About the $38,000 figure</h3>
+    <p><b>What it is:</b> an automatic merit scholarship &mdash; $25,000/yr off the $63,120 sticker, landing at ~$38K/yr. No separate application, essay, or interview is required; it's determined solely from cumulative weighted high school GPA at the time of the admission decision. Confirmed directly from Nazareth's own scholarship page, which as of this research was already showing figures for the 2027&ndash;28 cycle &mdash; the correct application year.</p>
+    <p><b>Full tier table:</b> Presidential $25,000/yr (GPA 93&ndash;100) &middot; Dean $22,000/yr (GPA 88&ndash;92.99) &middot; Founders $20,000/yr (GPA 87.99 and below, no stated floor beneath it).</p>
+    <p><b>Two things not yet confirmed:</b></p>
+    <p>1. Nazareth grades on a 100-point weighted scale. No published formula converts a standard 4.0/5.0-scale weighted GPA into that 93&ndash;100 band, which is the difference between the $25K and $22K tiers. A rough industry rule of thumb (roughly 3.7+ weighted tracking to the 93&ndash;100 range on a 100-point scale) is only a generic approximation, not Nazareth's actual formula, so the tier is worth confirming directly with admissions rather than assuming.</p>
+    <p>2. The "Founders" tier has no floor listed beneath it, which structurally suggests every admitted student receives at least $20K/yr &mdash; a common pricing model at smaller private schools with a high sticker price. That's an inference from the table's structure, not a stated guarantee.</p>
+    <p><b>Renewal:</b> good for up to 4 years, contingent on maintaining "satisfactory academic progress," a term not defined on Nazareth's page. Whether that aligns with the BFA program's separate 3.0-major-GPA requirement (see Cut/retention risk column) is unconfirmed.</p>
+  </div>
+<div class="footnotes">
+    <h3><span class="footnote-marker">&Vert;</span> About the $67,600 figure &mdash; read this before trusting it</h3>
+    <p>This is the least-confirmed number in the entire table. Treat it as a rough, hedged ballpark, not a real estimate the way Nazareth's or OCU's merit figures are.</p>
+    <p><b>What's confirmed:</b> the $87,817 sticker is real, pulled directly from Boston Conservatory at Berklee's own official 2026&ndash;27 cost of attendance page. Merit aid is real and automatic through the audition (no separate application) &mdash; the school states 92% of enrolled students receive institutional aid, and there's a "Presidential Scholarship" (full tuition + housing + fees) awarded to one student per division (dance/music/theater) per year &mdash; a ceiling case, not a realistic expectation.</p>
+    <p><b>Where the $67,600 actually comes from:</b> The school's own Net Price Calculator was run anonymously (confirmed by the tool itself: no login, no personal data stored). It returned figures for the <b>2018&ndash;19 academic year</b> &mdash; a total cost of attendance of $65,857 and estimated grant aid of $15,250, for a net price of $50,607. That $50,607 number is NOT usable today as-is: it's measuring a school that cost $22K/yr less than it does now. Instead, the discount RATE was extracted ($15,250 &divide; $65,857 &asymp; 23%) and applied to today's confirmed $87,817 sticker, producing $87,817 &times; (1 &minus; 0.23) &asymp; $67,600.</p>
+    <p><b>Why this could be wrong in either direction:</b> (1) this assumes Boston Conservatory's aid budget has scaled proportionally with its tuition since 2018&ndash;19 &mdash; not guaranteed, and possible aid has NOT kept pace with 8 years of sticker-price growth, which would mean the real number is higher than $67,600; (2) it's an average across "students similar to you" based on whatever financial/academic inputs were entered into the calculator, not a number specific to any one applicant; (3) it says nothing about audition-based talent scholarship money layered on top, which could push the number either direction depending on how competitive her audition is.</p>
+    <p><b>Bottom line:</b> budget for somewhere between this estimate and the full $87,817 sticker until there's a real aid offer in hand. Don't treat $67,600 as a number to plan around financially &mdash; treat it as evidence that full sticker is probably not what most families actually pay, without knowing by how much.</p>
+  </div>
+
+  <div class="excluded">
+    <h3>Also checked &mdash; not a fit</h3>
+    <div class="excluded-grid">
+      <div class="excluded-item">
+        <b>UC San Diego</b>
+        <span>No Musical Theatre program at all &mdash; used earlier only as a cost-of-attendance reference point.</span>
+      </div>
+      <div class="excluded-item">
+        <b>Purchase College (SUNY)</b>
+        <span>Conservatory offers BFA Acting only &mdash; per their own FAQ, "training and productions are dramatic in nature."</span>
+      </div>
+      <div class="excluded-item">
+        <b>Western Washington University</b>
+        <span>Musical theatre is a thread inside a general BA Theatre concentration &mdash; no audition, no BFA.</span>
+      </div>
+      <div class="excluded-item">
+        <b>Simon Fraser University</b>
+        <span>Checked for a college-fair visit &mdash; no BFA Musical Theatre program.</span>
+      </div>
+      <div class="excluded-item">
+        <b>NYU Shanghai</b>
+        <span>Checked for a college-fair visit &mdash; no BFA Musical Theatre program.</span>
+      </div>
+      <div class="excluded-item">
+        <b>Washington University in St. Louis</b>
+        <span>Checked for a college-fair visit &mdash; no BFA Musical Theatre program.</span>
+      </div>
+      <div class="excluded-item">
+        <b>University of British Columbia</b>
+        <span>BFA in Acting, Design &amp; Production, and Film only &mdash; no musical theatre program.</span>
+      </div>
+      <div class="excluded-item">
+        <b>University of Redlands</b>
+        <span>BA Theatre Arts and BM in Performance/Composition/Ed &mdash; musical theatre is a production opportunity, not a degree.</span>
+      </div>
+      <div class="excluded-item">
+        <b>Colorado State University</b>
+        <span>BA Theatre with an audition-gated Musical Theatre concentration &mdash; real, but a BA, not a BFA.</span>
+      </div>
+      <div class="excluded-item">
+        <b>Occidental College</b>
+        <span>BA in Theater &amp; Performance Studies &mdash; liberal-arts program, no BFA or MT track.</span>
+      </div>
+      <div class="excluded-item">
+        <b>University of Oregon</b>
+        <span>BA/BS Theater Arts only &mdash; no BFA, no MT program.</span>
+      </div>
+      <div class="excluded-item">
+        <b>Oregon State University</b>
+        <span>BA/BS Theatre Arts only &mdash; no MT track found.</span>
+      </div>
+      <div class="excluded-item">
+        <b>Brandeis University</b>
+        <span>BA Theater Arts, plus an audition-only Musical Theater Performance track inside the BA in Music &mdash; not a BFA.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="method">
+    <h3>Methodology &amp; caveats</h3>
+    <p><b>Cost figures</b> are sticker cost of attendance (tuition, fees, housing, food, books, personal) for an out-of-state student living on campus, drawn from each school's own financial aid pages where available and cross-checked against IPEDS-sourced aggregators elsewhere. Treat anything without a school's own published figure as directional, not final &mdash; confirm with each school's Net Price Calculator once real numbers are needed.</p>
+    <p><b>Best case w/ merit</b> only appears where a program offers non-need-based (talent or GPA) aid specifically, since need-based aid isn't assumed in this comparison. Where left blank, either no meaningful merit program was found, or sticker price is the realistic number.</p>
+    <p><b>Recognition</b> is a synthesized, subjective 1&ndash;10 score &mdash; not a formal ranking. It reflects: appearance on repeatedly-cited "top musical theatre program" lists (Michigan, CMU, CCM, NYU, Boston Conservatory, Point Park, Penn State, Syracuse, Pace, OCU) &mdash; these lists aren't BFA-specific, which is exactly how a BM program like OCU lands on them alongside mostly-BFA peers &mdash; notable current faculty or alumni, and program accreditation (e.g. NAST). A low score does not mean a weak program &mdash; several here are simply less nationally visible while still being legitimate, audition-gated training.</p>
+    <p><b>Cut/retention risk</b> reflects only what each program documents publicly. Absence of a documented policy is not a guarantee of zero attrition &mdash; some programs may counsel students out informally without a written mechanism. The "documented cut risk" stat above counts 8 of the 13 programs (all except Chico, CSUF, UCI, AMDA, and Boston Conservatory), even though UCI's row is also flagged RISK &mdash; UCI's mechanism is a candidacy gate (whether a student ever gets into the BFA track after enrolling academically) rather than a post-admission retention/dismissal risk like the other eight, so it's tracked separately rather than folded into the same tally. Chico and CSUF are the only two where no cut policy of any kind was found; AMDA is a third kind of case &mdash; its catalog documents only a standard GPA-based warning/probation/dismissal process (under 2.0), with no jury, adjudication, or role-compliance mechanism, so it is flagged clear but is not the same as "no policy." Boston Conservatory is different from both groups: its policies are real but sit behind an authenticated student portal, genuinely unverifiable rather than confirmed-clean.</p>
+  </div>
+
+  <footer>
+    <span>BFA Musical Theatre comparison</span>
+    <span>Last compiled October 2026 &middot; verify before decisions</span>
+  </footer>
+
+</div>
+
+<script>
+const data = [
+  {
+    school:"Western Carolina University", tag:"Cullowhee, NC", url:"https://www.wcu.edu/learn/programs/theatre/",
+    cost:25400, costSub:"NC Promise caps out-of-state tuition by state law",
+    merit:null,
+    rec:5, recLabel:"Regional, elevated by faculty",
+    cut:"red", cutLabel:"Named annual &quot;Program Continuation Policy&quot; &amp; 2.5 GPA minimum &mdash; documented",
+    admit:"Audition/interview only, competitive entry"
+  },
+  {
+    school:"Chico State", tag:"Chico, CA", url:"https://www.csuchico.edu/academics/majors-programs/musical-theatre-bfa.shtml",
+    cost:29000, costSub:"Cheapest of the CA options; off-campus runs even cheaper",
+    merit:null,
+    rec:3, recLabel:"Regional CSU, not nationally ranked",
+    cut:"green", cutLabel:"No formal policy found",
+    admit:"Video prescreen, virtual or on-campus"
+  },
+  {
+    school:"CSU Fullerton", tag:"Fullerton, CA", url:"https://www.fullerton.edu/arts/theatre/students/areas-of-study/bfa-musical-theatre.html",
+    cost:32000, costSub:"Small cohort keeps it competitive despite low cost",
+    merit:null,
+    rec:4, recLabel:"Small cohort adds selectivity, not prestige",
+    cut:"green", cutLabel:"No cut system &mdash; confirmed by CSUF's own FAQ",
+    admit:"Prescreen + live callback &middot; 12&ndash;16 admitted/yr"
+  },
+  {
+    school:"UC Irvine", tag:"Irvine, CA", firstChoice:true, url:"https://www.arts.uci.edu/drama/programs/bfa",
+    cost:40900, costSub:"Need-based aid only &mdash; sticker is the real number",
+    merit:null,
+    rec:6, recLabel:"UC academic halo; MT itself less cited",
+    cut:"red", cutLabel:"Front-loaded &mdash; audition happens after enrolling",
+    admit:"No audition to enroll &mdash; academic admit, then audition"
+  },
+  {
+    school:"UCLA", tag:"Los Angeles, CA", firstChoice:true, notBfa:"BA, NOT BFA", url:"https://tft.ucla.edu/programs/theater-ba/musical-theater-emphasis/",
+    cost:45500, costSub:"CA resident, on-campus &mdash; UCLA's own 2026&ndash;27 estimate",
+    merit:null,
+    rec:0, recLabel:"N/A &mdash; no BFA Musical Theatre program exists to score",
+    cut:"neutral", cutLabel:"N/A &mdash; has a light MT emphasis, not a dedicated pipeline",
+    admit:"General UCLA admission &mdash; has an audition-gated MT emphasis, but light/integrated, not a dedicated pipeline"
+  },
+  {
+    school:"Florida State University", tag:"Tallahassee, FL", url:"https://cfa.fsu.edu/programs/bfa-music-theatre/",
+    cost:43916, costSub:"Verified from FSU's own Fall 2026&ndash;Spring 2027 cost estimate page",
+    merit:null,
+    rec:7, recLabel:"Called out as strong value at its reputation tier",
+    cut:"red", cutLabel:"Continuous semester review &mdash; probation then dismissal if standards slip &mdash; documented",
+    admit:"Video prescreen, joint Music/Theatre program"
+  },
+  {
+    school:"Montclair State University", tag:"Montclair, NJ", url:"https://www.montclair.edu/academics/programs/bfa-musical-theatre",
+    cost:47500, costSub:"12 miles from Manhattan",
+    merit:43489, meritLabel:"w/ avg. merit award (&ndash;$4,011, relatively small)",
+    rec:6, recLabel:"NAST accredited, notable Broadway alum",
+    cut:"red", cutLabel:"Yearly juries &mdash; real, documented",
+    admit:"Common Prescreen + optional Unifieds"
+  },
+  {
+    school:"West Virginia University", tag:"Morgantown, WV", url:"https://www.wvu.edu/academics/programs/musical-theatre-bfa/",
+    cost:50000, costSub:"Possible additional college-level tuition on top",
+    merit:null,
+    rec:5, recLabel:"Conservatory-style, not nationally listed",
+    cut:"red", cutLabel:"Documented sophomore-year review &amp; probation",
+    admit:"Audition required, 20hrs/wk training jr/sr year"
+  },
+  {
+    school:"University of Northern Colorado", tag:"Greeley, CO", url:"https://www.unco.edu/programs/musical-theatre-bachelor-fine-arts/",
+    cost:50290, costSub:"Nonresident/non-WUE sticker &mdash; UNC's own 2025&ndash;26 published budget guide; 2026&ndash;27 rates finalize in June, expected to rise slightly",
+    merit:40946, meritLabel:"WUE resident rate &mdash; CA qualifies, confirmed via WICHE's own eligibility finder",
+    rec:5, recLabel:"National recruiting, real industry pipeline, not top-10 listed",
+    cut:"red", cutLabel:"Must audition for every mainstage show &amp; accept assigned roles &mdash; noncompliance risks expulsion &mdash; documented",
+    admit:"Audition only, national recruiting, NYC Senior Showcase"
+  },
+  {
+    school:"Oklahoma City University", tag:"Oklahoma City, OK", notBfa:"BM, NOT BFA", url:"https://www.okcu.edu/programs/music-theater",
+    cost:51400, costSub:"Sticker before talent scholarship",
+    merit:37500, meritLabel:"typical w/ talent scholarship",
+    rec:9, recLabel:"Repeatedly cited on national top-10 lists",
+    cut:"red", cutLabel:"Mandatory semester juries &mdash; must hit performance benchmarks to advance/graduate &mdash; documented",
+    admit:"National Common Prescreen circuit"
+  },
+  {
+    school:"Shenandoah University", tag:"Winchester, VA", url:"https://www.su.edu/conservatory/areas-of-study/bachelor-of-fine-arts-in-musical-theatre/",
+    cost:61422, costSub:"Verified from SU's own 2026&ndash;27 Conservatory cost of attendance page; no in-state/out-of-state distinction (private)",
+    merit:null,
+    rec:7, recLabel:"Only US program dedicated to pop/rock musical; ~18/yr admitted, &lt;3% acceptance (third-party estimate)",
+    cut:"red", cutLabel:"C-minimum in major courses &amp; mandatory audition/role acceptance &mdash; documented",
+    admit:"Two-step audition (prescreen + live)"
+  },
+  {
+    school:"Boston Conservatory at Berklee", tag:"Boston, MA", footnote:"pilcrow", url:"https://bostonconservatory.berklee.edu/musical-theater/bfa-musical-theater",
+    cost:87817, costSub:"Confirmed official 2026&ndash;27 sticker &mdash; most expensive school in this comparison by a wide margin",
+    merit:67600, meritLabel:"Extrapolated estimate, NOT confirmed &mdash; see footnote before trusting this number",
+    rec:8, recLabel:"Playbill &quot;Big 10&quot; most-represented-on-Broadway; consistently ranked among top MT programs",
+    cut:"neutral", cutLabel:"Policies exist but are locked behind Berklee's student portal &mdash; not publicly verifiable",
+    admit:"Two-step audition; ~92% of students receive institutional aid (per BC's own materials)"
+  },
+  {
+    school:"AMDA College of the Performing Arts", tag:"Los Angeles, CA", url:"https://www.amda.edu/academics/undergraduate/areas-of-study/musical-theatre/",
+    cost:74600, costSub:"AMDA's own 2027&ndash;28 page: $65,600 billed on campus + $9,000 books/living &mdash; about $294K over 4 years",
+    merit:49600, meritLabel:"Assumes the maximum $25K/yr audition scholarship AMDA advertises &mdash; a ceiling; typical award unknown",
+    rec:3, recLabel:"Not on the national top-MT lists used here; NAST accreditation ended Nov 2023; some industry-connected alumni",
+    cut:"green", cutLabel:"Only a standard GPA process (under 2.0 &rarr; warning &rarr; probation &rarr; possible dismissal) &mdash; no performance-based cut found in the 2025&ndash;26 catalog",
+    admit:"Audition required; rolling admission, 2.0 GPA expected; published acceptance rates conflict (24.5%&ndash;79%)"
+  },
+  {
+    school:"Nazareth University", tag:"Rochester, NY", footnote:true, firstChoice:true, url:"https://www2.naz.edu/academics/musical-theatre-degree-program/",
+    cost:63120, costSub:"Highest sticker on the list",
+    merit:38000, meritLabel:"Automatic Presidential award at 93&ndash;100 weighted GPA &mdash; no separate application",
+    rec:6, recLabel:"Strong alumni placement, not top-10 cited",
+    cut:"red", cutLabel:"Sophomore-year adjudication &amp; 3.0 major GPA required &mdash; documented",
+    admit:"Audition required, GPA-based merit stacks separately"
+  }
+];
+
+function money(n){ return n==null ? null : "$" + n.toLocaleString(); }
+
+function bulbRow(score){
+  let out = '<div class="bulbs">';
+  for(let i=1;i<=10;i++){
+    out += `<span class="bulb ${i<=score?'lit':''}"></span>`;
+  }
+  out += '</div>';
+  return out;
+}
+
+function flag(kind,label){
+  const cls = kind === 'red' ? 'flag-red' : kind === 'green' ? 'flag-green' : 'flag-neutral';
+  return `<span class="flag ${cls}">${kind==='red'?'RISK':kind==='green'?'CLEAR':'&mdash;'}</span><br><span style="font-size:14px;">${label}</span>`;
+}
+
+function row(r){
+  return `
+    <tr>
+      <td class="school">
+        <span class="school-name">${r.url ? `<a href="${r.url}" target="_blank" rel="noopener">${r.school}</a>` : r.school}</span>
+        <span class="school-tag">${r.tag}</span>${r.locationFootnote === 'section' ? '<sup class="footnote-marker">&sect;</sup>' : r.locationFootnote === 'pilcrow' ? '<sup class="footnote-marker">&Vert;</sup>' : r.locationFootnote ? '<sup class="footnote-marker">&Dagger;</sup>' : ''}
+        ${r.notBfa ? `<span class="badge-not-bfa">${typeof r.notBfa === 'string' ? r.notBfa : 'NOT BFA MT'}</span>` : ''}
+      </td>
+      <td>
+        <span class="figure">${money(r.cost)}</span>
+        <span class="figure-sub">${r.costSub}</span>
+      </td>
+      <td>
+        ${r.merit ? `<span class="figure best-case">${money(r.merit)}</span>${r.footnote === 'pilcrow' ? '<sup class="footnote-marker">&Vert;</sup>' : r.footnote ? '<sup class="footnote-marker">&dagger;</sup>' : ''}<span class="figure-sub">${r.meritLabel}</span>` : '<span class="dash">&mdash;</span>'}
+      </td>
+      <td>
+        ${r.rec ? bulbRow(r.rec) : ''}
+        <span class="rec-label">${r.rec ? r.rec + '/10 &middot; ' : ''}${r.recLabel}</span>
+      </td>
+      <td>${flag(r.cut, r.cutLabel)}</td>
+      <td style="font-size:14px;color:var(--ink-soft);">${r.admit}</td>
+    </tr>
+  `;
+}
+
+function dividerRow(){
+  return `<tr class="divider-row"><td colspan="6">Top picks, above &mdash; full field, below</td></tr>`;
+}
+
+function render(rows){
+  const body = document.getElementById('table-body');
+  const firstChoices = rows.filter(r=>r.firstChoice);
+  const rest = rows.filter(r=>!r.firstChoice);
+  body.innerHTML = firstChoices.map(row).join('') + dividerRow() + rest.map(row).join('');
+}
+
+let sortState = {key:'cost', dir:1};
+
+function applySort(){
+  return [...data].sort((a,b)=>{
+    const type = document.querySelector(`thead th[data-key="${sortState.key}"]`).dataset.type;
+    let av = a[sortState.key], bv = b[sortState.key];
+    if(type === 'text'){ av = (av||'').toString(); bv=(bv||'').toString(); return av.localeCompare(bv) * sortState.dir; }
+    av = av == null ? -Infinity : av;
+    bv = bv == null ? -Infinity : bv;
+    return (av - bv) * sortState.dir;
+  });
+}
+
+render(applySort());
+
+document.querySelectorAll('thead th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const key = th.dataset.key;
+    if(sortState.key === key){ sortState.dir *= -1; } else { sortState = {key, dir:1}; }
+    document.querySelectorAll('thead th').forEach(t=>t.classList.remove('active'));
+    th.classList.add('active');
+    th.querySelector('.arrow').innerHTML = sortState.dir === 1 ? '&#9662;' : '&#9652;';
+    render(applySort());
+  });
+});
+</script>
+</body>
+</html>
