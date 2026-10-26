@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Trek: TOS — Episode Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #030810; color: #c0d4ec; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; }
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+
+  .trek-header { flex-shrink: 0; padding: 12px 16px 8px; background: #06101e; border-bottom: 1px solid #1a3057; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .trek-header-title { font-size: 15px; font-weight: 700; color: #ccdaf0; letter-spacing: .04em; white-space: nowrap; }
+  .trek-progress-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .trek-prog-chip { display: flex; align-items: center; gap: 5px; background: #0d1f3a; border: 1px solid #1d3457; border-radius: 20px; padding: 3px 9px 3px 8px; font-size: 11px; }
+  .trek-prog-chip .tpc-label { color: #5bb8ff; font-weight: 700; }
+  .trek-prog-chip .tpc-bar { width: 44px; height: 4px; background: #0d2040; border-radius: 2px; overflow: hidden; }
+  .trek-prog-chip .tpc-fill { height: 100%; background: #2dd7d0; border-radius: 2px; transition: width .3s; }
+  .trek-prog-chip .tpc-pct { color: #3a7a9a; font-size: 10px; white-space: nowrap; }
+  .trek-chip-divider { width: 1px; height: 16px; background: #1a3057; flex-shrink: 0; margin: 0 2px; }
+  .trek-prog-chip.all .tpc-fill { background: #5bb8ff; }
+  .trek-prog-chip.s1 .tpc-fill { background: #c8a020; }
+  .trek-prog-chip.s2 .tpc-fill { background: #4a80c8; }
+  .trek-prog-chip.s3 .tpc-fill { background: #c84040; }
+  .trek-prog-chip.films .tpc-fill { background: #9040c0; }
+  .trek-header-divider { width: 1px; height: 24px; background: #1a3057; flex-shrink: 0; }
+  .trek-filter-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .trek-filter-label { font-size: 11px; color: #3a6080; text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+  .trek-filter-btn { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px; border: 1px solid #1a3057; background: none; color: #4a7a9a; cursor: pointer; transition: all .15s; letter-spacing: .03em; }
+  .trek-filter-btn:hover { border-color: #3a6090; color: #7ab0d0; background: #071525; }
+  .trek-filter-btn.active { border-color: #2a6090; background: #0d2540; color: #88c8f0; }
+  .trek-search { font-size: 11px; background: #07111e; border: 1px solid #1a3057; border-radius: 12px; padding: 3px 10px; color: #8ab8d8; width: 160px; outline: none; }
+  .trek-search::placeholder { color: #2a4a60; }
+  .trek-search:focus { border-color: #2a6090; color: #c0d8f0; }
+
+  .trek-season-scroll { flex: 1; overflow-y: auto; padding: 12px 16px 16px; }
+  .trek-season-block { margin-bottom: 18px; }
+  .trek-season-hdr { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; padding-bottom: 4px; display: flex; justify-content: space-between; }
+  .trek-season-block.s1 .trek-season-hdr { color: #c8a020; border-bottom: 1px solid #3a2a00; }
+  .trek-season-block.s2 .trek-season-hdr { color: #4a80c8; border-bottom: 1px solid #0a2050; }
+  .trek-season-block.s3 .trek-season-hdr { color: #c84040; border-bottom: 1px solid #3a0808; }
+  .trek-season-block.films .trek-season-hdr { color: #b070d0; border-bottom: 1px solid #2a1040; }
+  .trek-season-hdr span { color: #3a5a7a; font-weight: 400; letter-spacing: 0; }
+  .trek-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
+  .trek-tile { position: relative; background: #0b1626; border: 1px solid #1a3057; border-radius: 6px; padding: 8px 10px; cursor: pointer; transition: border-color .15s, background .15s; user-select: none; display: flex; flex-direction: column; gap: 3px; }
+  .trek-tile:hover { border-color: #2a5a9a; background: #0d1f3a; }
+  .trek-tile.watched { background: #061a10; border-color: #1a4a28; }
+  .trek-tile.watched:hover { border-color: #2a7a3a; }
+  .trek-disc-badge { position: absolute; top: 5px; right: 6px; font-size: 9px; font-weight: 700; color: #2a5070; letter-spacing: .04em; }
+  .trek-ep-num { font-size: 12px; color: #3a5a7a; font-family: monospace; }
+  .trek-tile.watched .trek-ep-num { color: #2a6a3a; }
+  .trek-ep-title { font-size: 13px; font-weight: 600; color: #8aaac8; line-height: 1.35; }
+  .trek-tile.watched .trek-ep-title { color: #2a8a40; }
+  .trek-tile-footer { margin-top: auto; padding-top: 5px; display: flex; justify-content: space-between; align-items: center; }
+  .trek-wl-btn { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 3px; border: 1px solid #2a4a6a; background: none; color: #4a8aaa; cursor: pointer; transition: all .15s; letter-spacing: .04em; }
+  .trek-wl-btn:hover { border-color: #5ab8d8; color: #7ad4f0; background: #051825; }
+  .trek-tile.wl .trek-wl-btn { border-color: #2dd7d0; color: #000; background: #2dd7d0; }
+  .trek-tile.wl .trek-wl-btn:hover { border-color: #20a8a0; color: #000; background: #20a8a0; }
+  .trek-watch-btn { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 3px; border: 1px solid #1a3057; background: none; color: #3a5a7a; cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .trek-watch-btn:hover { border-color: #2a7a3a; color: #3aaa50; background: #061a10; }
+  .trek-tile.watched .trek-watch-btn { border-color: #1a5a28; color: #2a8a42; background: #04120a; }
+  .trek-tile.watched .trek-watch-btn:hover { border-color: #6a1818; color: #c84040; background: #120404; }
+  .trek-tile.s1 .trek-watch-btn { border-color: #3a2000; }
+  .trek-tile.s2 .trek-watch-btn { border-color: #0a1a40; }
+  .trek-tile.s3 .trek-watch-btn { border-color: #2a0808; }
+  /* Season colors — unwatched */
+  .trek-tile.s1 { border-color: #4a3000; background: #0c0900; }
+  .trek-tile.s1:hover { border-color: #8a6000; background: #141000; }
+  .trek-tile.s1 .trek-ep-num { color: #7a5a10; }
+  .trek-tile.s1 .trek-ep-title { color: #c8a030; }
+  .trek-tile.s2 { border-color: #0a2050; background: #030d1a; }
+  .trek-tile.s2:hover { border-color: #1a4080; background: #071428; }
+  .trek-tile.s2 .trek-ep-num { color: #2a4a80; }
+  .trek-tile.s2 .trek-ep-title { color: #5a8ac8; }
+  .trek-tile.s3 { border-color: #3a0c0c; background: #0d0404; }
+  .trek-tile.s3:hover { border-color: #6a1818; background: #160808; }
+  .trek-tile.s3 .trek-ep-num { color: #602020; }
+  .trek-tile.s3 .trek-ep-title { color: #b04040; }
+  /* Films */
+  .trek-tile.films { border-color: #2a1040; background: #080410; }
+  .trek-tile.films:hover { border-color: #6a30a0; background: #100820; }
+  .trek-tile.films .trek-ep-num { color: #5a2a80; }
+  .trek-tile.films .trek-ep-title { color: #b070d0; }
+  .trek-tile.films .trek-watch-btn { border-color: #2a1040; }
+  .trek-tile.films.watched { background: #061a10; border-color: #1a4a28; }
+  .trek-tile.films.wl .trek-wl-btn { border-color: #2dd7d0; color: #000; background: #2dd7d0; }
+</style>
+</head>
+<body>
+
+<div class="trek-header">
+  <div class="trek-header-title">★ Star Trek: The Original Series</div>
+  <div class="trek-progress-row" id="trek-progress"></div>
+  <div class="trek-header-divider"></div>
+  <div class="trek-filter-row">
+    <span class="trek-filter-label">Filter:</span>
+    <button class="trek-filter-btn active" onclick="trekFilter('all',this)">All</button>
+    <button class="trek-filter-btn" onclick="trekFilter('unwatched',this)">Unwatched</button>
+    <button class="trek-filter-btn" onclick="trekFilter('watchlist',this)">Watchlist</button>
+    <button class="trek-filter-btn" onclick="trekFilter('watched',this)">Watched</button>
+  </div>
+  <div class="trek-header-divider"></div>
+  <input class="trek-search" id="trek-search" type="text" placeholder="Search episodes…" oninput="trekSearch(this.value)" autocomplete="off" spellcheck="false">
+</div>
+<div class="trek-season-scroll" id="trek-scroll"></div>
+
+<script>
+  const TOS_EPISODES=[
+    // Season 1
+    {s:1,e:1,t:"The Man Trap"},{s:1,e:2,t:"Charlie X"},{s:1,e:3,t:"Where No Man Has Gone Before"},
+    {s:1,e:4,t:"The Naked Time"},{s:1,e:5,t:"The Enemy Within"},{s:1,e:6,t:"Mudd's Women"},
+    {s:1,e:7,t:"What Are Little Girls Made Of?"},{s:1,e:8,t:"Miri"},{s:1,e:9,t:"Dagger of the Mind"},
+    {s:1,e:10,t:"The Corbomite Maneuver"},{s:1,e:11,t:"The Menagerie, Part I"},{s:1,e:12,t:"The Menagerie, Part II"},
+    {s:1,e:13,t:"The Conscience of the King"},{s:1,e:14,t:"Balance of Terror"},{s:1,e:15,t:"Shore Leave"},
+    {s:1,e:16,t:"The Galileo Seven"},{s:1,e:17,t:"The Squire of Gothos"},{s:1,e:18,t:"Arena"},
+    {s:1,e:19,t:"Tomorrow Is Yesterday"},{s:1,e:20,t:"Court Martial"},{s:1,e:21,t:"The Return of the Archons"},
+    {s:1,e:22,t:"Space Seed"},{s:1,e:23,t:"A Taste of Armageddon"},{s:1,e:24,t:"This Side of Paradise"},
+    {s:1,e:25,t:"The Devil in the Dark"},{s:1,e:26,t:"Errand of Mercy"},{s:1,e:27,t:"The Alternative Factor"},
+    {s:1,e:28,t:"The City on the Edge of Forever"},{s:1,e:29,t:"Operation: Annihilate!"},
+    // Season 2
+    {s:2,e:1,t:"Amok Time"},{s:2,e:2,t:"Who Mourns for Adonais?"},{s:2,e:3,t:"The Changeling"},
+    {s:2,e:4,t:"Mirror, Mirror"},{s:2,e:5,t:"The Apple"},{s:2,e:6,t:"The Doomsday Machine"},
+    {s:2,e:7,t:"Catspaw"},{s:2,e:8,t:"I, Mudd"},{s:2,e:9,t:"Metamorphosis"},
+    {s:2,e:10,t:"Journey to Babel"},{s:2,e:11,t:"Friday's Child"},{s:2,e:12,t:"The Deadly Years"},
+    {s:2,e:13,t:"Obsession"},{s:2,e:14,t:"Wolf in the Fold"},{s:2,e:15,t:"The Trouble with Tribbles"},
+    {s:2,e:16,t:"The Gamesters of Triskelion"},{s:2,e:17,t:"A Piece of the Action"},{s:2,e:18,t:"The Immunity Syndrome"},
+    {s:2,e:19,t:"A Private Little War"},{s:2,e:20,t:"Return to Tomorrow"},{s:2,e:21,t:"Patterns of Force"},
+    {s:2,e:22,t:"By Any Other Name"},{s:2,e:23,t:"The Omega Glory"},{s:2,e:24,t:"The Ultimate Computer"},
+    {s:2,e:25,t:"Bread and Circuses"},{s:2,e:26,t:"Assignment: Earth"},
+    // Season 3
+    {s:3,e:1,t:"Spock's Brain"},{s:3,e:2,t:"The Enterprise Incident"},{s:3,e:3,t:"The Paradise Syndrome"},
+    {s:3,e:4,t:"And the Children Shall Lead"},{s:3,e:5,t:"Is There in Truth No Beauty?"},{s:3,e:6,t:"Spectre of the Gun"},
+    {s:3,e:7,t:"Day of the Dove"},{s:3,e:8,t:"For the World Is Hollow and I Have Touched the Sky"},
+    {s:3,e:9,t:"The Tholian Web"},{s:3,e:10,t:"Plato's Stepchildren"},{s:3,e:11,t:"Wink of an Eye"},
+    {s:3,e:12,t:"The Empath"},{s:3,e:13,t:"Elaan of Troyius"},{s:3,e:14,t:"Whom Gods Destroy"},
+    {s:3,e:15,t:"Let That Be Your Last Battlefield"},{s:3,e:16,t:"The Mark of Gideon"},{s:3,e:17,t:"That Which Survives"},
+    {s:3,e:18,t:"The Lights of Zetar"},{s:3,e:19,t:"Requiem for Methuselah"},{s:3,e:20,t:"The Way to Eden"},
+    {s:3,e:21,t:"The Cloud Minders"},{s:3,e:22,t:"The Savage Curtain"},{s:3,e:23,t:"All Our Yesterdays"},
+    {s:3,e:24,t:"Turnabout Intruder"},
+    {s:3,e:25,t:"The Cage (Restored, 1988)",url:"https://memory-alpha.fandom.com/wiki/The_Cage_(episode)"},
+    {s:3,e:26,t:"The Cage (Original, Unaired)",url:"https://memory-alpha.fandom.com/wiki/The_Cage_(episode)"},
+  ];
+  const TOS_FILMS=[
+    {n:1,t:'The Motion Picture',y:1979,url:'https://www.imdb.com/title/tt0079945/'},
+    {n:2,t:'The Wrath of Khan',y:1982,url:'https://www.imdb.com/title/tt0084726/'},
+    {n:3,t:'The Search for Spock',y:1984,url:'https://www.imdb.com/title/tt0088170/'},
+    {n:4,t:'The Voyage Home',y:1986,url:'https://www.imdb.com/title/tt0092007/'},
+    {n:5,t:'The Final Frontier',y:1989,url:'https://www.imdb.com/title/tt0098382/'},
+    {n:6,t:'The Undiscovered Country',y:1991,url:'https://www.imdb.com/title/tt0102975/'},
+    {n:7,t:'Generations',y:1994,note:'Kirk + TNG',url:'https://www.imdb.com/title/tt0111280/'},
+  ];
+
+  const TREK_KEY='trek_tos_v1';
+  const TREK_WL_KEY='trek_wl_v1';
+  function trekLoad(){try{const s=localStorage.getItem(TREK_KEY);return s?JSON.parse(s):{}}catch(e){return {}}}
+  function trekSave(w){try{localStorage.setItem(TREK_KEY,JSON.stringify(w))}catch(e){}}
+  function trekWLLoad(){try{const s=localStorage.getItem(TREK_WL_KEY);return s?JSON.parse(s):{}}catch(e){return {}}}
+  function trekWLSave(d){try{localStorage.setItem(TREK_WL_KEY,JSON.stringify(d))}catch(e){}}
+
+  let _trekUrls=[], _filmUrls=[];
+  let _trekActiveFilter='all', _trekSearchTerm='';
+
+  function _trekApplyFilters(){
+    const scroll=document.getElementById('trek-scroll');
+    const q=_trekSearchTerm.toLowerCase();
+    scroll.querySelectorAll('.trek-tile').forEach(tile=>{
+      const titleEl=tile.querySelector('.trek-ep-title');
+      const numEl=tile.querySelector('.trek-ep-num');
+      const matchSearch=!q||(titleEl&&titleEl.textContent.toLowerCase().includes(q))||(numEl&&numEl.textContent.toLowerCase().includes(q));
+      let matchFilter=true;
+      if(_trekActiveFilter==='watched') matchFilter=tile.classList.contains('watched');
+      else if(_trekActiveFilter==='unwatched') matchFilter=!tile.classList.contains('watched');
+      else if(_trekActiveFilter==='watchlist') matchFilter=tile.classList.contains('wl');
+      tile.style.display=(matchSearch&&matchFilter)?'':'none';
+    });
+    scroll.querySelectorAll('.trek-season-block').forEach(block=>{
+      const visible=[...block.querySelectorAll('.trek-tile')].some(t=>t.style.display!=='none');
+      block.style.display=visible?'':'none';
+    });
+  }
+
+  function trekFilter(mode, btn){
+    _trekActiveFilter=mode;
+    document.querySelectorAll('.trek-filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    _trekApplyFilters();
+  }
+  function trekSearch(val){
+    _trekSearchTerm=val.trim();
+    _trekApplyFilters();
+  }
+  function trekToggleWL(key){const d=trekWLLoad();d[key]?delete d[key]:d[key]=1;trekWLSave(d);buildTrek();}
+  function trekToggle(key){const w=trekLoad();w[key]?delete w[key]:w[key]=1;trekSave(w);buildTrek();}
+  function trekOpenMA(idx){const url=_trekUrls[idx];if(url)window.open(url,'_blank');}
+  function trekOpenFilm(idx){const url=_filmUrls[idx];if(url)window.open(url,'_blank');}
+
+  function buildTrek(){
+    const w=trekLoad(); const wl=trekWLLoad();
+    _trekUrls=TOS_EPISODES.map(ep=>ep.url||'https://memory-alpha.fandom.com/wiki/'+ep.t.replace(/ /g,'_').replace(/'/g,"'").replace(/\?/g,'%3F')+'_(episode)');
+    const seasons=[1,2,3];
+    const sCounts={1:0,2:0,3:0}, sWatched={1:0,2:0,3:0};
+    TOS_EPISODES.forEach(ep=>{sCounts[ep.s]++;if(w['S'+ep.s+'E'+ep.e])sWatched[ep.s]++;});
+    const filmsWatched=TOS_FILMS.filter(f=>w['F'+f.n]).length;
+    const total=TOS_EPISODES.length, totalW=sWatched[1]+sWatched[2]+sWatched[3];
+    const tvChips=[
+      {cls:'all',label:'TV',w:totalW,t:total},
+      {cls:'s1',label:'S1',w:sWatched[1],t:sCounts[1]},
+      {cls:'s2',label:'S2',w:sWatched[2],t:sCounts[2]},
+      {cls:'s3',label:'S3',w:sWatched[3],t:sCounts[3]},
+    ];
+    const filmChip={cls:'films',label:'Films',w:filmsWatched,t:TOS_FILMS.length};
+    function chipHtml(c){
+      const pct=c.t?Math.round(c.w/c.t*100):0;
+      return '<div class="trek-prog-chip '+c.cls+'"><span class="tpc-label">'+c.label+'</span><div class="tpc-bar"><div class="tpc-fill" style="width:'+pct+'%"></div></div><span class="tpc-pct">'+c.w+'/'+c.t+' · '+pct+'%</span></div>';
+    }
+    document.getElementById('trek-progress').innerHTML=
+      tvChips.map(chipHtml).join('')+
+      '<div class="trek-chip-divider"></div>'+
+      chipHtml(filmChip);
+
+    const sLabels={1:'Season 1 · 1966–67',2:'Season 2 · 1967–68',3:'Season 3 · 1968–69'};
+    let html='';
+    seasons.forEach(s=>{
+      const eps=TOS_EPISODES.filter(e=>e.s===s);
+      const sw=sWatched[s], sc=sCounts[s];
+      html+='<div class="trek-season-block s'+s+'"><div class="trek-season-hdr">'+sLabels[s]+'<span>'+sw+' / '+sc+' watched</span></div><div class="trek-grid">';
+      eps.forEach(ep=>{
+        const key='S'+ep.s+'E'+ep.e, done=!!w[key];
+        const disc=ep.d||Math.ceil(ep.e/4);
+        const epNum='S'+ep.s+' E'+String(ep.e).padStart(2,'0');
+        const idx=TOS_EPISODES.indexOf(ep);
+        const onWL=!!wl[key];
+        html+='<div class="trek-tile s'+ep.s+(done?' watched':onWL?' wl':'')+'" onclick="trekOpenMA('+idx+')" title="Open on Memory Alpha">';
+        html+='<div class="trek-disc-badge">D'+disc+'</div>';
+        html+='<div class="trek-ep-num">'+epNum+'</div>';
+        html+='<div class="trek-ep-title">'+ep.t+'</div>';
+        html+='<div class="trek-tile-footer"><button class="trek-wl-btn" onclick="event.stopPropagation();trekToggleWL(\''+key+'\')" title="'+(onWL?'Remove from watchlist':'Add to watchlist')+'">'+(onWL?'✦ WL':'WL')+'</button>'
+          +'<button class="trek-watch-btn" onclick="event.stopPropagation();trekToggle(\''+key+'\')">'+(done?'✓ Watched':'Mark Watched')+'</button></div>';
+        html+='</div>';
+      });
+      html+='</div></div>';
+    });
+
+    _filmUrls=TOS_FILMS.map(f=>f.url);
+    html+='<div class="trek-season-block films"><div class="trek-season-hdr">TOS Films · 1979–1994<span>'+filmsWatched+' / '+TOS_FILMS.length+' watched</span></div><div class="trek-grid">';
+    TOS_FILMS.forEach((f,fi)=>{
+      const fkey='F'+f.n, fdone=!!w[fkey], fonWL=!!wl[fkey];
+      html+='<div class="trek-tile films'+(fdone?' watched':fonWL?' wl':'')+'" onclick="trekOpenFilm('+fi+')" title="Open on IMDb">';
+      html+='<div class="trek-ep-num">Film '+f.n+(f.note?' · '+f.note:'')+' · '+f.y+'</div>';
+      html+='<div class="trek-ep-title">'+f.t+'</div>';
+      html+='<div class="trek-tile-footer"><button class="trek-wl-btn" onclick="event.stopPropagation();trekToggleWL(\''+fkey+'\')" title="'+(fonWL?'Remove from watchlist':'Add to watchlist')+'">'+(fonWL?'✦ WL':'WL')+'</button>'
+        +'<button class="trek-watch-btn" onclick="event.stopPropagation();trekToggle(\''+fkey+'\')">'+(fdone?'✓ Watched':'Mark Watched')+'</button></div>';
+      html+='</div>';
+    });
+    html+='</div></div>';
+
+    document.getElementById('trek-scroll').innerHTML=html;
+    if(_trekActiveFilter!=='all'||_trekSearchTerm) _trekApplyFilters();
+  }
+
+  buildTrek();
+</script>
+</body>
+</html>
