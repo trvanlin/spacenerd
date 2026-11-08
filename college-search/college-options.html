@@ -118,10 +118,11 @@
 
   /* ===== Table ===== */
   .table-scroll{overflow-x:auto;margin-bottom:12px;}
+  .how-tag{display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--green-deep);border:1px solid var(--green-deep);border-radius:3px;padding:1px 7px;margin-bottom:5px;}
   table{
     width:100%;
     border-collapse:collapse;
-    min-width:980px;
+    min-width:1180px;
     background:var(--paper-raised);
   }
   thead th{
@@ -353,6 +354,7 @@
         <th data-key="school" data-type="text">School <span class="arrow">&#9662;</span></th>
         <th data-key="cost" data-type="num" class="active">Sticker cost/yr <span class="arrow">&#9662;</span></th>
         <th data-key="merit" data-type="num">Best case w/ merit <span class="arrow">&#9662;</span></th>
+        <th data-key="howTag" data-type="text">How merit is decided <span class="arrow">&#9662;</span></th>
         <th data-key="rec" data-type="num">Recognition <span class="arrow">&#9662;</span></th>
         <th data-key="cut" data-type="text">Cut/retention risk <span class="arrow">&#9662;</span></th>
         <th data-key="admit" data-type="text">Admission path <span class="arrow">&#9662;</span></th>
@@ -371,6 +373,7 @@
         <td>
           <span class="dash">&mdash;</span>
         </td>
+        <td><span class="how-tag">None (test-blind)</span><span class="figure-sub">UC doesn&rsquo;t use SAT for admission or scholarships, per UC&rsquo;s own statement.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">6/10 &middot; UC academic halo; MT itself less cited</span>
@@ -391,6 +394,7 @@
         <td>
           <span class="dash">&mdash;</span>
         </td>
+        <td><span class="how-tag">None (test-blind)</span><span class="figure-sub">UC doesn&rsquo;t use SAT for admission or scholarships, per UC&rsquo;s own statement.</span></td>
         <td>
           <span class="rec-label">N/A &mdash; no BFA Musical Theatre program exists to score</span>
         </td>
@@ -409,6 +413,7 @@
         <td>
           <span class="figure best-case">$38,000</span><sup class="footnote-marker">&dagger;</sup><span class="figure-sub">Automatic Presidential award at 93&ndash;100 weighted GPA &mdash; no separate application</span>
         </td>
+        <td><span class="how-tag">GPA</span><span class="figure-sub">Automatic by weighted GPA: $25K / $22K / $20K. No SAT.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">6/10 &middot; Strong alumni placement, not top-10 cited</span>
@@ -416,7 +421,7 @@
         <td><span class="flag flag-red">RISK</span><br><span style="font-size:14px;">Sophomore-year adjudication &amp; 3.0 major GPA required &mdash; documented</span></td>
         <td style="font-size:14px;color:var(--ink-soft);">Audition required, GPA-based merit stacks separately</td>
       </tr>
-      <tr class="divider-row"><td colspan="6">Top picks, above &mdash; full field, below</td></tr>
+      <tr class="divider-row"><td colspan="7">Top picks, above &mdash; full field, below</td></tr>
       <tr>
         <td class="school">
           <span class="school-name"><a href="https://www.wcu.edu/learn/programs/theatre/" target="_blank" rel="noopener">Western Carolina University</a></span>
@@ -429,6 +434,7 @@
         <td>
           <span class="dash">&mdash;</span>
         </td>
+        <td><span class="how-tag">GPA</span><span class="figure-sub">Flat NC Promise tuition cap; small GPA-based awards (e.g. Honors at 3.5+). Test-optional at 2.8+ GPA.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">5/10 &middot; Regional, elevated by faculty</span>
@@ -448,6 +454,7 @@
         <td>
           <span class="dash">&mdash;</span>
         </td>
+        <td><span class="how-tag">Not found</span><span class="figure-sub">No merit program found. CSU campuses are test-free for admission.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">3/10 &middot; Regional CSU, not nationally ranked</span>
@@ -467,6 +474,7 @@
         <td>
           <span class="dash">&mdash;</span>
         </td>
+        <td><span class="how-tag">Not found</span><span class="figure-sub">No merit program found. CSU campuses are test-free for admission.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">4/10 &middot; Small cohort adds selectivity, not prestige</span>
@@ -486,6 +494,7 @@
         <td>
           <span class="dash">&mdash;</span>
         </td>
+        <td><span class="how-tag">GPA + SAT (unconfirmed)</span><span class="figure-sub">Out-of-state waiver reportedly set by GPA and test scores. FSU publishes no cutoffs.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">7/10 &middot; Called out as strong value at its reputation tier</span>
@@ -505,6 +514,7 @@
         <td>
           <span class="figure best-case">$43,489</span><span class="figure-sub">w/ avg. merit award (&ndash;$4,011, relatively small)</span>
         </td>
+        <td><span class="how-tag">Unclear</span><span class="figure-sub">Presidential Scholarship rewards high school achievement. No published matrix, so the SAT&rsquo;s role is unconfirmed.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">6/10 &middot; NAST accredited, notable Broadway alum</span>
@@ -522,8 +532,9 @@
           <span class="figure-sub">Possible additional college-level tuition on top</span>
         </td>
         <td>
-          <span class="dash">&mdash;</span>
+          <span class="figure best-case">$32,000</span><span class="figure-sub">Climb Higher Level 1 ($18K/yr, WVU&rsquo;s Fall 2027 table): needs 3.8+ weighted GPA and SAT 1360+. Subtracted from the ~$50K estimate</span>
         </td>
+        <td><span class="how-tag">GPA + SAT</span><span class="figure-sub">Automatic. Top tier ($18K) needs 3.8+ weighted GPA and SAT 1360+. Lower tiers are GPA-only ($16K / $13K / $10K).</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">5/10 &middot; Conservatory-style, not nationally listed</span>
@@ -543,6 +554,7 @@
         <td>
           <span class="figure best-case">$40,946</span><span class="figure-sub">WUE resident rate &mdash; CA qualifies, confirmed via WICHE's own eligibility finder</span>
         </td>
+        <td><span class="how-tag">GPA</span><span class="figure-sub">Automatic at admission, mainly GPA. Test-optional. WUE pricing is separate.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">5/10 &middot; National recruiting, real industry pipeline, not top-10 listed</span>
@@ -563,6 +575,7 @@
         <td>
           <span class="figure best-case">$37,500</span><span class="figure-sub">typical w/ talent scholarship</span>
         </td>
+        <td><span class="how-tag">GPA + audition</span><span class="figure-sub">Automatic GPA award ($3&ndash;6K for arts) plus audition talent awards. Test-optional.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span></div>
           <span class="rec-label">9/10 &middot; Repeatedly cited on national top-10 lists</span>
@@ -582,6 +595,7 @@
         <td>
           <span class="dash">&mdash;</span>
         </td>
+        <td><span class="how-tag">GPA or audition</span><span class="figure-sub">Academic award $7&ndash;17K (GPA; SAT/ACT also factor) or Conservatory award $2&ndash;20K by audition. The conservatory award replaces the academic one.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">7/10 &middot; Only US program dedicated to pop/rock musical; ~18/yr admitted, &lt;3% acceptance (third-party estimate)</span>
@@ -601,6 +615,7 @@
         <td>
           <span class="figure best-case">$49,600</span><span class="figure-sub">Assumes the maximum $25K/yr audition scholarship AMDA advertises &mdash; a ceiling; typical award unknown</span>
         </td>
+        <td><span class="how-tag">Audition</span><span class="figure-sub">Up to $25K/yr from the audition. Renewal needs a 2.5 GPA.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">3/10 &middot; Not on the national top-MT lists used here; NAST accreditation ended Nov 2023; some industry-connected alumni</span>
@@ -620,6 +635,7 @@
         <td>
           <span class="figure best-case">$67,600</span><sup class="footnote-marker">&Vert;</sup><span class="figure-sub">Extrapolated estimate, NOT confirmed &mdash; see footnote before trusting this number</span>
         </td>
+        <td><span class="how-tag">Audition</span><span class="figure-sub">Automatic through the audition; no separate application.</span></td>
         <td>
           <div class="bulbs"><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb lit"></span><span class="bulb"></span><span class="bulb"></span></div>
           <span class="rec-label">8/10 &middot; Playbill "Big 10" most-represented-on-Broadway; consistently ranked among top MT programs</span>
@@ -717,7 +733,7 @@
 
   <footer>
     <span>BFA Musical Theatre comparison</span>
-    <span>Last compiled October 2026 &middot; verify before decisions</span>
+    <span>Last compiled November 2026 &middot; verify before decisions</span>
   </footer>
 
 </div>
@@ -728,6 +744,7 @@ const data = [
     school:"Western Carolina University", tag:"Cullowhee, NC", url:"https://www.wcu.edu/learn/programs/theatre/",
     cost:25400, costSub:"NC Promise caps out-of-state tuition by state law",
     merit:null,
+    howTag:"GPA", howNote:"Flat NC Promise tuition cap; small GPA-based awards (e.g. Honors at 3.5+). Test-optional at 2.8+ GPA.",
     rec:5, recLabel:"Regional, elevated by faculty",
     cut:"red", cutLabel:"Named annual &quot;Program Continuation Policy&quot; &amp; 2.5 GPA minimum &mdash; documented",
     admit:"Audition/interview only, competitive entry"
@@ -736,6 +753,7 @@ const data = [
     school:"Chico State", tag:"Chico, CA", url:"https://www.csuchico.edu/academics/majors-programs/musical-theatre-bfa.shtml",
     cost:29000, costSub:"Cheapest of the CA options; off-campus runs even cheaper",
     merit:null,
+    howTag:"Not found", howNote:"No merit program found. CSU campuses are test-free for admission.",
     rec:3, recLabel:"Regional CSU, not nationally ranked",
     cut:"green", cutLabel:"No formal policy found",
     admit:"Video prescreen, virtual or on-campus"
@@ -744,6 +762,7 @@ const data = [
     school:"CSU Fullerton", tag:"Fullerton, CA", url:"https://www.fullerton.edu/arts/theatre/students/areas-of-study/bfa-musical-theatre.html",
     cost:32000, costSub:"Small cohort keeps it competitive despite low cost",
     merit:null,
+    howTag:"Not found", howNote:"No merit program found. CSU campuses are test-free for admission.",
     rec:4, recLabel:"Small cohort adds selectivity, not prestige",
     cut:"green", cutLabel:"No cut system &mdash; confirmed by CSUF's own FAQ",
     admit:"Prescreen + live callback &middot; 12&ndash;16 admitted/yr"
@@ -752,6 +771,7 @@ const data = [
     school:"UC Irvine", tag:"Irvine, CA", firstChoice:true, url:"https://www.arts.uci.edu/drama/programs/bfa",
     cost:40900, costSub:"Need-based aid only &mdash; sticker is the real number",
     merit:null,
+    howTag:"None (test-blind)", howNote:"UC doesn&rsquo;t use SAT for admission or scholarships, per UC&rsquo;s own statement.",
     rec:6, recLabel:"UC academic halo; MT itself less cited",
     cut:"red", cutLabel:"Front-loaded &mdash; audition happens after enrolling",
     admit:"No audition to enroll &mdash; academic admit, then audition"
@@ -760,6 +780,7 @@ const data = [
     school:"UCLA", tag:"Los Angeles, CA", firstChoice:true, notBfa:"BA, NOT BFA", url:"https://tft.ucla.edu/programs/theater-ba/musical-theater-emphasis/",
     cost:45500, costSub:"CA resident, on-campus &mdash; UCLA's own 2026&ndash;27 estimate",
     merit:null,
+    howTag:"None (test-blind)", howNote:"UC doesn&rsquo;t use SAT for admission or scholarships, per UC&rsquo;s own statement.",
     rec:0, recLabel:"N/A &mdash; no BFA Musical Theatre program exists to score",
     cut:"neutral", cutLabel:"N/A &mdash; has a light MT emphasis, not a dedicated pipeline",
     admit:"General UCLA admission &mdash; has an audition-gated MT emphasis, but light/integrated, not a dedicated pipeline"
@@ -768,6 +789,7 @@ const data = [
     school:"Florida State University", tag:"Tallahassee, FL", url:"https://cfa.fsu.edu/programs/bfa-music-theatre/",
     cost:43916, costSub:"Verified from FSU's own Fall 2026&ndash;Spring 2027 cost estimate page",
     merit:null,
+    howTag:"GPA + SAT (unconfirmed)", howNote:"Out-of-state waiver reportedly set by GPA and test scores. FSU publishes no cutoffs.",
     rec:7, recLabel:"Called out as strong value at its reputation tier",
     cut:"red", cutLabel:"Continuous semester review &mdash; probation then dismissal if standards slip &mdash; documented",
     admit:"Video prescreen, joint Music/Theatre program"
@@ -776,6 +798,7 @@ const data = [
     school:"Montclair State University", tag:"Montclair, NJ", url:"https://www.montclair.edu/academics/programs/bfa-musical-theatre",
     cost:47500, costSub:"12 miles from Manhattan",
     merit:43489, meritLabel:"w/ avg. merit award (&ndash;$4,011, relatively small)",
+    howTag:"Unclear", howNote:"Presidential Scholarship rewards high school achievement. No published matrix, so the SAT&rsquo;s role is unconfirmed.",
     rec:6, recLabel:"NAST accredited, notable Broadway alum",
     cut:"red", cutLabel:"Yearly juries &mdash; real, documented",
     admit:"Common Prescreen + optional Unifieds"
@@ -783,7 +806,8 @@ const data = [
   {
     school:"West Virginia University", tag:"Morgantown, WV", url:"https://www.wvu.edu/academics/programs/musical-theatre-bfa/",
     cost:50000, costSub:"Possible additional college-level tuition on top",
-    merit:null,
+    merit:32000, meritLabel:"Climb Higher Level 1 ($18K/yr, WVU&rsquo;s Fall 2027 table): needs 3.8+ weighted GPA and SAT 1360+. Subtracted from the ~$50K estimate",
+    howTag:"GPA + SAT", howNote:"Automatic. Top tier ($18K) needs 3.8+ weighted GPA and SAT 1360+. Lower tiers are GPA-only ($16K / $13K / $10K).",
     rec:5, recLabel:"Conservatory-style, not nationally listed",
     cut:"red", cutLabel:"Documented sophomore-year review &amp; probation",
     admit:"Audition required, 20hrs/wk training jr/sr year"
@@ -792,6 +816,7 @@ const data = [
     school:"University of Northern Colorado", tag:"Greeley, CO", url:"https://www.unco.edu/programs/musical-theatre-bachelor-fine-arts/",
     cost:50290, costSub:"Nonresident/non-WUE sticker &mdash; UNC's own 2025&ndash;26 published budget guide; 2026&ndash;27 rates finalize in June, expected to rise slightly",
     merit:40946, meritLabel:"WUE resident rate &mdash; CA qualifies, confirmed via WICHE's own eligibility finder",
+    howTag:"GPA", howNote:"Automatic at admission, mainly GPA. Test-optional. WUE pricing is separate.",
     rec:5, recLabel:"National recruiting, real industry pipeline, not top-10 listed",
     cut:"red", cutLabel:"Must audition for every mainstage show &amp; accept assigned roles &mdash; noncompliance risks expulsion &mdash; documented",
     admit:"Audition only, national recruiting, NYC Senior Showcase"
@@ -800,6 +825,7 @@ const data = [
     school:"Oklahoma City University", tag:"Oklahoma City, OK", notBfa:"BM, NOT BFA", url:"https://www.okcu.edu/programs/music-theater",
     cost:51400, costSub:"Sticker before talent scholarship",
     merit:37500, meritLabel:"typical w/ talent scholarship",
+    howTag:"GPA + audition", howNote:"Automatic GPA award ($3&ndash;6K for arts) plus audition talent awards. Test-optional.",
     rec:9, recLabel:"Repeatedly cited on national top-10 lists",
     cut:"red", cutLabel:"Mandatory semester juries &mdash; must hit performance benchmarks to advance/graduate &mdash; documented",
     admit:"National Common Prescreen circuit"
@@ -808,6 +834,7 @@ const data = [
     school:"Shenandoah University", tag:"Winchester, VA", url:"https://www.su.edu/conservatory/areas-of-study/bachelor-of-fine-arts-in-musical-theatre/",
     cost:61422, costSub:"Verified from SU's own 2026&ndash;27 Conservatory cost of attendance page; no in-state/out-of-state distinction (private)",
     merit:null,
+    howTag:"GPA or audition", howNote:"Academic award $7&ndash;17K (GPA; SAT/ACT also factor) or Conservatory award $2&ndash;20K by audition. The conservatory award replaces the academic one.",
     rec:7, recLabel:"Only US program dedicated to pop/rock musical; ~18/yr admitted, &lt;3% acceptance (third-party estimate)",
     cut:"red", cutLabel:"C-minimum in major courses &amp; mandatory audition/role acceptance &mdash; documented",
     admit:"Two-step audition (prescreen + live)"
@@ -816,6 +843,7 @@ const data = [
     school:"Boston Conservatory at Berklee", tag:"Boston, MA", footnote:"pilcrow", url:"https://bostonconservatory.berklee.edu/musical-theater/bfa-musical-theater",
     cost:87817, costSub:"Confirmed official 2026&ndash;27 sticker &mdash; most expensive school in this comparison by a wide margin",
     merit:67600, meritLabel:"Extrapolated estimate, NOT confirmed &mdash; see footnote before trusting this number",
+    howTag:"Audition", howNote:"Automatic through the audition; no separate application.",
     rec:8, recLabel:"Playbill &quot;Big 10&quot; most-represented-on-Broadway; consistently ranked among top MT programs",
     cut:"neutral", cutLabel:"Policies exist but are locked behind Berklee's student portal &mdash; not publicly verifiable",
     admit:"Two-step audition; ~92% of students receive institutional aid (per BC's own materials)"
@@ -824,6 +852,7 @@ const data = [
     school:"AMDA College of the Performing Arts", tag:"Los Angeles, CA", url:"https://www.amda.edu/academics/undergraduate/areas-of-study/musical-theatre/",
     cost:74600, costSub:"AMDA's own 2027&ndash;28 page: $65,600 billed on campus + $9,000 books/living &mdash; about $294K over 4 years",
     merit:49600, meritLabel:"Assumes the maximum $25K/yr audition scholarship AMDA advertises &mdash; a ceiling; typical award unknown",
+    howTag:"Audition", howNote:"Up to $25K/yr from the audition. Renewal needs a 2.5 GPA.",
     rec:3, recLabel:"Not on the national top-MT lists used here; NAST accreditation ended Nov 2023; some industry-connected alumni",
     cut:"green", cutLabel:"Only a standard GPA process (under 2.0 &rarr; warning &rarr; probation &rarr; possible dismissal) &mdash; no performance-based cut found in the 2025&ndash;26 catalog",
     admit:"Audition required; rolling admission, 2.0 GPA expected; published acceptance rates conflict (24.5%&ndash;79%)"
@@ -832,6 +861,7 @@ const data = [
     school:"Nazareth University", tag:"Rochester, NY", footnote:true, firstChoice:true, url:"https://www2.naz.edu/academics/musical-theatre-degree-program/",
     cost:63120, costSub:"Highest sticker on the list",
     merit:38000, meritLabel:"Automatic Presidential award at 93&ndash;100 weighted GPA &mdash; no separate application",
+    howTag:"GPA", howNote:"Automatic by weighted GPA: $25K / $22K / $20K. No SAT.",
     rec:6, recLabel:"Strong alumni placement, not top-10 cited",
     cut:"red", cutLabel:"Sophomore-year adjudication &amp; 3.0 major GPA required &mdash; documented",
     admit:"Audition required, GPA-based merit stacks separately"
@@ -869,6 +899,7 @@ function row(r){
       <td>
         ${r.merit ? `<span class="figure best-case">${money(r.merit)}</span>${r.footnote === 'pilcrow' ? '<sup class="footnote-marker">&Vert;</sup>' : r.footnote ? '<sup class="footnote-marker">&dagger;</sup>' : ''}<span class="figure-sub">${r.meritLabel}</span>` : '<span class="dash">&mdash;</span>'}
       </td>
+      <td><span class="how-tag">${r.howTag}</span><span class="figure-sub">${r.howNote}</span></td>
       <td>
         ${r.rec ? bulbRow(r.rec) : ''}
         <span class="rec-label">${r.rec ? r.rec + '/10 &middot; ' : ''}${r.recLabel}</span>
@@ -880,7 +911,7 @@ function row(r){
 }
 
 function dividerRow(){
-  return `<tr class="divider-row"><td colspan="6">Top picks, above &mdash; full field, below</td></tr>`;
+  return `<tr class="divider-row"><td colspan="7">Top picks, above &mdash; full field, below</td></tr>`;
 }
 
 function render(rows){
